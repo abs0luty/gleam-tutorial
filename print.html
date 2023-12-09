@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Gleam Tutorial</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what-is-gleam.html"><strong aria-hidden="true">1.</strong> What is Gleam?</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="hello-world.html"><strong aria-hidden="true">3.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">4.</strong> Comments</a></li><li class="chapter-item expanded "><a href="numbers.html"><strong aria-hidden="true">5.</strong> Numbers</a></li><li class="chapter-item expanded "><a href="booleans.html"><strong aria-hidden="true">6.</strong> Booleans</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">7.</strong> Variables</a></li><li class="chapter-item expanded "><a href="tuples-and-lists.html"><strong aria-hidden="true">8.</strong> Tuples and lists</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Regular and anonymous functions</a></li><li class="chapter-item expanded "><a href="expression-blocks.html"><strong aria-hidden="true">10.</strong> Expression blocks</a></li><li class="chapter-item expanded "><a href="strings.html"><strong aria-hidden="true">11.</strong> Strings</a></li><li class="chapter-item expanded "><a href="pipe-operator.html"><strong aria-hidden="true">12.</strong> Pipe operator</a></li><li class="chapter-item expanded "><a href="nil.html"><strong aria-hidden="true">13.</strong> Nil</a></li><li class="chapter-item expanded "><a href="result.html"><strong aria-hidden="true">14.</strong> Result</a></li><li class="chapter-item expanded "><a href="pattern-matching.html"><strong aria-hidden="true">15.</strong> Pattern matching</a></li><li class="chapter-item expanded "><a href="panic.html"><strong aria-hidden="true">16.</strong> Panic and assert</a></li><li class="chapter-item expanded "><a href="custom-types.html"><strong aria-hidden="true">17.</strong> Creating custom types</a></li><li class="chapter-item expanded "><a href="type-aliases.html"><strong aria-hidden="true">18.</strong> Type aliases</a></li><li class="chapter-item expanded "><a href="todo.html"><strong aria-hidden="true">19.</strong> Todo</a></li><li class="chapter-item expanded "><a href="let-assertions.html"><strong aria-hidden="true">20.</strong> Let assertions</a></li><li class="chapter-item expanded "><a href="constants.html"><strong aria-hidden="true">21.</strong> Constants</a></li><li class="chapter-item expanded "><a href="modules.html"><strong aria-hidden="true">22.</strong> Modules and imports</a></li><li class="chapter-item expanded "><a href="use.html"><strong aria-hidden="true">23.</strong> Use</a></li><li class="chapter-item expanded "><a href="bitstrings.html"><strong aria-hidden="true">24.</strong> Bit strings</a></li><li class="chapter-item expanded "><a href="escape-sequences.html"><strong aria-hidden="true">25.</strong> Escape sequences</a></li><li class="chapter-item expanded "><a href="generics.html"><strong aria-hidden="true">26.</strong> Generics</a></li><li class="chapter-item expanded "><a href="tail-call.html"><strong aria-hidden="true">27.</strong> Tail call optimisation</a></li><li class="chapter-item expanded "><a href="phantom.html"><strong aria-hidden="true">28.</strong> Phantom types</a></li><li class="chapter-item expanded "><a href="labelled_arguments.html"><strong aria-hidden="true">29.</strong> Labelled arguments</a></li><li class="chapter-item expanded "><a href="labelled_fields.html"><strong aria-hidden="true">30.</strong> Labelled fields</a></li><li class="chapter-item expanded "><a href="dict.html"><strong aria-hidden="true">31.</strong> Dict</a></li><li class="chapter-item expanded "><a href="pair.html"><strong aria-hidden="true">32.</strong> Pairs</a></li><li class="chapter-item expanded "><a href="set.html"><strong aria-hidden="true">33.</strong> Sets</a></li><li class="chapter-item expanded "><a href="option.html"><strong aria-hidden="true">34.</strong> Option</a></li><li class="chapter-item expanded "><a href="order.html"><strong aria-hidden="true">35.</strong> Order</a></li><li class="chapter-item expanded "><a href="iterator.html"><strong aria-hidden="true">36.</strong> Iterators</a></li><li class="chapter-item expanded "><a href="opaque.html"><strong aria-hidden="true">37.</strong> Opaque types</a></li><li class="chapter-item expanded "><a href="queue.html"><strong aria-hidden="true">38.</strong> Queue</a></li><li class="chapter-item expanded "><a href="interop.html"><strong aria-hidden="true">39.</strong> Erlang and Javascript interop</a></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">40.</strong> Testing and gleeunit</a></li><li class="chapter-item expanded "><a href="bytes-and-string-builders.html"><strong aria-hidden="true">41.</strong> Bytes and string builders</a></li><li class="chapter-item expanded "><a href="base64.html"><strong aria-hidden="true">42.</strong> Base64</a></li><li class="chapter-item expanded "><a href="regex.html"><strong aria-hidden="true">43.</strong> Regex</a></li><li class="chapter-item expanded "><a href="uri.html"><strong aria-hidden="true">44.</strong> URI</a></li><li class="chapter-item expanded "><a href="installing-packages.html"><strong aria-hidden="true">45.</strong> Installing custom packages</a></li><li class="chapter-item expanded "><a href="publishing.html"><strong aria-hidden="true">46.</strong> Creating and publishing a package</a></li><li class="chapter-item expanded "><a href="docker-images.html"><strong aria-hidden="true">47.</strong> Gleam docker images</a></li><li class="chapter-item expanded "><a href="simplifile.html"><strong aria-hidden="true">48.</strong> IO: simplifile</a></li><li class="chapter-item expanded "><a href="filepath.html"><strong aria-hidden="true">49.</strong> Filepath: filepath</a></li><li class="chapter-item expanded "><a href="ranger.html"><strong aria-hidden="true">50.</strong> Ranges: ranger</a></li><li class="chapter-item expanded "><a href="birl.html"><strong aria-hidden="true">51.</strong> Datetime: birl</a></li><li class="chapter-item expanded "><a href="snag.html"><strong aria-hidden="true">52.</strong> Ad-hoc error type: snag</a></li><li class="chapter-item expanded "><a href="json.html"><strong aria-hidden="true">53.</strong> Json: gleam_json</a></li><li class="chapter-item expanded "><a href="crypto.html"><strong aria-hidden="true">54.</strong> Cryptography: gleam_crypto</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Gleam Tutorial</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="what-is-gleam"><a class="header" href="#what-is-gleam">What is Gleam?</a></h1>
+<p>Gleam is a friendly language for building type-safe, scalable systems!</p>
+<p>It compiles to <a href="http://www.erlang.org/">Erlang</a> (or JavaScript) and has straightforward interop
+with other BEAM languages such as Erlang, Elixir, and LFE.</p>
+<p>For more information see the Gleam website: <a href="https://gleam.run">https://gleam.run</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<h2 id="erlang"><a class="header" href="#erlang">Erlang</a></h2>
+<p>As Gleam compiler transpiles mainly to erlang and additionally javascript, it requires erlang to work. So if you are on Linux or MacOS, you can use one of:</p>
+<ul>
+<li>For Homebrew on macOS: <code>brew install erlang</code>.</li>
+<li>For MacPorts on macOS: <code>port install erlang</code>.</li>
+<li>For Ubuntu and Debian: <code>apt-get install erlang</code>.</li>
+<li>For Fedora: <code>yum install erlang</code>.</li>
+<li>For ArchLinux and Manjaro: <code>pacman -S erlang</code>.</li>
+<li>For FreeBSD: <code>pkg install erlang</code>.</li>
+</ul>
+<p>If you are on Windows, use <a href="https://github.com/erlang/otp/releases/download/OTP-26.1.2/otp_win64_26.1.2.exe">64-bit</a> or <a href="https://github.com/erlang/otp/releases/download/OTP-26.1.2/otp_win32_26.1.2.exe">32-bit</a> installers.</p>
+<h2 id="releases"><a class="header" href="#releases">Releases</a></h2>
+<p>To install Gleam, go to <a href="https://github.com/gleam-lang/gleam/releases">releases tab</a> on the github repo. Find the last release and install the corresponding version.</p>
+<h2 id="building-from-source"><a class="header" href="#building-from-source">Building from source</a></h2>
+<p>In some cases, you want to build Gleam compiler from source. For example, when you need to use it in web using webassembly or you want to contribute. First clone the Gleam git repo:</p>
+<pre><code>git clone https://github.com/gleam-lang/gleam
+cd gleam
+</code></pre>
+<p>Gleam compiler is written in Rust, so you need to have Rust installed on your system.</p>
+<p>If you are on Linux/Mac, you can install <code>rustup</code> using this shell command:</p>
+<pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+</code></pre>
+<p><code>rustup</code> installs Rust programming language from the official release channels. To install latest stable of Rust, use <code>rustup toolchain install</code>.</p>
+<p>If you are on Windows, go to the <a href="https://www.rust-lang.org/learn/get-started">Rust official website</a> and click to the <em>download rustup-init.exe</em> button. Then run the downloaded exe file and run shell command: <code>rustup toolchain install</code>.</p>
+<p>After installing Rust, run:</p>
+<pre><code>cargo install --path compiler-cli
+</code></pre>
+<p>In the Gleam repo folder, and you will get Gleam compiler installed on your system.</p>
+<p>In case, you need version of the Gleam compiler for WebAssembly, you need to first install <code>wasm-pack</code>:</p>
+<pre><code>curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+</code></pre>
+<p>If you are on Windows, you can alternatively install it from source:</p>
+<pre><code>cargo install wasm-pack
+</code></pre>
+<p>Then run:</p>
+<pre><code>cd compiler-wasm
+wasm-pack build --target web
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello World</a></h1>
+<p>Let us now write our first Gleam program! <em>If you don't have Gleam installed, it is recommended to follow instructions in the <a href="./installation.html">previous section</a></em>. Run:</p>
+<pre><code>gleam new hello_world
+cd hello_world
+</code></pre>
+<p>You can now see the automatically generated Gleam project structure:</p>
+<pre><code>hello_world
+|_ .github/workflows
+   |_ test.yml
+|_ src
+   |_ hello_world.gleam
+|_ test
+   |_ hello_world_test.gleam
+|_ .gitignore
+|_ gleam.toml
+|_ README.md
+</code></pre>
+<p>The starting point is located in the <code>src/hello_world.gleam</code> file. It will probably look something like this:</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  io.println(&quot;Hello from hello_world!&quot;)
+}
+</code></pre>
+<p>As you can see, Gleam doesn't require semicolons. To run the program, you can use <code>gleam run</code> command:</p>
+<pre><code>$ gleam run
+  Compiling gleam_stdlib
+  Compiling gleeunit
+  Compiling hello_world
+   Compiled in 1.78s
+    Running hello_world.main
+Hello from hello_world!
+</code></pre>
+<p>By default, it transpiles our code to erlang and uses it to run our code. However, you can also use javascript using <code>--target</code> flag:</p>
+<pre><code>$ gleam run --target javascript
+  Compiling gleam_stdlib
+  Compiling gleeunit
+  Compiling hello_world
+   Compiled in 1.5s
+    Running hello_world.main
+Hello from hello_world!
+</code></pre>
+<p>You can also use specific javascript runtime using <code>--runtime</code> flag:</p>
+<pre><code>$ gleam run --target javascript --runtime node
+  Compiling gleam_stdlib
+  Compiling gleeunit
+  Compiling hello_world
+   Compiled in 1.5s
+    Running hello_world.main
+Hello from hello_world!
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="comments"><a class="header" href="#comments">Comments</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="numbers"><a class="header" href="#numbers">Numbers</a></h1>
+<p>Gleam has two main types for numbers: <code>Int</code> for whole numbers and <code>Float</code> for numbers with a decimal point.</p>
+<h2 id="integers"><a class="header" href="#integers">Integers</a></h2>
+<p>Integers in Gleam are written as usual:</p>
+<pre><code class="language-gleam">1
+2
+3
+-4
+2942930103
+</code></pre>
+<p>Gleam supports <code>_</code> in integers for clarity:</p>
+<pre><code class="language-gleam">3_000_000
+</code></pre>
+<p><em>In the given example, the <code>_</code> has no syntactic and semantic meaning.</em></p>
+<p>Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with <code>0b</code>, <code>0o</code> and <code>0x</code> respectively:</p>
+<pre><code class="language-gleam">0b0101000101
+0o712
+0xFf // `f` and `F` here are the same
+</code></pre>
+<p>Gleam supports basic primitive operations with integers:</p>
+<pre><code class="language-gleam">1 + 3 - 2 * 4 // =&gt; -4
+7 / 2  // =&gt; 3 (rounded)
+3 % 2  // =&gt; 1
+1 &gt; 0  // =&gt; True
+1 &lt; 0  // =&gt; False
+1 &gt;= 0 // =&gt; True
+1 &lt;= 0 // =&gt; False
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: In Gleam division between integers returns another integer, which is the result of the division rounded down.</p>
+</blockquote>
+<blockquote>
+<p><strong>Note</strong>: In Gleam division doesn't handle edge case with divisor being <code>0</code>:</p>
+<pre><code class="language-gleam">2 / 0 // =&gt; 0
+1 / 0 // =&gt; 0
+0 / 0 // =&gt; 0
+</code></pre>
+<p>This is why it is generally recommended to use <code>int.divide</code> function which returns an error if the divisor is <code>0</code>:</p>
+<pre><code class="language-gleam">5 |&gt; int.divide(2) // =&gt; Ok(2)
+5 |&gt; int.divide(0) // =&gt; Error(Nil)
+0 |&gt; int.divide(0) // =&gt; Error(Nil)
+</code></pre>
+</blockquote>
+<p>To print the integer in Gleam, you need to first convert it to string. You can do that using <code>int.to_string</code> function:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/int
+
+fn main() {
+  io.println(3 |&gt; int.to_string)
+}
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: There is currently no maximum value for integers in Gleam, however there is a difference in behaviour for javascript and erlang targets for converting big integers to strings. Example:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/int
+
+fn main() {
+  io.println(9_999_999_999_999_999 |&gt; int.to_string)
+}
+</code></pre>
+<p>Output when running with default erlang target (<code>gleam run</code>):</p>
+<pre><code>9999999999999999
+</code></pre>
+<p>Output when running with javascript target (<code>gleam run --target javascript</code>):</p>
+<pre><code>10000000000000000
+</code></pre>
+</blockquote>
+<p>You can find the absolute value of the integer using <code>int.absolute_value</code> function:</p>
+<pre><code class="language-gleam">-12 |&gt; int.absolute_value // =&gt; 12
+12  |&gt; int.absolute_value // =&gt; 12
+0   |&gt; int.absolute_value // =&gt; 0
+</code></pre>
+<p>If you want the result of the base being raised to the power of exponent, you can use <code>power</code> function:</p>
+<pre><code class="language-gleam">3 |&gt; int.power(of: 2.0) // =&gt; 9
+2 |&gt; int.power(of: 2.0) // =&gt; 4
+2 |&gt; int.power(of: 4.0) // =&gt; 16
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: <code>power</code> accepts second argument only as floating point number. Gleam doesn't have implicit <code>Int</code> to <code>Float</code> cast:</p>
+<pre><code>error: Type mismatch
+   ┌─ /gleam-tutorial/hello_world/src/hello_world.gleam
+   │
+   │  3 |&gt; int.power(of: 2)
+   │                     ^
+
+Expected type:
+
+    Float
+
+Found type:
+
+    Int
+</code></pre>
+<p>So <code>2</code> must be changed to <code>2.0</code>. See the <a href="numbers.html#floating-point-numbers">floating point numbers section</a> below.</p>
+</blockquote>
+<p>If you want to convert an integer to float, you can use <code>to_float</code> function:</p>
+<pre><code class="language-gleam">3  |&gt; to_float // 3.0
+-3 |&gt; to_float // -3.0
+0  |&gt; to_float // 0.0
+</code></pre>
+<p>Here are some other useful methods for integers:</p>
+<pre><code class="language-gleam">// Returns the minimum of two numbers
+int.min(2, 3)    // =&gt; 2
+
+// Returns the maximum of two numbers
+int.max(3, 4)    // =&gt; 4
+
+// Returns true if the number is even
+2 |&gt; int.is_even // =&gt; True
+3 |&gt; int.is_even // =&gt; False
+
+// Returns true if the number is odd
+2 |&gt; int.is_odd  // =&gt; False
+3 |&gt; int.is_odd  // =&gt; True
+
+// Returns the negative of the number
+1 |&gt; int.negate  // =&gt; -1
+</code></pre>
+<p>You can convert integers to different common bases:</p>
+<pre><code class="language-gleam">2  |&gt; to_base2 // =&gt; &quot;10&quot;
+15 |&gt; to_base8 // =&gt; &quot;17&quot;
+48 |&gt; to_base16 // =&gt; &quot;30&quot;
+48 |&gt; to_base36 // =&gt; &quot;1C&quot;
+</code></pre>
+<p>If you want to convert a number to any base from <code>2</code> to <code>36</code>, you can use <code>to_base_string</code>:</p>
+<pre><code class="language-gleam">// 37 is bigger than 36
+48 |&gt; to_base_string(37) // =&gt; Error(InvalidBase)
+
+// 1 is less than 2
+48 |&gt; to_base_string(1)  // =&gt; Error(InvalidBase)
+
+// Same as running to_base36()
+48 |&gt; to_base_string(36) // =&gt; Ok(&quot;1C&quot;)
+</code></pre>
+<h2 id="floating-point-numbers"><a class="header" href="#floating-point-numbers">Floating-point numbers</a></h2>
+<p><code>Float</code>-s are numbers that have a decimal point:</p>
+<pre><code class="language-gleam">1.6
+-0.3
+8.0
+</code></pre>
+<p>As for integers, Gleam supports <code>_</code> in floats for clarity:</p>
+<pre><code class="language-gleam">3.141_159_265
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: you cannot put <code>_</code> before <code>.</code>:</p>
+<pre><code>error: Syntax error
+   ┌─ .../hello_world/src/hello_world.gleam
+   │
+   │     { -0_.3_3 }
+   │         ^ Numbers cannot have a trailing underscore
+
+Hint: remove it.
+</code></pre>
+</blockquote>
+<p>You can also use scientific notation with floats:</p>
+<pre><code class="language-gleam">2.997e8
+6.626e-34
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: In Gleam there are actually two division operations: <code>/</code> for integers and <code>/.</code> for floats:</p>
+<pre><code class="language-gleam">2.0 /. 2.0 // =&gt; 1.0
+3.0 /. 2.0 // =&gt; 1.5
+
+// As with integers
+2.0 /. 0.0 // =&gt; 0.0
+0.0 /. 0.0 // =&gt; 0.0
+</code></pre>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="booleans"><a class="header" href="#booleans">Booleans</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="variables"><a class="header" href="#variables">Variables</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tuples-and-lists"><a class="header" href="#tuples-and-lists">Tuples and lists</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="expression-blocks"><a class="header" href="#expression-blocks">Expression blocks</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe operator</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nil"><a class="header" href="#nil">Nil</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="result"><a class="header" href="#result">Result</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="panic-and-assert"><a class="header" href="#panic-and-assert">Panic and assert</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="creating-custom-types"><a class="header" href="#creating-custom-types">Creating custom types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="type-aliases"><a class="header" href="#type-aliases">Type aliases</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="todo"><a class="header" href="#todo">Todo</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="let-assertions"><a class="header" href="#let-assertions">Let assertions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="constants"><a class="header" href="#constants">Constants</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="modules-and-imports"><a class="header" href="#modules-and-imports">Modules and imports</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="use"><a class="header" href="#use">Use</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bit-strings"><a class="header" href="#bit-strings">Bit strings</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="escape-sequences"><a class="header" href="#escape-sequences">escape sequences</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tail-call-optimisation"><a class="header" href="#tail-call-optimisation">Tail call optimisation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="phantom-types"><a class="header" href="#phantom-types">Phantom types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled arguments</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-fields"><a class="header" href="#labelled-fields">Labelled fields</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dict"><a class="header" href="#dict">Dict</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pairs"><a class="header" href="#pairs">Pairs</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sets"><a class="header" href="#sets">Sets</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="option"><a class="header" href="#option">Option</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="order"><a class="header" href="#order">Order</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="iterator"><a class="header" href="#iterator">Iterator</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="opaque-types"><a class="header" href="#opaque-types">Opaque types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="queue"><a class="header" href="#queue">Queue</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="erlang-and-javascript-interop"><a class="header" href="#erlang-and-javascript-interop">Erlang and Javascript interop</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="testing"><a class="header" href="#testing">Testing</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bytes-and-string-builders"><a class="header" href="#bytes-and-string-builders">Bytes and string builders</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="base64"><a class="header" href="#base64">Base64</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="regex"><a class="header" href="#regex">Regex</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="uri"><a class="header" href="#uri">URI</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installing-custom-packages"><a class="header" href="#installing-custom-packages">Installing custom packages</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="creating-and-publishing-a-package"><a class="header" href="#creating-and-publishing-a-package">Creating and publishing a package</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gleam-docker-images"><a class="header" href="#gleam-docker-images">Gleam docker images</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="simplifile-package"><a class="header" href="#simplifile-package">Simplifile package</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="filepath-filepath"><a class="header" href="#filepath-filepath">Filepath: filepath</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ranges-ranger"><a class="header" href="#ranges-ranger">Ranges: ranger</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="datetime-birl"><a class="header" href="#datetime-birl">Datetime: birl</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ad-hoc-error-type-snag"><a class="header" href="#ad-hoc-error-type-snag">Ad-hoc error type: snag</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="json-gleam_json"><a class="header" href="#json-gleam_json">Json: gleam_json</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="gleam_crypto"><a class="header" href="#gleam_crypto">gleam_crypto</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="syntax.js"></script>
+        <script src="highlight.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
