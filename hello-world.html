@@ -196,11 +196,18 @@ cd hello_world
 |_ gleam.toml
 |_ README.md
 </code></pre>
-<p>The starting point is located in the <code>src/hello_world.gleam</code> file. It will probably look something like this:</p>
+<p>The entry point is located in the <code>src/hello_world.gleam</code> file. It will probably look something like this:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
   io.println(&quot;Hello from hello_world!&quot;)
+}
+</code></pre>
+<p>Let us change our program, so that it prints canonical <code>Hello, world!</code> message:</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  io.println(&quot;Hello, world!&quot;)
 }
 </code></pre>
 <p>As you can see, Gleam doesn't require semicolons. To run the program, you can use <code>gleam run</code> command:</p>
@@ -210,7 +217,7 @@ pub fn main() {
   Compiling hello_world
    Compiled in 1.78s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 </code></pre>
 <p>By default, it transpiles our code to erlang and uses it to run our code. However, you can also use javascript using <code>--target</code> flag:</p>
 <pre><code>$ gleam run --target javascript
@@ -219,7 +226,7 @@ Hello from hello_world!
   Compiling hello_world
    Compiled in 1.5s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 </code></pre>
 <p>You can also use specific javascript runtime using <code>--runtime</code> flag:</p>
 <pre><code>$ gleam run --target javascript --runtime node
@@ -228,7 +235,7 @@ Hello from hello_world!
   Compiling hello_world
    Compiled in 1.5s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 </code></pre>
 
                     </main>

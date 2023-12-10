@@ -252,12 +252,29 @@ pub fn register_event_handler() {
   })
 }
 </code></pre>
-<h1 id="links"><a class="header" href="#links">Links</a></h1>
+<h1 id="helpful-links"><a class="header" href="#helpful-links">Helpful links</a></h1>
 <ul>
-<li><a href="https://gleam.run/documentation#cheatsheets">Cheat sheets</a></li>
 <li><a href="https://gleam.run/book/tour/">Language tour</a></li>
+<li><a href="https://gleam.run">Official website</a></li>
 <li><a href="https://discord.com/invite/Fm8Pwmy">Discord server</a></li>
 <li><a href="https://github.com/gleam-lang">Github</a></li>
+<li><a href="https://gleam.run/documentation#cheatsheets">Cheat sheets</a>
+<ul>
+<li><a href="https://gleam.run/cheatsheets/gleam-for-elixir-users/">for Elixir users</a></li>
+<li><a href="https://gleam.run/cheatsheets/gleam-for-elm-users">for Elm users</a></li>
+<li><a href="https://gleam.run/cheatsheets/gleam-for-erlang-users">for Erlang users</a></li>
+<li><a href="https://gleam.run/cheatsheets/gleam-for-php-users">for PHP users</a></li>
+<li><a href="https://gleam.run/cheatsheets/gleam-for-python-users">for Python users</a></li>
+<li><a href="https://gleam.run/cheatsheets/gleam-for-rust-users">for Rust users</a></li>
+</ul>
+</li>
+<li><a href="https://github.com/gleam-lang/awesome-gleam">Awesome Gleam resource list</a></li>
+<li><a href="https://hexdocs.pm/gleam_stdlib/">Standard library documentation</a></li>
+<li><a href="https://packages.gleam.run/">Gleam package index</a></li>
+<li><a href="https://gleam.run/writing-gleam/gleam-toml/"><code>gleam.toml</code> file reference</a></li>
+<li><a href="https://gleam.run/writing-gleam/command-line-reference/">Command line reference (for <code>gleam</code> command)</a></li>
+<li><a href="https://erlangforums.com/c/beam-language-forums/gleam-forum/36">Gleam's threads on the Erlang Forums</a></li>
+<li><a href="https://github.com/gleam-lang/gleam/discussions">Gleam discussions on Github</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <h2 id="erlang"><a class="header" href="#erlang">Erlang</a></h2>
@@ -315,11 +332,18 @@ cd hello_world
 |_ gleam.toml
 |_ README.md
 </code></pre>
-<p>The starting point is located in the <code>src/hello_world.gleam</code> file. It will probably look something like this:</p>
+<p>The entry point is located in the <code>src/hello_world.gleam</code> file. It will probably look something like this:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
   io.println(&quot;Hello from hello_world!&quot;)
+}
+</code></pre>
+<p>Let us change our program, so that it prints canonical <code>Hello, world!</code> message:</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  io.println(&quot;Hello, world!&quot;)
 }
 </code></pre>
 <p>As you can see, Gleam doesn't require semicolons. To run the program, you can use <code>gleam run</code> command:</p>
@@ -329,7 +353,7 @@ pub fn main() {
   Compiling hello_world
    Compiled in 1.78s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 </code></pre>
 <p>By default, it transpiles our code to erlang and uses it to run our code. However, you can also use javascript using <code>--target</code> flag:</p>
 <pre><code>$ gleam run --target javascript
@@ -338,7 +362,7 @@ Hello from hello_world!
   Compiling hello_world
    Compiled in 1.5s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 </code></pre>
 <p>You can also use specific javascript runtime using <code>--runtime</code> flag:</p>
 <pre><code>$ gleam run --target javascript --runtime node
@@ -347,7 +371,7 @@ Hello from hello_world!
   Compiling hello_world
    Compiled in 1.5s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="comments"><a class="header" href="#comments">Comments</a></h1>
 <p>Let us now modify our previous hello world program:</p>
