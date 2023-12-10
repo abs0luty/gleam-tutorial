@@ -38,7 +38,23 @@ Output:
 True
 ```
 
-Gleam supports negation of Bools using either the `!` operator or the `bool.negate` function from the `gleam/bool` module:
+> **Note**: you can alternatively use `io.debug`, if you want to print any type you want:
+>
+> ```gleam
+> import gleam/io
+>
+> pub fn main() {
+>   io.debug(False)
+>   io.debug("True")
+> }
+> ```
+> Output:
+> ```
+> False
+> True
+> ```
+
+Gleam also supports negation of Bools using either the `!` operator or the `bool.negate` function from the `gleam/bool` module:
 
 ```gleam
 import gleam/io
@@ -56,63 +72,6 @@ Output:
 False
 True
 ```
-
-> **Note**: you can alternatively use `io.debug`, if you want to print any type you want:
->
-> ```gleam
-> import gleam/io
->
-> pub fn main() {
->   io.debug(False)
->   io.debug("True")
-> }
-> ```
-> Output:
-> ```
-> False
-> True
-> ```
-
-> **Important**: `&&` and `||` are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:
->
-> ```gleam
-> import gleam/io
->
-> fn test() -> Bool {
->    io.println("1")
->    True
-> }
->
-> pub fn main() {
->    io.debug(True || test())
-> }
-> ```
-> Output:
-> ```
-> True
-> ```
-
-
-> **Note**: calls like this:
-> ```gleam
-> io.debug(True)
-> ```
-> Can be simplified, using the pipe operator (`|>`):
-> ```gleam
-> True |> io.debug
-> ```
->
-> Another example:
-> ```gleam
-> import gleam/io
-> import gleam/bool
->
-> pub fn main() {
->   True
->   |> bool.to_string
->   |> io.println
-> }
-> ```
 
 > **Important**: `&&` and `||` are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:
 >
@@ -150,4 +109,25 @@ True
 > ```
 > test
 > True
+> ```
+
+> **Note**: calls like this:
+> ```gleam
+> io.debug(True)
+> ```
+> Can be simplified, using the pipe operator (`|>`):
+> ```gleam
+> True |> io.debug
+> ```
+>
+> Another example:
+> ```gleam
+> import gleam/io
+> import gleam/bool
+>
+> pub fn main() {
+>   True
+>   |> bool.to_string
+>   |> io.println
+> }
 > ```

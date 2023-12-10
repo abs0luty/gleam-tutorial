@@ -197,8 +197,8 @@ As for integers, Gleam supports `_` in floats for clarity:
 > error: Syntax error
 >    ┌─ .../hello_world/src/hello_world.gleam
 >    │
->    │     { -0_.3_3 }
->    │         ^ Numbers cannot have a trailing underscore
+>    │     -0_.3_3
+>    │       ^ Numbers cannot have a trailing underscore
 >
 > Hint: remove it.
 > ```
@@ -210,10 +210,11 @@ You can also use scientific notation with floats:
 6.626e-34
 ```
 
-> **Note**: In Gleam there are actually two division operations: `/` for integers and `/.` for floats:
->
+> **Note**: In Gleam operators like `+`, `-`, `*` and `/` cannot be used for floats. Instead use `+.`, `-.`, `*.` and `/.`:
 > ```gleam
-> 2.0 /. 2.0 // => 1.0
+> 2.0 +. 2.0 // => 4.0
+> 3.0 -. 2.0 // => 1.0
+> 1.0 *. 2.0 // => 2.0
 > 3.0 /. 2.0 // => 1.5
 >
 > // As with integers
