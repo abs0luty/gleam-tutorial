@@ -282,7 +282,7 @@ float.min(2.0, 3.3)             // => 2.0
 float.max(3.1, 4.2)             // => 4.2
 
 // Returns the negative of the number
-1 |> float.negate               // => -1
+1.0 |> float.negate             // => -1.0
 
 // Returns the value as `Int`, truncating all decimal digits
 2.4287898428 |> float.truncate  // => 2
