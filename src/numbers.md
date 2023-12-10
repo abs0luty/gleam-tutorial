@@ -80,11 +80,11 @@ fn main() {
 >   io.println(9_999_999_999_999_999 |> int.to_string)
 > }
 > ```
-> Output when running with default erlang target (`gleam run`):
+> Output when running the code using default erlang target (`gleam run`):
 > ```
 > 9999999999999999
 > ```
-> Output when running with javascript target (`gleam run --target javascript`):
+> Output when running the code using javascript target (`gleam run --target javascript`):
 > ```
 > 10000000000000000
 > ```
@@ -151,6 +151,10 @@ int.max(3, 4)    // => 4
 
 // Returns the negative of the number
 1 |> int.negate  // => -1
+
+// Returns the square root of the number
+4   |> int.square_root // => Ok(2.0)
+-16 |> int.square_root // => Error(Nil)
 ```
 
 You can convert integers to different common bases:
@@ -221,3 +225,75 @@ You can also use scientific notation with floats:
 > 2.0 /. 0.0 // => 0.0
 > 0.0 /. 0.0 // => 0.0
 > ```
+
+> **Note**: It is a little more difficult with comparison operators. `==` and `!=` work for both integers and floats. `>`, `<`, `>=`, `<=` however only work for integers. So you need to use analogs: `>.`, `<.`, `>=.`, `<=.`:
+> ```gleam
+> 2.0 >.  1.0  // => True
+> 2.0 <=. 2.0  // => True
+> 2.0 <.  2.0  // => True
+> 2.0 ==  2.0  // => True
+> 2.0 !=  2.0  // => False
+> ```
+
+> **Note**: In Gleam as with integers division doesn't handle edge case with divisor being `0.0`:
+> ```gleam
+> 2.0 /. 0.0 // => 0.0
+> 1.0 /. 0.0 // => 0.0
+> 0.0 /. 0.0 // => 0.0
+> ```
+> This is why it is generally recommended to use `float.divide` function which returns an error if the divisor is 0:
+> ```gleam
+> import gleam/float
+>
+> 5.0 |> float.divide(2.0) // => Ok(2.5)
+> 5.0 |> float.divide(0.0) // => Error(Nil)
+> 0.0 |> float.divide(0.0) // => Error(Nil)
+> ```
+
+You can find the absolute value of the float using `float.absolute_value` function:
+
+```gleam
+-12.0 |> float.absolute_value // => 12.0
+12.0  |> float.absolute_value // => 12.0
+0.0   |> float.absolute_value // => 0.0
+```
+
+You can also round float number to the next lowest or the next highest whole number using `ceiling` and `floor` functions:
+
+```gleam
+2.3 |> float.ceiling // => 3.0
+2.3 |> float.floor   // => 2.0
+```
+
+Or you can round to the nearest whole number using `round`:
+
+```gleam
+2.3 |> float.round // => 2.0
+2.5 |> float.round // => 3.0
+```
+
+Here are some other useful methods for floats:
+
+```gleam
+// Returns the minimum of two numbers
+float.min(2.0, 3.3)             // => 2.0
+
+// Returns the maximum of two numbers
+float.max(3.1, 4.2)             // => 4.2
+
+// Returns the negative of the number
+1 |> float.negate               // => -1
+
+// Returns the value as `Int`, truncating all decimal digits
+2.4287898428 |> float.truncate  // => 2
+
+// Returns the results of the base being raised to the power of the exponent
+2.0  |> float.power(-1.0)    // => Ok(0.5)
+2.0  |> float.power(2.0)     // => Ok(4.0)
+4.0  |> float.power(of: 2.0) // => Ok(16.0)
+-1.0 |> float.power(0.5)     // => Error(Nil)
+
+// Returns the square root
+4.0   |> float.square_root   // => Ok(2.0)
+-16.0 |> float.square_root   // => Error(Nil)
+```
