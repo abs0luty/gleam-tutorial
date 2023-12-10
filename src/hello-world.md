@@ -22,13 +22,23 @@ hello_world
 |_ README.md
 ```
 
-The starting point is located in the `src/hello_world.gleam` file. It will probably look something like this:
+The entry point is located in the `src/hello_world.gleam` file. It will probably look something like this:
 
 ```gleam
 import gleam/io
 
 pub fn main() {
   io.println("Hello from hello_world!")
+}
+```
+
+Let us change our program, so that it prints canonical `Hello, world!` message:
+
+```gleam
+import gleam/io
+
+pub fn main() {
+  io.println("Hello, world!")
 }
 ```
 
@@ -41,7 +51,7 @@ $ gleam run
   Compiling hello_world
    Compiled in 1.78s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 ```
 
 By default, it transpiles our code to erlang and uses it to run our code. However, you can also use javascript using `--target` flag:
@@ -53,7 +63,7 @@ $ gleam run --target javascript
   Compiling hello_world
    Compiled in 1.5s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 ```
 
 You can also use specific javascript runtime using `--runtime` flag:
@@ -65,5 +75,5 @@ $ gleam run --target javascript --runtime node
   Compiling hello_world
    Compiled in 1.5s
     Running hello_world.main
-Hello from hello_world!
+Hello, world!
 ```

@@ -100,9 +100,23 @@ pub fn register_event_handler() {
 }
 ```
 
-# Links
+# Helpful links
 
-- [Cheat sheets](https://gleam.run/documentation#cheatsheets)
 - [Language tour](https://gleam.run/book/tour/)
+- [Official website](https://gleam.run)
 - [Discord server](https://discord.com/invite/Fm8Pwmy)
 - [Github](https://github.com/gleam-lang)
+- [Cheat sheets](https://gleam.run/documentation#cheatsheets)
+  * [for Elixir users](https://gleam.run/cheatsheets/gleam-for-elixir-users/)
+  * [for Elm users](https://gleam.run/cheatsheets/gleam-for-elm-users)
+  * [for Erlang users](https://gleam.run/cheatsheets/gleam-for-erlang-users)
+  * [for PHP users](https://gleam.run/cheatsheets/gleam-for-php-users)
+  * [for Python users](https://gleam.run/cheatsheets/gleam-for-python-users)
+  * [for Rust users](https://gleam.run/cheatsheets/gleam-for-rust-users)
+- [Awesome Gleam resource list](https://github.com/gleam-lang/awesome-gleam)
+- [Standard library documentation](https://hexdocs.pm/gleam_stdlib/)
+- [Gleam package index](https://packages.gleam.run/)
+- [`gleam.toml` file reference](https://gleam.run/writing-gleam/gleam-toml/)
+- [Command line reference (for `gleam` command)](https://gleam.run/writing-gleam/command-line-reference/)
+- [Gleam's threads on the Erlang Forums](https://erlangforums.com/c/beam-language-forums/gleam-forum/36)
+- [Gleam discussions on Github](https://github.com/gleam-lang/gleam/discussions)
