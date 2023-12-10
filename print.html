@@ -182,6 +182,83 @@
 <p>It compiles to <a href="http://www.erlang.org/">Erlang</a> (or JavaScript) and has straightforward interop
 with other BEAM languages such as Erlang, Elixir, and LFE.</p>
 <p>For more information see the Gleam website: <a href="https://gleam.run">https://gleam.run</a>.</p>
+<p>Hello world written in Gleam:</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  io.println(&quot;hello, world!&quot;)
+}
+</code></pre>
+<p>The power of a type system, the expressiveness of functional programming, and the reliability of the highly concurrent, fault tolerant Erlang runtime, with a familiar and modern syntax.</p>
+<h1 id="reliable-and-scalable"><a class="header" href="#reliable-and-scalable">Reliable and scalable</a></h1>
+<p>Running on the battle-tested Erlang virtual machine that powers planet-scale systems such as WhatsApp and Ericsson, Gleam is ready for workloads of any size.</p>
+<p>Thanks to a multi-core actor based concurrency system that can run millions of concurrent tasks, fast immutable data structures, and a concurrent garbage collector that never stops the world, your service can scale and stay lightning fast with ease.</p>
+<pre><code class="language-gleam">fn spawn_task(i) {
+  task.async(fn() {
+    let n = int.to_string(i)
+    io.println(&quot;Hello from &quot; &lt;&gt; n)
+  })
+}
+
+pub fn main() {
+  // Run loads of threads, no problem
+  list.range(0, 200_000)
+  |&gt; list.map(spawn_task)
+  |&gt; list.each(task.await_forever)
+}
+</code></pre>
+<h1 id="ready-when-you-are"><a class="header" href="#ready-when-you-are">Ready when you are</a></h1>
+<p>Gleam comes with compiler, build tool, formatter, editor integrations, and package manager all built in, so creating a Gleam project is just running gleam new.</p>
+<p>As part of the wider BEAM ecosystem, Gleam programs can use thousands of published packages, whether they are written in Gleam, Erlang, or Elixir.</p>
+<pre><code>➜ (main) gleam add gleam_json
+  Resolving versions
+Downloading packages
+ Downloaded 2 packages in 0.01s
+      Added gleam_json v0.5.0
+➜ (main) gleam test
+ Compiling thoas
+ Compiling gleam_json
+ Compiling app
+  Compiled in 1.67s
+   Running app_test.main
+.
+1 tests, 0 failures
+</code></pre>
+<h1 id="here-to-help"><a class="header" href="#here-to-help">Here to help</a></h1>
+<p>No null values, no exceptions, clear error messages, and a practical type system. Whether you're writing new code or maintaining old code, Gleam is designed to make your job as fun and stress-free as possible.</p>
+<pre><code>error: Unknown record field
+
+  ┌─ ./src/app.gleam:8:16
+  │
+8 │ user.alias
+  │     ^^^^^^ Did you mean `name`?
+
+The value being accessed has this type:
+    User
+
+It has these fields:
+    .name
+</code></pre>
+<h1 id="multilingual"><a class="header" href="#multilingual">Multilingual</a></h1>
+<p>Gleam makes it easy to use code written in other BEAM languages such as Erlang and Elixir, so there's a rich ecosystem of thousands of open source libraries for Gleam users to make use of.</p>
+<p>Gleam can additionally compile to JavaScript, enabling you to use your code in the browser, or anywhere else JavaScript can run. It also generates TypeScript definitions, so you can interact with your Gleam code confidently, even from the outside.</p>
+<pre><code class="language-gleam">@external(erlang, &quot;Elixir.HPAX&quot;, &quot;new&quot;)
+pub fn new(size: Int) -&gt; Table
+
+pub fn register_event_handler() {
+  let el = document.query_selector(&quot;a&quot;)
+  element.add_event_listener(el, fn() {
+    io.println(&quot;Clicked!&quot;)
+  })
+}
+</code></pre>
+<h1 id="links"><a class="header" href="#links">Links</a></h1>
+<ul>
+<li><a href="https://gleam.run/documentation#cheatsheets">Cheat sheets</a></li>
+<li><a href="https://gleam.run/book/tour/">Language tour</a></li>
+<li><a href="https://discord.com/invite/Fm8Pwmy">Discord server</a></li>
+<li><a href="https://github.com/gleam-lang">Github</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <h2 id="erlang"><a class="header" href="#erlang">Erlang</a></h2>
 <p>As Gleam compiler transpiles mainly to erlang and additionally javascript, it requires erlang to work. So if you are on Linux or MacOS, you can use one of:</p>
@@ -315,19 +392,6 @@ pub fn main() {
 <p>Output:</p>
 <pre><code>True
 </code></pre>
-<p>Gleam supports negation of Bools using either the <code>!</code> operator or the <code>bool.negate</code> function from the <code>gleam/bool</code> module:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
-
-pub fn main() {
-  io.debug(!True)
-  io.debug(bool.negate(False))
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>False
-True
-</code></pre>
 <blockquote>
 <p><strong>Note</strong>: you can alternatively use <code>io.debug</code>, if you want to print any type you want:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -342,41 +406,19 @@ pub fn main() {
 True
 </code></pre>
 </blockquote>
-<blockquote>
-<p><strong>Important</strong>: <code>&amp;&amp;</code> and <code>||</code> are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:</p>
-<pre><code class="language-gleam">import gleam/io
-
-fn test() -&gt; Bool {
-   io.println(&quot;1&quot;)
-   True
-}
-
-pub fn main() {
-   io.debug(True || test())
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>True
-</code></pre>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: calls like this:</p>
-<pre><code class="language-gleam">io.debug(True)
-</code></pre>
-<p>Can be simplified, using the pipe operator (<code>|&gt;</code>):</p>
-<pre><code class="language-gleam">True |&gt; io.debug
-</code></pre>
-<p>Another example:</p>
+<p>Gleam also supports negation of Bools using either the <code>!</code> operator or the <code>bool.negate</code> function from the <code>gleam/bool</code> module:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
 
 pub fn main() {
-  True
-  |&gt; bool.to_string
-  |&gt; io.println
+  io.debug(!True)
+  io.debug(bool.negate(False))
 }
 </code></pre>
-</blockquote>
+<p>Output:</p>
+<pre><code>False
+True
+</code></pre>
 <blockquote>
 <p><strong>Important</strong>: <code>&amp;&amp;</code> and <code>||</code> are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -409,6 +451,24 @@ pub fn main() {
 <p><code>&quot;test&quot;</code> will be printed:</p>
 <pre><code>test
 True
+</code></pre>
+</blockquote>
+<blockquote>
+<p><strong>Note</strong>: calls like this:</p>
+<pre><code class="language-gleam">io.debug(True)
+</code></pre>
+<p>Can be simplified, using the pipe operator (<code>|&gt;</code>):</p>
+<pre><code class="language-gleam">True |&gt; io.debug
+</code></pre>
+<p>Another example:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/bool
+
+pub fn main() {
+  True
+  |&gt; bool.to_string
+  |&gt; io.println
+}
 </code></pre>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="numbers"><a class="header" href="#numbers">Numbers</a></h1>
@@ -559,8 +619,8 @@ int.max(3, 4)    // =&gt; 4
 <pre><code>error: Syntax error
    ┌─ .../hello_world/src/hello_world.gleam
    │
-   │     { -0_.3_3 }
-   │         ^ Numbers cannot have a trailing underscore
+   │     -0_.3_3
+   │       ^ Numbers cannot have a trailing underscore
 
 Hint: remove it.
 </code></pre>
@@ -570,8 +630,10 @@ Hint: remove it.
 6.626e-34
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: In Gleam there are actually two division operations: <code>/</code> for integers and <code>/.</code> for floats:</p>
-<pre><code class="language-gleam">2.0 /. 2.0 // =&gt; 1.0
+<p><strong>Note</strong>: In Gleam operators like <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code> cannot be used for floats. Instead use <code>+.</code>, <code>-.</code>, <code>*.</code> and <code>/.</code>:</p>
+<pre><code class="language-gleam">2.0 +. 2.0 // =&gt; 4.0
+3.0 -. 2.0 // =&gt; 1.0
+1.0 *. 2.0 // =&gt; 2.0
 3.0 /. 2.0 // =&gt; 1.5
 
 // As with integers

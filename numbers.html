@@ -327,8 +327,8 @@ int.max(3, 4)    // =&gt; 4
 <pre><code>error: Syntax error
    ┌─ .../hello_world/src/hello_world.gleam
    │
-   │     { -0_.3_3 }
-   │         ^ Numbers cannot have a trailing underscore
+   │     -0_.3_3
+   │       ^ Numbers cannot have a trailing underscore
 
 Hint: remove it.
 </code></pre>
@@ -338,8 +338,10 @@ Hint: remove it.
 6.626e-34
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: In Gleam there are actually two division operations: <code>/</code> for integers and <code>/.</code> for floats:</p>
-<pre><code class="language-gleam">2.0 /. 2.0 // =&gt; 1.0
+<p><strong>Note</strong>: In Gleam operators like <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code> cannot be used for floats. Instead use <code>+.</code>, <code>-.</code>, <code>*.</code> and <code>/.</code>:</p>
+<pre><code class="language-gleam">2.0 +. 2.0 // =&gt; 4.0
+3.0 -. 2.0 // =&gt; 1.0
+1.0 *. 2.0 // =&gt; 2.0
 3.0 /. 2.0 // =&gt; 1.5
 
 // As with integers

@@ -207,19 +207,6 @@ pub fn main() {
 <p>Output:</p>
 <pre><code>True
 </code></pre>
-<p>Gleam supports negation of Bools using either the <code>!</code> operator or the <code>bool.negate</code> function from the <code>gleam/bool</code> module:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
-
-pub fn main() {
-  io.debug(!True)
-  io.debug(bool.negate(False))
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>False
-True
-</code></pre>
 <blockquote>
 <p><strong>Note</strong>: you can alternatively use <code>io.debug</code>, if you want to print any type you want:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -234,41 +221,19 @@ pub fn main() {
 True
 </code></pre>
 </blockquote>
-<blockquote>
-<p><strong>Important</strong>: <code>&amp;&amp;</code> and <code>||</code> are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:</p>
-<pre><code class="language-gleam">import gleam/io
-
-fn test() -&gt; Bool {
-   io.println(&quot;1&quot;)
-   True
-}
-
-pub fn main() {
-   io.debug(True || test())
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>True
-</code></pre>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: calls like this:</p>
-<pre><code class="language-gleam">io.debug(True)
-</code></pre>
-<p>Can be simplified, using the pipe operator (<code>|&gt;</code>):</p>
-<pre><code class="language-gleam">True |&gt; io.debug
-</code></pre>
-<p>Another example:</p>
+<p>Gleam also supports negation of Bools using either the <code>!</code> operator or the <code>bool.negate</code> function from the <code>gleam/bool</code> module:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
 
 pub fn main() {
-  True
-  |&gt; bool.to_string
-  |&gt; io.println
+  io.debug(!True)
+  io.debug(bool.negate(False))
 }
 </code></pre>
-</blockquote>
+<p>Output:</p>
+<pre><code>False
+True
+</code></pre>
 <blockquote>
 <p><strong>Important</strong>: <code>&amp;&amp;</code> and <code>||</code> are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -301,6 +266,24 @@ pub fn main() {
 <p><code>&quot;test&quot;</code> will be printed:</p>
 <pre><code>test
 True
+</code></pre>
+</blockquote>
+<blockquote>
+<p><strong>Note</strong>: calls like this:</p>
+<pre><code class="language-gleam">io.debug(True)
+</code></pre>
+<p>Can be simplified, using the pipe operator (<code>|&gt;</code>):</p>
+<pre><code class="language-gleam">True |&gt; io.debug
+</code></pre>
+<p>Another example:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/bool
+
+pub fn main() {
+  True
+  |&gt; bool.to_string
+  |&gt; io.println
+}
 </code></pre>
 </blockquote>
 
