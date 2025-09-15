@@ -1,11 +1,10 @@
 # Summary
 
 - [What is Gleam?](./what-is-gleam.md)
-- [Installation](./installation.md)
-- [Hello World](./hello-world.md)
-- [Comments](./comments.md)
-- [Booleans](./booleans.md)
-- [Numbers](./numbers.md)
+- [Quick start](./quick-start.md)
+- [Primitives](./primitives.md)
+  * [Booleans](./booleans.md)
+  * [Numbers](./numbers.md)
 - [Variables](./variables.md)
 - [Tuples and lists](./tuples-and-lists.md)
 - [Regular and anonymous functions](./functions.md)

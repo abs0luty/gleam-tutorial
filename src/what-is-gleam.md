@@ -1,13 +1,8 @@
 # What is Gleam?
 
-Gleam is a friendly language for building type-safe, scalable systems!
+**Gleam** is a modern, friendly programming language for building type-safe and scalable systems. It compiles to [Erlang](http://www.erlang.org/) and JavaScript, and integrates seamlessly with other BEAM languages like Erlang, Elixir, and LFE.
 
-It compiles to [Erlang](http://www.erlang.org/) (or JavaScript) and has straightforward interop
-with other BEAM languages such as Erlang, Elixir, and LFE.
-
-For more information see the Gleam website: [https://gleam.run](https://gleam.run).
-
-Hello world written in Gleam:
+A simple Gleam program looks like this:
 
 ```gleam
 import gleam/io
@@ -17,13 +12,17 @@ pub fn main() {
 }
 ```
 
-The power of a type system, the expressiveness of functional programming, and the reliability of the highly concurrent, fault tolerant Erlang runtime, with a familiar and modern syntax.
+Gleam combines the guarantees of a strong type system, the expressiveness of functional programming, and the reliability of the highly concurrent Erlang runtime.
 
-# Reliable and scalable
+## Reliability and scalability
 
-Running on the battle-tested Erlang virtual machine that powers planet-scale systems such as WhatsApp and Ericsson, Gleam is ready for workloads of any size.
+Running on the Erlang virtual machine - the same platform behind large-scale systems such as WhatsApp - Gleam is built for production workloads of any size.
 
-Thanks to a multi-core actor based concurrency system that can run millions of concurrent tasks, fast immutable data structures, and a concurrent garbage collector that never stops the world, your service can scale and stay lightning fast with ease.
+The BEAM runtime enables:
+
+- Multi-core, actor-based concurrency with millions of lightweight processes.
+- Immutable data structures for safe parallelism.
+- A concurrent garbage collector that never pauses the entire system.
 
 ```gleam
 fn spawn_task(i) {
@@ -34,38 +33,34 @@ fn spawn_task(i) {
 }
 
 pub fn main() {
-  // Run loads of threads, no problem
   list.range(0, 200_000)
   |> list.map(spawn_task)
   |> list.each(task.await_forever)
 }
 ```
 
-# Ready when you are
+## Built-in tools
 
-Gleam comes with compiler, build tool, formatter, editor integrations, and package manager all built in, so creating a Gleam project is just running gleam new.
-
-As part of the wider BEAM ecosystem, Gleam programs can use thousands of published packages, whether they are written in Gleam, Erlang, or Elixir.
+Gleam ships with everything you need: a compiler, build tool, formatter, package manager, and editor integrations. Starting a new project is as simple as:
 
 ```
-➜ (main) gleam add gleam_json
-  Resolving versions
-Downloading packages
- Downloaded 2 packages in 0.01s
+gleam new my_project
+```
+
+The ecosystem includes thousands of packages from Gleam, Erlang, and Elixir. For example:
+
+```
+➜ gleam add gleam_json
       Added gleam_json v0.5.0
-➜ (main) gleam test
- Compiling thoas
- Compiling gleam_json
- Compiling app
-  Compiled in 1.67s
+➜ gleam test
    Running app_test.main
 .
 1 tests, 0 failures
 ```
 
-# Here to help
+## Developer-friendly
 
-No null values, no exceptions, clear error messages, and a practical type system. Whether you're writing new code or maintaining old code, Gleam is designed to make your job as fun and stress-free as possible.
+Gleam avoids common pitfalls like null values and exceptions. Its type system and error messages are designed to be practical and approachable:
 
 ```
 error: Unknown record field
@@ -82,11 +77,9 @@ It has these fields:
     .name
 ```
 
-# Multilingual
+## Interoperability
 
-Gleam makes it easy to use code written in other BEAM languages such as Erlang and Elixir, so there's a rich ecosystem of thousands of open source libraries for Gleam users to make use of.
-
-Gleam can additionally compile to JavaScript, enabling you to use your code in the browser, or anywhere else JavaScript can run. It also generates TypeScript definitions, so you can interact with your Gleam code confidently, even from the outside.
+Gleam works smoothly with other BEAM languages, giving you access to a vast ecosystem of libraries. It can also compile to JavaScript, complete with TypeScript definitions for safe interoperability.
 
 ```gleam
 @external(erlang, "Elixir.HPAX", "new")
@@ -100,19 +93,15 @@ pub fn register_event_handler() {
 }
 ```
 
-# Helpful links
+## Learn more
 
 - [Language tour](https://gleam.run/book/tour/)
 - [Official website](https://gleam.run)
 - [Discord server](https://discord.com/invite/Fm8Pwmy)
 - [Github](https://github.com/gleam-lang)
-- [Cheat sheets](https://gleam.run/documentation#cheatsheets)
-  * [for Elixir users](https://gleam.run/cheatsheets/gleam-for-elixir-users/)
-  * [for Elm users](https://gleam.run/cheatsheets/gleam-for-elm-users)
-  * [for Erlang users](https://gleam.run/cheatsheets/gleam-for-erlang-users)
-  * [for PHP users](https://gleam.run/cheatsheets/gleam-for-php-users)
-  * [for Python users](https://gleam.run/cheatsheets/gleam-for-python-users)
-  * [for Rust users](https://gleam.run/cheatsheets/gleam-for-rust-users)
+- [Cheat sheets for:](https://gleam.run/documentation#cheatsheets)
+  * [Elixir users](https://gleam.run/cheatsheets/gleam-for-elixir-users/), [Elm users](https://gleam.run/cheatsheets/gleam-for-elm-users), [Erlang users](https://gleam.run/cheatsheets/gleam-for-erlang-users)
+  * [PHP users](https://gleam.run/cheatsheets/gleam-for-php-users), [Python users](https://gleam.run/cheatsheets/gleam-for-python-users), [Rust users](https://gleam.run/cheatsheets/gleam-for-rust-users)
 - [Awesome Gleam resource list](https://github.com/gleam-lang/awesome-gleam)
 - [Standard library documentation](https://hexdocs.pm/gleam_stdlib/)
 - [Gleam package index](https://packages.gleam.run/)

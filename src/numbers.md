@@ -88,6 +88,23 @@ fn main() {
 > ```
 > 10000000000000000
 > ```
+>
+> As of recently, gleam started to output a warning when dealing with big numbers in JS target:
+>
+> ```
+> warning: Int is outside JavaScript's safe integer range
+>   ┌─ /Users/adi.salimgereyev/hello_world/src/hello_world.gleam:5:14
+>   │
+> 5 │   io.println(9_999_999_999_999_999 |> int.to_string)
+>   │              ^^^^^^^^^^^^^^^^^^^^^ This is not a safe integer value on JavaScript
+>
+> This integer value is too large to be represented accurately by
+> JavaScript's number type. To avoid this warning integer values must be in
+> the range -(2^53 - 1) - (2^53 - 1).
+>
+> See JavaScript's Number.MAX_SAFE_INTEGER and Number.MIN_SAFE_INTEGER
+> properties for more information.
+> ```
 
 You can find the absolute value of the integer using `int.absolute_value` function:
 

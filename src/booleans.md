@@ -1,6 +1,8 @@
 # Booleans
 
-In Gleam, boolean literal is either `True` or `False`. Its type is `Bool`. Here are some basic operations with booleans:
+In Gleam, boolean literals are either `True` or `False`. Their type is `Bool`.
+
+## Basic Boolean Operators
 
 ```gleam
 False && False // => False
@@ -14,120 +16,143 @@ True || False  // => True
 True || True   // => True
 ```
 
-`&&` and `||` are short circuiting, meaning they don't evaluate the right hand side if they don't have to.
+`&&` is logical **AND**: it returns `True` only if *both* operands are `True`.
 
-`&&` evaluates the right hand side if the left hand side is `True`. So it is literally a name for "_logical **AND**_". So it returns `True` only if all two inputs are `True`.
+`||` is logical **OR**: it returns `False` only if *both* operands are `False`.
 
-`||` evaluates the right hand side if the left hand side is `False`. So it is literally a name for "_logical **OR**_". So it returns `False` only if all two inputs are `False`.
+Both `&&` and `||` short‐circuit:
 
-If you want to print boolean with `io.println` function, you need to first convert it to `String` using `bool.to_string`:
+* `&&` does not evaluate its right operand if the left is `False`, since the result is already known to be `False`.
+* `||` does not evaluate its right operand if the left is `True`, since the result must be `True`.
 
+Here is an example of such behaviour:
 ```gleam
 import gleam/io
-import gleam/bool
 
-pub fn main() {
-  io.println(
-    bool.to_string(True),
-  )
+fn foo() -> Bool {
+   io.println("test")
+   True
 }
-```
-
-Output:
-```
-True
-```
-
-> **Note**: you can alternatively use `io.debug`, if you want to print any type you want:
->
-> ```gleam
-> import gleam/io
->
-> pub fn main() {
->   io.debug(False)
->   io.debug("True")
-> }
-> ```
-> Output:
-> ```
-> False
-> True
-> ```
-
-Gleam also supports negation of Bools using either the `!` operator or the `bool.negate` function from the `gleam/bool` module:
-
-```gleam
-import gleam/io
-import gleam/bool
 
 pub fn main() {
-  io.debug(!True)
-  io.debug(bool.negate(False))
+   echo False && foo()
 }
 ```
 
 Output:
 
 ```
+src/main.gleam:9
 False
+```
+
+In this case `"test"` isn’t printed because `False && …` immediately yields `False` without calling `test()`. If instead you write:
+
+```gleam
+import gleam/io
+
+fn test() -> Bool {
+   io.println("test")
+   True
+}
+
+pub fn main() {
+   echo True && test()
+}
+```
+
+Output:
+
+```
+test
+src/main.gleam:9
 True
 ```
 
-> **Important**: `&&` and `||` are short circuiting, meaning they don't evaluate the right hand side if they don't have to. Example:
->
-> ```gleam
-> import gleam/io
->
-> fn test() -> Bool {
->    io.println("test")
->    True
-> }
->
-> pub fn main() {
->    io.debug(False && test())
-> }
-> ```
-> Output:
-> ```
-> False
-> ```
-> _Here `"test"` wasn't printed, because no matter what `test()` returns, the
-> result of the `&&` operator is `False`._ However, if we will change `False` to `True`:
-> ```gleam
-> import gleam/io
->
-> fn test() -> Bool {
->    io.println("test")
->    True
-> }
->
-> pub fn main() {
->    io.debug(True && test())
-> }
-> ```
-> `"test"` will be printed:
-> ```
-> test
-> True
-> ```
+Because the left side (`True`) doesn't block evaluation, so `test()` is called.
 
-> **Note**: calls like this:
-> ```gleam
-> io.debug(True)
-> ```
-> Can be simplified, using the pipe operator (`|>`):
-> ```gleam
-> True |> io.debug
-> ```
->
-> Another example:
-> ```gleam
-> import gleam/io
-> import gleam/bool
->
-> pub fn main() {
->   True
->   |> bool.to_string
->   |> io.println
-> }
-> ```
+## Printing Booleans
+
+If you want to print a `Bool`, you must first convert it to a `String` using `bool.to_string`. For example:
+
+```gleam
+import gleam/io
+import gleam/bool
+
+pub fn main() {
+  io.println(bool.to_string(True))
+}
+```
+
+Output:
+
+```
+True
+```
+
+Alternatively, for debugging you can use `echo`:
+
+```gleam
+import gleam/io
+
+pub fn main() {
+  echo False
+  echo "True"
+}
+```
+
+Output:
+
+```
+src/main.gleam:4
+False
+src/main.gleam:5
+"True"
+```
+
+## Negation
+
+You can negate booleans in two ways:
+
+* Using the `!` operator: `!True` → `False`, `!False` → `True`
+* Using `bool.negate` from the `gleam/bool` module:
+
+```gleam
+import gleam/io
+import gleam/bool
+
+pub fn main() {
+  echo !True
+  echo bool.negate(False)
+}
+```
+
+Output:
+
+```
+src/main.gleam:4
+False
+src/main.gleam:5
+True
+```
+
+## Pipe Operator (`|>`)
+
+It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:
+
+```gleam
+import gleam/io
+import gleam/bool
+
+pub fn main() {
+  True
+  |> bool.to_string
+  |> io.println
+}
+```
+
+This does the same as:
+
+```gleam
+io.println(bool.to_string(True))
+```
