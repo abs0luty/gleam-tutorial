@@ -1,6 +1,63 @@
 # Numbers
 
-Gleam has two main types for numbers: `Int` for whole numbers and `Float` for numbers with a decimal point.
+Gleam has two numeric types: **`Int`** for whole numbers and **`Float`** for fractional values.
+
+## How numbers are stored (BEAM vs JavaScript)
+
+* **On BEAM (Erlang runtime):**
+  `Int` values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. `Float` is the runtime’s 64-bit IEEE-754 double, but BEAM has no `NaN`/`Infinity` values exposed in the same way as JavaScript. Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return `0` for operators and offers checked functions in the stdlib. 
+
+* **On JavaScript:**
+  `Float` is a 64-bit IEEE-754 double, matching JS `Number`. `Int` operations obey the host’s numeric semantics; keep integers within JS’s **safe integer** range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers. Gleam’s stdlib exposes the same checked APIs (`int.divide`, `float.divide`, etc.). 
+
+> Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via a library designed for Gleam/JS.
+
+## Integers
+
+Integers are written normally:
+
+```gleam
+1
+2
+3
+-4
+2942930103
+```
+
+You can insert underscores for readability:
+
+```gleam
+3_000_000
+```
+
+Underscores have no semantic meaning.
+
+Gleam supports binary, octal, and hexadecimal literals with `0b`, `0o`, and `0x`:
+
+```gleam
+0b0101000101
+0o712
+0xFf  // `f` and `F` are equivalent
+```
+
+### Operators and comparisons
+
+```gleam
+1 + 3 - 2 * 4  // => -4
+7 / 2          // => 3  (truncated toward zero)
+3 % 2          // => 1
+1 > 0          // => True
+1 < 0          // => False
+1 >= 0         // => True
+1 <= 0         // => False
+```
+
+**Division note.** Integer `/` returns another integer (truncating). Gleam defines division by zero for operators to return `0` rather than crash; prefer the checked API when you want an error instead
+
+[1]: https://stackoverflow.com/questions/39268564/is-there-a-size-limit-for-erlang-integers?utm_source=chatgpt.com "Is there a size limit for Erlang integers?"
+[2]: https://tour.gleam.run/basics/floats/?utm_source=chatgpt.com "Floats"
+[3]: https://v8.dev/features/bigint?utm_source=chatgpt.com "BigInt: arbitrary-precision integers in JavaScript"
+
 
 ## Integers
 
