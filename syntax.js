@@ -1,6 +1,6 @@
 hljs.registerLanguage("gleam", function (hljs) {
   const KEYWORDS =
-    "as assert case const fn if import let panic use opaque pub todo type";
+    "as assert case const fn if import let panic use opaque pub todo type echo";
   const STRING = {
     className: "string",
     variants: [{ begin: /"/, end: /"/ }],

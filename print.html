@@ -179,7 +179,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="what-is-gleam"><a class="header" href="#what-is-gleam">What is Gleam?</a></h1>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p><strong>Gleam</strong> is a modern, friendly programming language for building type-safe and scalable systems. It compiles to <a href="http://www.erlang.org/">Erlang</a> and JavaScript, and integrates seamlessly with other BEAM languages like Erlang, Elixir, and LFE.</p>
 <p>A simple Gleam program looks like this:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -529,8 +529,49 @@ pub fn main() {
 <pre><code class="language-gleam">io.println(bool.to_string(True))
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="numbers"><a class="header" href="#numbers">Numbers</a></h1>
-<p>Gleam has two main types for numbers: <code>Int</code> for whole numbers and <code>Float</code> for numbers with a decimal point.</p>
+<p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
+<h2 id="how-numbers-are-stored-beam-vs-javascript"><a class="header" href="#how-numbers-are-stored-beam-vs-javascript">How numbers are stored (BEAM vs JavaScript)</a></h2>
+<ul>
+<li>
+<p><strong>On BEAM (Erlang runtime):</strong>
+<code>Int</code> values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. <code>Float</code> is the runtime’s 64-bit IEEE-754 double, but BEAM has no <code>NaN</code>/<code>Infinity</code> values exposed in the same way as JavaScript. Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return <code>0</code> for operators and offers checked functions in the stdlib.</p>
+</li>
+<li>
+<p><strong>On JavaScript:</strong>
+<code>Float</code> is a 64-bit IEEE-754 double, matching JS <code>Number</code>. <code>Int</code> operations obey the host’s numeric semantics; keep integers within JS’s <strong>safe integer</strong> range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers. Gleam’s stdlib exposes the same checked APIs (<code>int.divide</code>, <code>float.divide</code>, etc.).</p>
+</li>
+</ul>
+<blockquote>
+<p>Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via a library designed for Gleam/JS.</p>
+</blockquote>
 <h2 id="integers"><a class="header" href="#integers">Integers</a></h2>
+<p>Integers are written normally:</p>
+<pre><code class="language-gleam">1
+2
+3
+-4
+2942930103
+</code></pre>
+<p>You can insert underscores for readability:</p>
+<pre><code class="language-gleam">3_000_000
+</code></pre>
+<p>Underscores have no semantic meaning.</p>
+<p>Gleam supports binary, octal, and hexadecimal literals with <code>0b</code>, <code>0o</code>, and <code>0x</code>:</p>
+<pre><code class="language-gleam">0b0101000101
+0o712
+0xFf  // `f` and `F` are equivalent
+</code></pre>
+<h3 id="operators-and-comparisons"><a class="header" href="#operators-and-comparisons">Operators and comparisons</a></h3>
+<pre><code class="language-gleam">1 + 3 - 2 * 4  // =&gt; -4
+7 / 2          // =&gt; 3  (truncated toward zero)
+3 % 2          // =&gt; 1
+1 &gt; 0          // =&gt; True
+1 &lt; 0          // =&gt; False
+1 &gt;= 0         // =&gt; True
+1 &lt;= 0         // =&gt; False
+</code></pre>
+<p><strong>Division note.</strong> Integer <code>/</code> returns another integer (truncating). Gleam defines division by zero for operators to return <code>0</code> rather than crash; prefer the checked API when you want an error instead</p>
+<h2 id="integers-1"><a class="header" href="#integers-1">Integers</a></h2>
 <p>Integers in Gleam are written as usual:</p>
 <pre><code class="language-gleam">1
 2
@@ -775,26 +816,143 @@ float.max(3.1, 4.2)             // =&gt; 4.2
 4.0   |&gt; float.square_root   // =&gt; Ok(2.0)
 -16.0 |&gt; float.square_root   // =&gt; Error(Nil)
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="variables"><a class="header" href="#variables">Variables</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tuples-and-lists"><a class="header" href="#tuples-and-lists">Tuples and lists</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="expression-blocks"><a class="header" href="#expression-blocks">Expression blocks</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe operator</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="nil"><a class="header" href="#nil">Nil</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="result"><a class="header" href="#result">Result</a></h1>
+<p>In Gleam, <strong>strings are UTF-8 binaries</strong> written with double quotes. They are immutable and may contain any Unicode text.</p>
+<h2 id="encoding-model"><a class="header" href="#encoding-model">Encoding model</a></h2>
+<p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, “é” may be one code point or a letter plus a combining accent). Under the hood:</p>
+<ul>
+<li>On the <strong>Erlang</strong> target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang — stdlib v7.0.2">Erlang.org</a>)</li>
+<li>On the <strong>JavaScript</strong> target, the host runtime represents strings as sequences of <strong>UTF-16 code units</strong>; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
+</ul>
+<h2 id="literals-and-concatenation"><a class="header" href="#literals-and-concatenation">Literals and concatenation</a></h2>
+<p>Strings are written with double quotes and support common escapes (e.g., <code>\"</code>, <code>\\</code>, <code>\n</code>, <code>\t</code>, <code>\u{...}</code>). Concatenate with <code>&lt;&gt;</code>:</p>
+<pre><code class="language-gleam">"Hello, Gleam!\n" &lt;&gt; "\u{1F44B}"  // "Hello, Gleam! 👋"
+</code></pre>
+<h2 id="core-operations-grapheme-aware-unless-noted"><a class="header" href="#core-operations-grapheme-aware-unless-noted">Core operations (grapheme-aware unless noted)</a></h2>
+<h3 id="emptiness--length"><a class="header" href="#emptiness--length">Emptiness &amp; length</a></h3>
+<pre><code class="language-gleam">import gleam/string
+
+pub fn main() {
+  echo string.is_empty("")       // True
+  echo string.length("Gleam")    // 5
+  echo string.length("ß↑e̊")      // 3 (graphemes)
+  echo string.byte_size("Gleam") // 5
+  echo string.byte_size("ß↑e̊")   // 8 (bytes)
+}
+</code></pre>
+<p><code>length</code> runs in linear time because it walks graphemes. <code>byte_size</code> returns UTF-8 bytes (constant time on BEAM, linear on JS).</p>
+<h3 id="reverse"><a class="header" href="#reverse">Reverse</a></h3>
+<pre><code class="language-gleam">string.reverse("stressed") // "desserts"
+</code></pre>
+<p>Linear time, operates on graphemes.</p>
+<h3 id="replace-all-occurrences"><a class="header" href="#replace-all-occurrences">Replace (all occurrences)</a></h3>
+<pre><code class="language-gleam">string.replace(in: "www.example.com", each: ".", with: "-")
+// "www-example-com"
+</code></pre>
+<h3 id="case-conversion"><a class="header" href="#case-conversion">Case conversion</a></h3>
+<pre><code class="language-gleam">string.lowercase("X-FILES") // "x-files"
+string.uppercase("skinner") // "SKINNER"
+</code></pre>
+<p>Useful for case-insensitive work; implemented via target-specific primitives.</p>
+<h3 id="ordering--comparison"><a class="header" href="#ordering--comparison">Ordering &amp; comparison</a></h3>
+<pre><code class="language-gleam">string.compare("Anthony", "Anthony") // order.Eq
+string.compare("A", "B")             // order.Lt
+</code></pre>
+<p>Comparison is lexicographic over graphemes.</p>
+<h3 id="substrings--slicing"><a class="header" href="#substrings--slicing">Substrings &amp; slicing</a></h3>
+<pre><code class="language-gleam">string.slice(from: "gleam", at_index: 1, length: 2)  // "le"
+string.slice(from: "gleam", at_index: -2, length: 2) // "am"
+</code></pre>
+<p>Negative <code>at_index</code> counts from the end; out-of-range is safe and returns <code>""</code>.</p>
+<h3 id="cropping--dropping"><a class="header" href="#cropping--dropping">Cropping &amp; dropping</a></h3>
+<pre><code class="language-gleam">string.crop(from: "The Lone Gunmen", before: "Lone") // "Lone Gunmen"
+string.drop_start(from: "  hats", up_to: 2)          // "hats"
+string.drop_end(from: "hats  ", up_to: 2)            // "hats"
+</code></pre>
+<h3 id="contains--prefix--suffix"><a class="header" href="#contains--prefix--suffix">Contains / prefix / suffix</a></h3>
+<pre><code class="language-gleam">string.contains(does: "theory", contain: "ory") // True
+string.starts_with("theory", "the")             // True
+string.ends_with("theory", "ory")               // True
+</code></pre>
+<h3 id="splitting"><a class="header" href="#splitting">Splitting</a></h3>
+<pre><code class="language-gleam">string.split("home/gleam/desktop/", on: "/")
+// ["home","gleam","desktop",""]
+
+string.split_once("home/gleam/desktop/", on: "/")
+// Ok(#("home", "gleam/desktop/"))
+</code></pre>
+<p><code>split_once</code> returns <code>Error(Nil)</code> if the separator is missing.</p>
+<h3 id="joining--building"><a class="header" href="#joining--building">Joining &amp; building</a></h3>
+<pre><code class="language-gleam">string.append(to: "butter", suffix: "fly")  // "butterfly"
+string.concat(["never","the","less"])       // "nevertheless"
+string.join(["home","evan","Desktop"], with: "/") // "home/evan/Desktop"
+</code></pre>
+<h3 id="repeating--padding"><a class="header" href="#repeating--padding">Repeating &amp; padding</a></h3>
+<pre><code class="language-gleam">string.repeat("ha", times: 3)        // "hahaha"
+string.pad_start("121", to: 5, with: ".") // "..121"
+string.pad_end("123", to: 5, with: ".")   // "123.."
+</code></pre>
+<h3 id="trimming"><a class="header" href="#trimming">Trimming</a></h3>
+<pre><code class="language-gleam">string.trim("  hats  \n")       // "hats"
+string.trim_start("  hats  \n") // "hats  \n"
+string.trim_end("  hats  \n")   // "  hats"
+</code></pre>
+<p>Whitespace is defined per Unicode “Pattern_White_Space” (UAX #31). (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
+<h2 id="working-at-grapheme--code-point-level"><a class="header" href="#working-at-grapheme--code-point-level">Working at grapheme / code point level</a></h2>
+<h3 id="pop--iterate-graphemes"><a class="header" href="#pop--iterate-graphemes">Pop &amp; iterate graphemes</a></h3>
+<pre><code class="language-gleam">string.pop_grapheme("gleam") // Ok(#("g", "leam"))
+string.to_graphemes("abc")   // ["a","b","c"]
+</code></pre>
+<h3 id="code-points-unicode-scalars"><a class="header" href="#code-points-unicode-scalars">Code points (Unicode scalars)</a></h3>
+<p>Convert a <code>String</code> to a list of Unicode <strong>code points</strong> and back:</p>
+<pre><code class="language-gleam">let cps = string.to_utf_codepoints("🏳️‍🌈")
+// [UtfCodepoint(127987), 65039, 8205, 127752]
+
+string.from_utf_codepoints(cps) // "🏳️‍🌈"
+</code></pre>
+<p>Construct / inspect code points:</p>
+<pre><code class="language-gleam">let assert Ok(cp) = string.utf_codepoint(97)         // 'a'
+string.utf_codepoint_to_int(cp)                      // 97
+</code></pre>
+<p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29/?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
+<h2 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h2>
+<pre><code class="language-gleam">string.first("icecream")   // Ok("i")
+string.last("icecream")    // Ok("m")
+string.capitalise("mamouna") // "Mamouna"
+string.to_option("")       // None
+string.to_option("hats")   // Some("hats")
+</code></pre>
+<h2 id="performance--target-notes"><a class="header" href="#performance--target-notes">Performance &amp; target notes</a></h2>
+<ul>
+<li>Most operations here are <strong>linear in graphemes</strong> (e.g., <code>length</code>, <code>reverse</code>, <code>replace</code>, <code>split</code>, <code>join</code>, <code>repeat</code>). <code>byte_size</code> is constant time on BEAM, linear on JS. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
+<li>BEAM recommends keeping Unicode text as <strong>UTF-8 binaries</strong>; this aligns with Gleam’s <code>String</code>. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com" title="unicode — stdlib v7.0.3">Erlang.org</a>)</li>
+<li>On JS, remember that built-in host APIs (outside Gleam) can expose <strong>UTF-16 code-unit</strong> semantics (e.g., <code>.length</code> in raw JS). Gleam’s own functions provide Unicode-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
+</ul>
+<h2 id="why-grapheme-aware-apis-matter"><a class="header" href="#why-grapheme-aware-apis-matter">Why grapheme-aware APIs matter</a></h2>
+<p>Counting graphemes (user-perceived characters) rather than bytes or code units yields correct behavior for combined marks, emoji, and complex scripts. This follows the Unicode Text Segmentation standard (UAX #29). (<a href="https://unicode.org/reports/tr29/?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
+<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
+<ul>
+<li><strong><code>gleam/string</code> module docs (HexDocs)</strong> — authoritative API reference. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
+<li><strong>Gleam Tour: Strings</strong> — literals, escapes, concatenation. (<a href="https://tour.gleam.run/basics/strings/?utm_source=chatgpt.com" title="Strings">tour.gleam.run</a>)</li>
+<li><strong>Unicode UAX #29</strong> — grapheme/word/sentence boundaries. (<a href="https://www.unicode.org/reports/tr29/tr29-32.html?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</li>
+<li><strong>Erlang Unicode usage</strong> — background for BEAM target. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang — stdlib v7.0.2">Erlang.org</a>)</li>
+<li><strong>MDN: JavaScript Strings</strong> — UTF-16 code-unit representation. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basics"><a class="header" href="#basics">Basics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tuples-and-lists"><a class="header" href="#tuples-and-lists">Tuples and lists</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="assignments"><a class="header" href="#assignments">Assignments</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="result"><a class="header" href="#result">Result</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="expression-blocks"><a class="header" href="#expression-blocks">Expression blocks</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="panic-and-assert"><a class="header" href="#panic-and-assert">Panic and assert</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="creating-custom-types"><a class="header" href="#creating-custom-types">Creating custom types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="type-aliases"><a class="header" href="#type-aliases">Type aliases</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="todo"><a class="header" href="#todo">Todo</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="let-assertions"><a class="header" href="#let-assertions">Let assertions</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="constants"><a class="header" href="#constants">Constants</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="modules-and-imports"><a class="header" href="#modules-and-imports">Modules and imports</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="use"><a class="header" href="#use">Use</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="advanced-gleam"><a class="header" href="#advanced-gleam">Advanced Gleam</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="todo"><a class="header" href="#todo">Todo</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bit-strings"><a class="header" href="#bit-strings">Bit strings</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="escape-sequences"><a class="header" href="#escape-sequences">escape sequences</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tail-call-optimisation"><a class="header" href="#tail-call-optimisation">Tail call optimisation</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="phantom-types"><a class="header" href="#phantom-types">Phantom types</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled arguments</a></h1>
@@ -813,6 +971,7 @@ float.max(3.1, 4.2)             // =&gt; 4.2
 <div style="break-before: page; page-break-before: always;"></div><h1 id="base64"><a class="header" href="#base64">Base64</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="regex"><a class="header" href="#regex">Regex</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="uri"><a class="header" href="#uri">URI</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ecosystem"><a class="header" href="#ecosystem">Ecosystem</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="installing-custom-packages"><a class="header" href="#installing-custom-packages">Installing custom packages</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="creating-and-publishing-a-package"><a class="header" href="#creating-and-publishing-a-package">Creating and publishing a package</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gleam-docker-images"><a class="header" href="#gleam-docker-images">Gleam docker images</a></h1>
