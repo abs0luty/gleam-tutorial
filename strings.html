@@ -184,7 +184,7 @@
                         <h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
 <p>In Gleam, <strong>strings are UTF-8 binaries</strong> written with double quotes. They are immutable and may contain any Unicode text.</p>
 <h2 id="encoding-model"><a class="header" href="#encoding-model">Encoding model</a></h2>
-<p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, “é” may be one code point or a letter plus a combining accent). Under the hood:</p>
+<p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, "é" may be one code point or a letter plus a combining accent). Under the hood:</p>
 <ul>
 <li>On the <strong>Erlang</strong> target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang — stdlib v7.0.2">Erlang.org</a>)</li>
 <li>On the <strong>JavaScript</strong> target, the host runtime represents strings as sequences of <strong>UTF-16 code units</strong>; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
@@ -262,7 +262,7 @@ string.pad_end("123", to: 5, with: ".")   // "123.."
 string.trim_start("  hats  \n") // "hats  \n"
 string.trim_end("  hats  \n")   // "  hats"
 </code></pre>
-<p>Whitespace is defined per Unicode “Pattern_White_Space” (UAX #31). (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
+<p>Whitespace is defined per Unicode "Pattern_White_Space" (UAX #31). (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
 <h2 id="working-at-grapheme--code-point-level"><a class="header" href="#working-at-grapheme--code-point-level">Working at grapheme / code point level</a></h2>
 <h3 id="pop--iterate-graphemes"><a class="header" href="#pop--iterate-graphemes">Pop &amp; iterate graphemes</a></h3>
 <pre><code class="language-gleam">string.pop_grapheme("gleam") // Ok(#("g", "leam"))

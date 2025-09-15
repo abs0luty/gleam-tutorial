@@ -819,7 +819,7 @@ float.max(3.1, 4.2)             // =&gt; 4.2
 <div style="break-before: page; page-break-before: always;"></div><h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
 <p>In Gleam, <strong>strings are UTF-8 binaries</strong> written with double quotes. They are immutable and may contain any Unicode text.</p>
 <h2 id="encoding-model"><a class="header" href="#encoding-model">Encoding model</a></h2>
-<p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, “é” may be one code point or a letter plus a combining accent). Under the hood:</p>
+<p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, "é" may be one code point or a letter plus a combining accent). Under the hood:</p>
 <ul>
 <li>On the <strong>Erlang</strong> target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang — stdlib v7.0.2">Erlang.org</a>)</li>
 <li>On the <strong>JavaScript</strong> target, the host runtime represents strings as sequences of <strong>UTF-16 code units</strong>; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
@@ -897,7 +897,7 @@ string.pad_end("123", to: 5, with: ".")   // "123.."
 string.trim_start("  hats  \n") // "hats  \n"
 string.trim_end("  hats  \n")   // "  hats"
 </code></pre>
-<p>Whitespace is defined per Unicode “Pattern_White_Space” (UAX #31). (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
+<p>Whitespace is defined per Unicode "Pattern_White_Space" (UAX #31). (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
 <h2 id="working-at-grapheme--code-point-level"><a class="header" href="#working-at-grapheme--code-point-level">Working at grapheme / code point level</a></h2>
 <h3 id="pop--iterate-graphemes"><a class="header" href="#pop--iterate-graphemes">Pop &amp; iterate graphemes</a></h3>
 <pre><code class="language-gleam">string.pop_grapheme("gleam") // Ok(#("g", "leam"))
@@ -940,7 +940,7 @@ string.to_option("hats")   // Some("hats")
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tuples-and-lists"><a class="header" href="#tuples-and-lists">Tuples and lists</a></h1>
 <h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
-<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>—their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc. Under the hood they’re <strong>immutable singly-linked lists</strong>, which makes adding/removing at the <strong>front</strong> the “head” very cheap, but operating on the <strong>end</strong> expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing.</p>
+<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>—their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc. Under the hood they’re <strong>immutable singly-linked lists</strong>, which makes adding/removing at the <strong>front</strong> the "head" very cheap, but operating on the <strong>end</strong> expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing.</p>
 <p>On both BEAM and JavaScript targets, Gleam exposes the same list semantics; you use the standard library’s <code>gleam/list</code> for everyday operations such as <code>map</code>, <code>filter</code>, <code>fold</code>, etc.</p>
 <h2 id="creating-and-growing-lists"><a class="header" href="#creating-and-growing-lists">Creating and growing lists</a></h2>
 <h3 id="literal-syntax"><a class="header" href="#literal-syntax">Literal syntax</a></h3>
@@ -964,7 +964,7 @@ let all  = [1, ..tail]     // -&gt; [1, 2, 3, 4]
 <h2 id="performance-model-important"><a class="header" href="#performance-model-important">Performance model (important!)</a></h2>
 <ul>
 <li><strong>Fast:</strong> prepend, examine head (<code>first</code>, <code>rest</code>), single pass transforms (<code>map</code>, <code>filter</code>, <code>fold</code>).</li>
-<li><strong>Linear / costly:</strong> <code>length</code>, <code>append</code> $needs to traverse$, operations that reach into the middle or end. When you find yourself “indexing,” consider a different data structure (e.g., a dict keyed by position) or rethink the algorithm to stream or fold.</li>
+<li><strong>Linear / costly:</strong> <code>length</code>, <code>append</code> needs to traverse, operations that reach into the middle or end. When you find yourself "indexing," consider a different data structure (e.g., a dict keyed by position) or rethink the algorithm to stream or fold.</li>
 </ul>
 <h2 id="everyday-operators--utilities-from-gleamlist"><a class="header" href="#everyday-operators--utilities-from-gleamlist">Everyday operators &amp; utilities (from <code>gleam/list</code>)</a></h2>
 <p>Below are the most common tools. All are <strong>pure</strong> and return new lists.</p>
@@ -984,7 +984,7 @@ list.rest([1, 2])   // Ok([2])
 list.filter([2, 4, 6, 1], fn(x) { x&gt;2 }) // [4, 6]
 list.fold([1, 2, 3], 0, fn(acc, x) { acc + x }) // 6
 </code></pre>
-<p>These are your “loops” in functional Gleam.</p>
+<p>These are your "loops" in functional Gleam.</p>
 <h3 id="find--predicates"><a class="header" href="#find--predicates">Find &amp; predicates</a></h3>
 <pre><code class="language-gleam">list.find([1, 2, 3], fn(x) { x &gt; 2 }) // Ok(3)
 list.any([3, 4], fn(x) { x &gt; 3 })     // True
