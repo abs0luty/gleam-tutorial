@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Ranges: ranger - Gleam Tutorial</title>
+        <title>Primitives - Gleam Tutorial</title>
 
 
         <!-- Custom HTML head -->
@@ -147,7 +147,7 @@
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/ranger.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/primitives.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -181,17 +181,31 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ranges-ranger"><a class="header" href="#ranges-ranger">Ranges: ranger</a></h1>
+                        <h1 id="comments"><a class="header" href="#comments">Comments</a></h1>
+<p>Let us now modify our previous hello world program:</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  // Print hello world
+  io.println("Hello world!")
+}
+</code></pre>
+<p>Gleam allows you to write comments in your code. In Gleam, comments must start with two slashes and continue until the end of the line. For comments that extend beyond a single line, you’ll need to include <code>//</code> on each line, like this:</p>
+<pre><code class="language-gleam">// Hello, world! I have a lot to say, so much that it will take multiple
+// lines of text. Therefore, I will start each line with // to denote it
+// as part of a multi-line comment.
+</code></pre>
+<p>Comments don't have any semantic meaning and don't affect the way the program behaves. Instead, they are used for clarity and for documenting your code.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="filepath.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="quick-start.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="birl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="booleans.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -201,11 +215,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="filepath.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="quick-start.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="birl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="booleans.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
