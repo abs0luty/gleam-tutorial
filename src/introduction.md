@@ -39,6 +39,34 @@ pub fn main() {
 }
 ```
 
+## Use syntax
+
+Gleam's `use` syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the "pyramid of doom". 
+
+It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain. In short: same power, vastly clearer shape:
+
+```gleam
+pub fn with_use() -> Result(String, Nil) {
+  use username <- result.try(get_username())
+  use password <- result.try(get_password())
+  use greeting <- result.map(log_in(username, password))
+  greeting <> ", " <> username
+}
+```
+
+Without `use`, the same logic requires nested anonymous functions and is harder to read:
+```gleam
+pub fn without_use() -> Result(String, Nil) {
+  result.try(get_username(), fn(username) {
+    result.try(get_password(), fn(password) {
+      result.map(log_in(username, password), fn(greeting) {
+        greeting <> ", " <> username
+      })
+    })
+  })
+}
+```
+
 ## Built-in tools
 
 Gleam ships with everything you need: a compiler, build tool, formatter, package manager, and editor integrations. Starting a new project is as simple as:

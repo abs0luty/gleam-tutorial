@@ -176,10 +176,6 @@ string.to_option("hats")   // Some("hats")
 * BEAM recommends keeping Unicode text as **UTF-8 binaries**; this aligns with Gleam’s `String`. ([Erlang.org][7])
 * On JS, remember that built-in host APIs (outside Gleam) can expose **UTF-16 code-unit** semantics (e.g., `.length` in raw JS). Gleam’s own functions provide Unicode-aware behavior. ([MDN Web Docs][4])
 
-## Why grapheme-aware APIs matter
-
-Counting graphemes (user-perceived characters) rather than bytes or code units yields correct behavior for combined marks, emoji, and complex scripts. This follows the Unicode Text Segmentation standard (UAX #29). ([Unicode][2])
-
 ### Further reading
 
 * **`gleam/string` module docs (HexDocs)** - API reference. ([hexdocs.pm][1])
