@@ -41,7 +41,7 @@ There’s also a dedicated *prefix* syntax for building from an existing list an
 ## Performance model (important!)
 
 * **Fast:** prepend, examine head (`first`, `rest`), single pass transforms (`map`, `filter`, `fold`).
-* **Linear / costly:** `length`, `append` $needs to traverse$, operations that reach into the middle or end. When you find yourself “indexing,” consider a different data structure (e.g., a dict keyed by position) or rethink the algorithm to stream or fold.
+* **Linear / costly:** `length`, `append` needs to traverse, operations that reach into the middle or end. When you find yourself “indexing,” consider a different data structure (e.g., a dict keyed by position) or rethink the algorithm to stream or fold.
 
 ## Everyday operators & utilities (from `gleam/list`)
 
