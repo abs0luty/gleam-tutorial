@@ -212,6 +212,27 @@ pub fn main() {
   |&gt; list.each(task.await_forever)
 }
 </code></pre>
+<h2 id="use-syntax"><a class="header" href="#use-syntax">Use syntax</a></h2>
+<p>Gleam's <code>use</code> syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the "pyramid of doom".</p>
+<p>It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain. In short: same power, vastly clearer shape:</p>
+<pre><code class="language-gleam">pub fn with_use() -&gt; Result(String, Nil) {
+  use username &lt;- result.try(get_username())
+  use password &lt;- result.try(get_password())
+  use greeting &lt;- result.map(log_in(username, password))
+  greeting &lt;&gt; ", " &lt;&gt; username
+}
+</code></pre>
+<p>Without <code>use</code>, the same logic requires nested anonymous functions and is harder to read:</p>
+<pre><code class="language-gleam">pub fn without_use() -&gt; Result(String, Nil) {
+  result.try(get_username(), fn(username) {
+    result.try(get_password(), fn(password) {
+      result.map(log_in(username, password), fn(greeting) {
+        greeting &lt;&gt; ", " &lt;&gt; username
+      })
+    })
+  })
+}
+</code></pre>
 <h2 id="built-in-tools"><a class="header" href="#built-in-tools">Built-in tools</a></h2>
 <p>Gleam ships with everything you need: a compiler, build tool, formatter, package manager, and editor integrations. Starting a new project is as simple as:</p>
 <pre><code>gleam new my_project

@@ -293,8 +293,6 @@ string.to_option("hats")   // Some("hats")
 <li>BEAM recommends keeping Unicode text as <strong>UTF-8 binaries</strong>; this aligns with Gleam’s <code>String</code>. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com" title="unicode - stdlib v7.0.3">Erlang.org</a>)</li>
 <li>On JS, remember that built-in host APIs (outside Gleam) can expose <strong>UTF-16 code-unit</strong> semantics (e.g., <code>.length</code> in raw JS). Gleam’s own functions provide Unicode-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
 </ul>
-<h2 id="why-grapheme-aware-apis-matter"><a class="header" href="#why-grapheme-aware-apis-matter">Why grapheme-aware APIs matter</a></h2>
-<p>Counting graphemes (user-perceived characters) rather than bytes or code units yields correct behavior for combined marks, emoji, and complex scripts. This follows the Unicode Text Segmentation standard (UAX #29). (<a href="https://unicode.org/reports/tr29/?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <ul>
 <li><strong><code>gleam/string</code> module docs (HexDocs)</strong> - API reference. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
