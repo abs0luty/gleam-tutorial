@@ -183,7 +183,7 @@
                     <main>
                         <h1 id="tuples-and-lists"><a class="header" href="#tuples-and-lists">Tuples and lists</a></h1>
 <h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
-<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>—their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc. Under the hood they’re <strong>immutable singly-linked lists</strong>, which makes adding/removing at the <strong>front</strong> the "head" very cheap, but operating on the <strong>end</strong> expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing.</p>
+<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>-their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc. Under the hood they’re <strong>immutable singly-linked lists</strong>, which makes adding/removing at the <strong>front</strong> the "head" very cheap, but operating on the <strong>end</strong> expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing.</p>
 <p>On both BEAM and JavaScript targets, Gleam exposes the same list semantics; you use the standard library’s <code>gleam/list</code> for everyday operations such as <code>map</code>, <code>filter</code>, <code>fold</code>, etc.</p>
 <h2 id="creating-and-growing-lists"><a class="header" href="#creating-and-growing-lists">Creating and growing lists</a></h2>
 <h3 id="literal-syntax"><a class="header" href="#literal-syntax">Literal syntax</a></h3>
@@ -216,7 +216,7 @@ let all  = [1, ..tail]     // -&gt; [1, 2, 3, 4]
 list.is_empty([])        // True
 list.contains([1, 0], 0) // True
 </code></pre>
-<p><code>length</code> is linear—it walks the list.</p>
+<p><code>length</code> is linear-it walks the list.</p>
 <h3 id="head--tail"><a class="header" href="#head--tail">Head &amp; tail</a></h3>
 <pre><code class="language-gleam">list.first([1, 2])  // Ok(1)
 list.rest([1, 2])   // Ok([2])
