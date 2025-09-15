@@ -2,11 +2,10 @@
 
 - [Introduction](./introduction.md)
   * [Quick start](./quick-start.md)
-- [Primitives](./primitives.md)
+- [Basics](./basics.md)
   * [Booleans](./booleans.md)
   * [Numbers](./numbers.md)
   * [Strings](./strings.md)
-- [Basics](./basics.md)
   * [Tuples and lists](./tuples-and-lists.md)
   * [Assignments](./assignments.md)
   * [Pattern matching](./pattern-matching.md)
