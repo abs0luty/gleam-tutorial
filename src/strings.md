@@ -4,7 +4,7 @@ In Gleam, **strings are UTF-8 binaries** written with double quotes. They are im
 
 ## Encoding model 
 
-Gleam treats user-visible characters as **grapheme clusters** (for example, “é” may be one code point or a letter plus a combining accent). Under the hood:
+Gleam treats user-visible characters as **grapheme clusters** (for example, "é" may be one code point or a letter plus a combining accent). Under the hood:
 
 * On the **Erlang** target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. ([Erlang.org][3])
 * On the **JavaScript** target, the host runtime represents strings as sequences of **UTF-16 code units**; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. ([MDN Web Docs][4])
@@ -129,7 +129,7 @@ string.trim_start("  hats  \n") // "hats  \n"
 string.trim_end("  hats  \n")   // "  hats"
 ```
 
-Whitespace is defined per Unicode “Pattern\_White\_Space” (UAX #31). ([hexdocs.pm][1])
+Whitespace is defined per Unicode "Pattern\_White\_Space" (UAX #31). ([hexdocs.pm][1])
 
 ## Working at grapheme / code point level
 
