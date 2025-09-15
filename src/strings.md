@@ -182,17 +182,17 @@ Counting graphemes (user-perceived characters) rather than bytes or code units y
 
 ### Further reading
 
-* **`gleam/string` module docs (HexDocs)** — authoritative API reference. ([hexdocs.pm][1])
-* **Gleam Tour: Strings** — literals, escapes, concatenation. ([tour.gleam.run][6])
-* **Unicode UAX #29** — grapheme/word/sentence boundaries. ([Unicode][8])
-* **Erlang Unicode usage** — background for BEAM target. ([Erlang.org][3])
-* **MDN: JavaScript Strings** — UTF-16 code-unit representation. ([MDN Web Docs][4])
+* **`gleam/string` module docs (HexDocs)** - API reference. ([hexdocs.pm][1])
+* **Gleam Tour: Strings** - literals, escapes, concatenation. ([tour.gleam.run][6])
+* **Unicode UAX #29** - grapheme/word/sentence boundaries. ([Unicode][8])
+* **Erlang Unicode usage** - background for BEAM target. ([Erlang.org][3])
+* **MDN: JavaScript Strings** - UTF-16 code-unit representation. ([MDN Web Docs][4])
 
 [1]: https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com "gleam/string · gleam_stdlib · v0.63.0"
 [2]: https://unicode.org/reports/tr29/?utm_source=chatgpt.com "UAX #29: Unicode Text Segmentation"
-[3]: https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com "Using Unicode in Erlang — stdlib v7.0.2"
+[3]: https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com "Using Unicode in Erlang - stdlib v7.0.2"
 [4]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com "String - JavaScript"
 [5]: https://hexdocs.pm/gleam_stdlib/0.11.0/gleam/bit_string/?utm_source=chatgpt.com "gleam/bit_string - gleam_stdlib"
 [6]: https://tour.gleam.run/basics/strings/?utm_source=chatgpt.com "Strings"
-[7]: https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com "unicode — stdlib v7.0.3"
+[7]: https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com "unicode - stdlib v7.0.3"
 [8]: https://www.unicode.org/reports/tr29/tr29-32.html?utm_source=chatgpt.com "UAX #29: Unicode Text Segmentation"

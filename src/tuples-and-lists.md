@@ -2,7 +2,7 @@
 
 ## Lists 
 
-A **list** is an ordered collection of values. Lists are **generic**—their type records the element type: `List(Int)`, `List(String)`, etc. Under the hood they’re **immutable singly-linked lists**, which makes adding/removing at the **front** the "head" very cheap, but operating on the **end** expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing. 
+A **list** is an ordered collection of values. Lists are **generic**-their type records the element type: `List(Int)`, `List(String)`, etc. Under the hood they’re **immutable singly-linked lists**, which makes adding/removing at the **front** the "head" very cheap, but operating on the **end** expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing. 
 
 On both BEAM and JavaScript targets, Gleam exposes the same list semantics; you use the standard library’s `gleam/list` for everyday operations such as `map`, `filter`, `fold`, etc.
 
@@ -55,7 +55,7 @@ list.is_empty([])        // True
 list.contains([1, 0], 0) // True
 ```
 
-`length` is linear—it walks the list. 
+`length` is linear-it walks the list. 
 
 ### Head & tail
 
