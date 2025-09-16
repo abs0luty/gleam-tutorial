@@ -1,0 +1,137 @@
+:root {
+    /* Browser default font-size is 16px, this way 1 rem = 10px */
+    font-size: 80%;
+    color-scheme: var(--color-scheme);
+}
+
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 100;
+src: local('Lexend Thin'), local('Lexend-Thin'),
+url('{{ resource "fonts/Lexend-Thin.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 200;
+src: local('Lexend ExtraLight'), local('Lexend-ExtraLight'),
+url('{{ resource "fonts/Lexend-ExtraLight.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 300;
+src: local('Lexend Light'), local('Lexend-Light'),
+url('{{ resource "fonts/Lexend-Light.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 400;
+src: local('Lexend Regular'), local('Lexend-Regular'),
+url('{{ resource "fonts/Lexend-Regular.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 500;
+src: local('Lexend Medium'), local('Lexend-Medium'),
+url('{{ resource "fonts/Lexend-Medium.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 600;
+src: local('Lexend SemiBold'), local('Lexend-SemiBold'),
+url('{{ resource "fonts/Lexend-SemiBold.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 700;
+src: local('Lexend Bold'), local('Lexend-Bold'),
+url('{{ resource "fonts/Lexend-Bold.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 800;
+src: local('Lexend ExtraBold'), local('Lexend-ExtraBold'),
+url('{{ resource "fonts/Lexend-ExtraBold.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Lexend';
+font-style: normal;
+font-weight: 900;
+src: local('Lexend Black'), local('Lexend-Black'),
+url('{{ resource "fonts/Lexend-Black.ttf" }}') format('truetype');
+}
+
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 100;
+src: local('Outfit Thin'), local('Outfit-Thin'),
+url('{{ resource "fonts/Outfit-Thin.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 200;
+src: local('Outfit ExtraLight'), local('Outfit-ExtraLight'),
+url('{{ resource "fonts/Outfit-ExtraLight.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 300;
+src: local('Outfit Light'), local('Outfit-Light'),
+url('{{ resource "fonts/Outfit-Light.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+src: local('Outfit Regular'), local('Outfit-Regular'),
+url('{{ resource "fonts/Outfit-Regular.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 500;
+src: local('Outfit Medium'), local('Outfit-Medium'),
+url('{{ resource "fonts/Outfit-Medium.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 600;
+src: local('Outfit SemiBold'), local('Outfit-SemiBold'),
+url('{{ resource "fonts/Outfit-SemiBold.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 700;
+src: local('Outfit Bold'), local('Outfit-Bold'),
+url('{{ resource "fonts/Outfit-Bold.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 800;
+src: local('Outfit ExtraBold'), local('Outfit-ExtraBold'),
+url('{{ resource "fonts/Outfit-ExtraBold.ttf" }}') format('truetype');
+}
+@font-face {
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 900;
+src: local('Outfit Black'), local('Outfit-Black'),
+url('{{ resource "fonts/Outfit-Black.ttf" }}') format('truetype');
+}
+
+body{font-family:"Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+
+h1,h2,h3,.display{font-family:"Lexend",var(--font-sans);font-weight:700}

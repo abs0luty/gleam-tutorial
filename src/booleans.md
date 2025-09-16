@@ -136,7 +136,7 @@ src/main.gleam:5
 True
 ```
 
-## Pipe Operator (`|>`)
+## Pipe Operator
 
 It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:
 

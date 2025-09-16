@@ -3,10 +3,13 @@ authors = ["Adi Salimgereev"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Gleam Tutorial"
+title = "Gleam programming language"
 
 [output.html]
+additional-css = ["./theme/catppuccin.css", "./theme/custom.css"]
 additional-js = ["syntax.js", "highlight.js"]
 cname = "https://gleam.run"
 git-repository-url = "https://github.com/abs0luty/gleam-tutorial"
 edit-url-template = "https://github.com/abs0luty/gleam-tutorial/edit/main/{path}"
+default-theme = "latte"
+preferred-dark-theme = "mocha"
