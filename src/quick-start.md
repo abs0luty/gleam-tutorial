@@ -1,5 +1,3 @@
-# Quick start
-
 ## Installing Erlang
 
 Since Gleam primarily compiles to Erlang (with optional JavaScript support), you'll need Erlang installed on your system first.

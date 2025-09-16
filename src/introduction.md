@@ -1,4 +1,4 @@
-# Introduction
+## What is Gleam?
 
 **Gleam** is a modern, friendly programming language for building type-safe and scalable systems. It compiles to [Erlang](http://www.erlang.org/) and JavaScript, and integrates seamlessly with other BEAM languages like Erlang, Elixir, and LFE.
 

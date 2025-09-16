@@ -1,4 +1,4 @@
-# Comments
+## Comments
 
 Let us now modify our previous hello world program:
 

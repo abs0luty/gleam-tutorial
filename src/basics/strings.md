@@ -1,15 +1,11 @@
-# Strings
+## Strings
 
-In Gleam, **strings are UTF-8 binaries** written with double quotes. They are immutable and may contain any Unicode text. 
-
-## Encoding model 
+In Gleam, **strings are UTF-8 binaries**. They are immutable and may contain any Unicode text. 
 
 Gleam treats user-visible characters as **grapheme clusters** (for example, "é" may be one code point or a letter plus a combining accent). Under the hood:
 
 * On the **BEAM** target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. ([Erlang.org][3])
 * On the **JavaScript** target, the host runtime represents strings as sequences of **UTF-16 code units**; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. ([MDN Web Docs][4])
-
-## Literals and concatenation
 
 Strings are written with double quotes and support common escapes (e.g., `\"`, `\\`, `\n`, `\t`, `\u{...}`). Concatenate with `<>`:
 
@@ -17,9 +13,7 @@ Strings are written with double quotes and support common escapes (e.g., `\"`, `
 "Hello, Gleam!\n" <> "\u{1F44B}"  // "Hello, Gleam! 👋"
 ```
 
-## Core operations (grapheme-aware unless noted)
-
-### Emptiness & length
+### Check emptiness & length:
 
 ```gleam
 import gleam/string
@@ -160,7 +154,7 @@ string.utf_codepoint_to_int(cp)                      // 97
 
 These functions expose the scalar values; grapheme boundaries still follow UAX #29. ([Unicode][2])
 
-## First/last, capitalisation, options
+### First/last, capitalisation, options
 
 ```gleam
 string.first("icecream")   // Ok("i")
@@ -170,11 +164,13 @@ string.to_option("")       // None
 string.to_option("hats")   // Some("hats")
 ```
 
-## Performance & target notes
+### Performance & target notes
 
-* Most operations here are **linear in graphemes** (e.g., `length`, `reverse`, `replace`, `split`, `join`, `repeat`). `byte_size` is constant time on BEAM, linear on JS. ([hexdocs.pm][1])
-* BEAM recommends keeping Unicode text as **UTF-8 binaries**; this aligns with Gleam’s `String`. ([Erlang.org][7])
-* On JS, remember that built-in host APIs (outside Gleam) can expose **UTF-16 code-unit** semantics (e.g., `.length` in raw JS). Gleam’s own functions provide Unicode-aware behavior. ([MDN Web Docs][4])
+Most operations here are **linear in graphemes** (e.g., `length`, `reverse`, `replace`, `split`, `join`, `repeat`). `byte_size` is constant time on BEAM, linear on JS. ([hexdocs.pm][1])
+
+BEAM recommends keeping Unicode text as **UTF-8 binaries**; this aligns with Gleam’s `String`. ([Erlang.org][7])
+
+On JS, remember that built-in host APIs (outside Gleam) can expose **UTF-16 code-unit** semantics (e.g., `.length` in raw JS). Gleam’s own functions provide Unicode-aware behavior. ([MDN Web Docs][4])
 
 ### Further reading
 
@@ -185,10 +181,10 @@ string.to_option("hats")   // Some("hats")
 * **MDN: JavaScript Strings** - UTF-16 code-unit representation. ([MDN Web Docs][4])
 
 [1]: https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com "gleam/string · gleam_stdlib · v0.63.0"
-[2]: https://unicode.org/reports/tr29/?utm_source=chatgpt.com "UAX #29: Unicode Text Segmentation"
+[2]: https://unicode.org/reports/tr29 "UAX #29: Unicode Text Segmentation"
 [3]: https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com "Using Unicode in Erlang - stdlib v7.0.2"
 [4]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com "String - JavaScript"
-[5]: https://hexdocs.pm/gleam_stdlib/0.11.0/gleam/bit_string/?utm_source=chatgpt.com "gleam/bit_string - gleam_stdlib"
-[6]: https://tour.gleam.run/basics/strings/?utm_source=chatgpt.com "Strings"
+[5]: https://hexdocs.pm/gleam_stdlib/0.11.0/gleam/bit_string "gleam/bit_string - gleam_stdlib"
+[6]: https://tour.gleam.run/basics/strings "Strings"
 [7]: https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com "unicode - stdlib v7.0.3"
 [8]: https://www.unicode.org/reports/tr29/tr29-32.html?utm_source=chatgpt.com "UAX #29: Unicode Text Segmentation"

@@ -1,4 +1,4 @@
-# Booleans
+## Booleans
 
 In Gleam, boolean literals are either `True` or `False`. Their type is `Bool`. You can apply binary operations on these boolean values, such as:
 
@@ -6,6 +6,7 @@ In Gleam, boolean literals are either `True` or `False`. Their type is `Bool`. Y
 False && False // => False
 True && False  // => False
 True && True   // => True
+
 False || False // => False
 True || False  // => True
 True || True   // => True
@@ -57,7 +58,7 @@ test
 
 Because the left side (`True`) doesn't block evaluation, so `test()` is called.
 
-## Printing Booleans
+### Printing Booleans
 
 If you want to print a `Bool`, you must first convert it to a `String` using `bool.to_string`. For example:
 
@@ -96,7 +97,7 @@ src/main.gleam:5
 "True"
 ```
 
-## Negation
+### Negation
 
 You can negate booleans in two ways:
 
@@ -122,7 +123,7 @@ src/main.gleam:5
 True
 ```
 
-## Pipe Operator
+### Pipe Operator
 
 It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:
 
@@ -143,7 +144,7 @@ This does the same as:
 io.println(bool.to_string(True))
 ```
 
-# Numbers
+## Numbers
 
 Gleam has two numeric types: **`Int`** for whole numbers and **`Float`** for fractional values.
 
@@ -157,7 +158,7 @@ Gleam has two numeric types: **`Int`** for whole numbers and **`Float`** for fra
 
   > Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via [the library designed for JS target](https://hexdocs.pm/bigi/index.html).
 
-## Integers
+### Integers
 Here are some examples of integer literals in Gleam:
 
 ```gleam
@@ -350,7 +351,7 @@ If you want to convert a number to any base from `2` to `36`, you can use `to_ba
 48 |> to_base_string(36) // => Ok("1C")
 ```
 
-## Floats
+### Floats
 
 Here are some examples of float literals:
 

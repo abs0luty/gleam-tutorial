@@ -1,5 +1,3 @@
-# Tuples and lists
-
 ## Lists 
 
 A **list** is an ordered collection of values. Lists are **generic**-their type records the element type: `List(Int)`, `List(String)`, etc. 
@@ -7,8 +5,6 @@ A **list** is an ordered collection of values. Lists are **generic**-their type 
 Under the hood they're **immutable singly-linked lists**, which makes adding/removing at the **front** the "head" very cheap, but operating on the **end** expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing. 
 
 On both BEAM and JavaScript targets, Gleam exposes the same list semantics; you use the standard library’s `gleam/list` for everyday operations such as `map`, `filter`, `fold`, etc.
-
-## Creating and growing lists
 
 ### Literal syntax
 
@@ -90,8 +86,8 @@ Short-circuiting versions of "any"/"all".
 ### Zipping & unzipping
 
 ```gleam
-list.zip([1, 2], ["a", "b"])     // [#(1,"a"), #(2,"b")]
-list.unzip([#(1,2), #(3,4)])     // #([1,3], [2,4])
+list.zip([1, 2], ["a", "b"])     // [#(1, "a"), #(2, "b")]
+list.unzip([#(1, 2), #(3, 4)])     // #([1, 3], [2, 4])
 ```
 
 `strict_zip` fails if lengths differ.
@@ -109,8 +105,8 @@ list.flat_map([2, 4], fn(x) { [x, x + 1] })  // [2, 3, 4, 5]
 ### Take & drop (safe slicing)
 
 ```gleam
-list.take([1,2,3,4], 2) // [1, 2]
-list.drop([1,2,3,4], 2) // [3, 4]
+list.take([1, 2, 3, 4], 2) // [1, 2]
+list.drop([1, 2, 3, 4], 2) // [3, 4]
 ```
 
 Linear, non-throwing.
@@ -118,8 +114,8 @@ Linear, non-throwing.
 ### Unique, sort
 
 ```gleam
-list.unique([1,1,4,7,3,3,4]) // [1,4,7,3]
-list.sort([4,3,6,5,4,1,2], by: int.compare) // [1,2,3,4,4,5,6]
+list.unique([1, 1, 4, 7, 3, 3, 4]) // [1, 4, 7, 3]
+list.sort([4, 3, 6, 5, 4, 1, 2], by: int.compare) // [1, 2, 3, 4, 4, 5, 6]
 ```
 
 Stable merge sort under the hood.
@@ -127,9 +123,9 @@ Stable merge sort under the hood.
 ### Windows, chunks, partitions
 
 ```gleam
-list.window([1,2,3,4,5], by: 3)       // [[1,2,3],[2,3,4],[3,4,5]]
-list.sized_chunk([1,2,3,4,5,6], into: 2) // [[1,2],[3,4],[5,6]]
-list.partition([1,2,3,4,5], int.is_odd)  // #([1,3,5], [2,4])
+list.window([1, 2, 3, 4, 5], by: 3)       // [[1, 2, 3],[2, 3, 4],[3, 4, 5]]
+list.sized_chunk([1, 2, 3, 4, 5, 6], into: 2) // [[1, 2],[3, 4],[5, 6]]
+list.partition([1, 2, 3, 4, 5], int.is_odd)  // #([1, 3, 5], [2, 4])
 ```
 
 Convenient for streaming/rolling analyses. 
@@ -137,8 +133,8 @@ Convenient for streaming/rolling analyses.
 ### Ranges & repetition
 
 ```gleam
-list.range(0, 5)        // [0,1,2,3,4,5]
-list.repeat("a", 3)     // ["a","a","a"]
+list.range(0, 5)        // [0, 1, 2, 3, 4, 5]
+list.repeat("a", 3)     // ["a", "a", "a"]
 ```
 
 Handy for generating test data or indices. 
@@ -151,44 +147,27 @@ If you often need **random access** by index or frequent **updates in the middle
 
 A **tuple** quickly groups a fixed number of values, possibly of **different types**. For example, `#(1, "Hi!")` has type `#(Int, String)`, and `#(1.4, 10, 48)` has type `#(Float, Int, Int)`. They’re commonly used to **return two or three values** from a function. If the group has meaning, consider a **custom type** or record for clarity. 
 
-## Constructing and accessing tuples
+### Literal syntax
 
-### **Literal syntax**
+```gleam
+let pair = #(200, "OK")
+let triple = #("x", 10, True)
+```
 
-  ```gleam
-  let pair = #(200, "OK")
-  let triple = #("x", 10, True)
-  ```
+### Positional accessors (no pattern match needed)
 
-### **Positional accessors** (no pattern match needed)
+```gleam
+pair.0   // 200
+pair.1   // "OK"
+triple.2 // True
+```
 
-  ```gleam
-  pair.0   // 200
-  pair.1   // "OK"
-  triple.2 // True
-  ```
+These zero-based accessors are convenient for quick reads.
 
-  These zero-based accessors are convenient for quick reads.
+### Pattern matching
 
-### **Pattern matching**
-
-  ```gleam
-  case triple {
-    #(name, count, active) -> name <> " " <> int.to_string(count)
-  }
-  ```
-
-### Typical uses
-
-* **Multi-value returns**
-
-  ```gleam
-  fn min_max(xs: List(Int)) -> #(Int, Int) {
-    let assert Ok(first) = list.first(xs)
-    list.fold(xs, #(first, first), fn(#(lo, hi), x) {
-      #(int.min(lo, x), int.max(hi, x))
-    })
-  }
-  ```
-
-* **Zipping lists** produces tuples you can later `unzip` into parallel lists. 
+```gleam
+case triple {
+  #(name, count, active) -> name <> " " <> int.to_string(count)
+}
+```
