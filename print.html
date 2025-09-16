@@ -1069,14 +1069,9 @@ pub fn main() {
   let point = #(3, 4)
   let #(x, y) = point
 
-  // Exact-length list destructuring (must be exactly two elements)
-  let [a, b] = [10, 20]
-
   io.println(int.to_string(x + y))
-  io.println(int.to_string(a + b))
 }
 </code></pre>
-<p>If the value might not have the exact shape (e.g., the list might be empty), use a <code>case</code> instead of a plain <code>let</code>.</p>
 <h3 id="case-expression"><a class="header" href="#case-expression">Case expression</a></h3>
 <p><code>case</code> lets you handle multiple shapes safely. You can match strings using the concatenation operator (<code>&lt;&gt;</code>):</p>
 <pre><code class="language-gleam">import gleam/io
