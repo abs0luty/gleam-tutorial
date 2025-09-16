@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Numbers - Gleam programming language</title>
+        <title>Booleans and numbers - Gleam programming language</title>
 
 
         <!-- Custom HTML head -->
@@ -12,36 +12,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="./theme/catppuccin.css">
-        <link rel="stylesheet" href="./theme/custom.css">
+        <link rel="stylesheet" href=".././theme/catppuccin.css">
+        <link rel="stylesheet" href=".././theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -147,13 +147,13 @@
                     <h1 class="menu-title">Gleam programming language</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/numbers.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/booleans-and-numbers.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -187,62 +187,139 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="numbers"><a class="header" href="#numbers">Numbers</a></h1>
+                        <h1 id="booleans"><a class="header" href="#booleans">Booleans</a></h1>
+<p>In Gleam, boolean literals are either <code>True</code> or <code>False</code>. Their type is <code>Bool</code>. You can apply binary operations on these boolean values, such as:</p>
+<pre><code class="language-gleam">False &amp;&amp; False // =&gt; False
+True &amp;&amp; False  // =&gt; False
+True &amp;&amp; True   // =&gt; True
+False || False // =&gt; False
+True || False  // =&gt; True
+True || True   // =&gt; True
+</code></pre>
+<p><code>&amp;&amp;</code> is logical <strong>AND</strong>: it returns <code>True</code> only if <em>both</em> operands are <code>True</code>.</p>
+<p><code>||</code> is logical <strong>OR</strong>: it returns <code>False</code> only if <em>both</em> operands are <code>False</code>.</p>
+<p>Both <code>&amp;&amp;</code> and <code>||</code> short‐circuit:</p>
+<ul>
+<li><code>&amp;&amp;</code> does not evaluate its right operand if the left is <code>False</code>, since the result is already known to be <code>False</code>.</li>
+<li><code>||</code> does not evaluate its right operand if the left is <code>True</code>, since the result must be <code>True</code>.</li>
+</ul>
+<p>Here is an example of such behaviour:</p>
+<pre><code class="language-gleam">import gleam/io
+
+fn foo() -&gt; Bool {
+  io.println("test")
+  True
+}
+
+pub fn main() {
+  let _ = False &amp;&amp; foo()
+}
+</code></pre>
+<p>In this case <code>test</code> isn't printed because <code>False &amp;&amp; ...</code> immediately yields <code>False</code> without calling <code>test()</code>. If instead you write:</p>
+<pre><code class="language-gleam">import gleam/io
+
+fn test() -&gt; Bool {
+  io.println("test")
+  True
+}
+
+pub fn main() {
+  let _ = True &amp;&amp; test()
+}
+</code></pre>
+<p>Output:</p>
+<pre><code>test
+</code></pre>
+<p>Because the left side (<code>True</code>) doesn't block evaluation, so <code>test()</code> is called.</p>
+<h2 id="printing-booleans"><a class="header" href="#printing-booleans">Printing Booleans</a></h2>
+<p>If you want to print a <code>Bool</code>, you must first convert it to a <code>String</code> using <code>bool.to_string</code>. For example:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/bool
+
+pub fn main() {
+  io.println(bool.to_string(True))
+}
+</code></pre>
+<p>Output:</p>
+<pre><code>True
+</code></pre>
+<p>Alternatively, for debugging you can use <code>echo</code>:</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  echo False
+  echo "True"
+}
+</code></pre>
+<p>Output:</p>
+<pre><code>src/main.gleam:4
+False
+src/main.gleam:5
+"True"
+</code></pre>
+<h2 id="negation"><a class="header" href="#negation">Negation</a></h2>
+<p>You can negate booleans in two ways:</p>
+<ul>
+<li>Using the <code>!</code> operator: <code>!True</code> → <code>False</code>, <code>!False</code> → <code>True</code></li>
+<li>Using <code>bool.negate</code> from the <code>gleam/bool</code> module:</li>
+</ul>
+<pre><code class="language-gleam">import gleam/io
+import gleam/bool
+
+pub fn main() {
+  echo !True
+  echo bool.negate(False)
+}
+</code></pre>
+<p>Output:</p>
+<pre><code>src/main.gleam:4
+False
+src/main.gleam:5
+True
+</code></pre>
+<h2 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe Operator</a></h2>
+<p>It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/bool
+
+pub fn main() {
+  True
+  |&gt; bool.to_string
+  |&gt; io.println
+}
+</code></pre>
+<p>This does the same as:</p>
+<pre><code class="language-gleam">io.println(bool.to_string(True))
+</code></pre>
+<h1 id="numbers"><a class="header" href="#numbers">Numbers</a></h1>
 <p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
-<h2 id="how-numbers-are-stored-beam-vs-javascript"><a class="header" href="#how-numbers-are-stored-beam-vs-javascript">How numbers are stored (BEAM vs JavaScript)</a></h2>
 <ul>
 <li>
-<p><strong>On BEAM (Erlang runtime):</strong>
-<code>Int</code> values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. <code>Float</code> is the runtime’s 64-bit IEEE-754 double, but BEAM has no <code>NaN</code>/<code>Infinity</code> values exposed in the same way as JavaScript. Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return <code>0</code> for operators and offers checked functions in the stdlib.</p>
+<p>On the <strong>BEAM</strong> target, <code>Int</code> values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. <code>Float</code> is the runtime’s 64-bit IEEE-754 double, but BEAM has no <code>NaN</code>/<code>Infinity</code> values exposed in the same way as JavaScript.</p>
+<p>Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return <code>0</code> for operators and offers checked functions in the stdlib.</p>
 </li>
 <li>
-<p><strong>On JavaScript:</strong>
-<code>Float</code> is a 64-bit IEEE-754 double, matching JS <code>Number</code>. <code>Int</code> operations obey the host’s numeric semantics; keep integers within JS’s <strong>safe integer</strong> range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers. Gleam’s stdlib exposes the same checked APIs (<code>int.divide</code>, <code>float.divide</code>, etc.).</p>
+<p>On the <strong>JavaScript</strong> target, <code>Float</code> is a 64-bit IEEE-754 double, matching JS <code>Number</code>. <code>Int</code> operations obey the host’s numeric semantics; keep integers within JS’s <strong>safe integer</strong> range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers.</p>
+<p>Gleam’s stdlib exposes the same checked APIs (<code>int.divide</code>, <code>float.divide</code>, etc.).</p>
+<blockquote>
+<p>Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via <a href="https://hexdocs.pm/bigi/index.html">the library designed for JS target</a>.</p>
+</blockquote>
 </li>
 </ul>
-<blockquote>
-<p>Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via a library designed for Gleam/JS.</p>
-</blockquote>
 <h2 id="integers"><a class="header" href="#integers">Integers</a></h2>
-<p>Integers are written normally:</p>
-<pre><code class="language-gleam">1
-2
-3
--4
-2942930103
-</code></pre>
-<p>You can insert underscores for readability:</p>
-<pre><code class="language-gleam">3_000_000
-</code></pre>
-<p>Underscores have no semantic meaning.</p>
-<p>Gleam supports binary, octal, and hexadecimal literals with <code>0b</code>, <code>0o</code>, and <code>0x</code>:</p>
-<pre><code class="language-gleam">0b0101000101
-0o712
-0xFf  // `f` and `F` are equivalent
-</code></pre>
-<h3 id="operators-and-comparisons"><a class="header" href="#operators-and-comparisons">Operators and comparisons</a></h3>
-<pre><code class="language-gleam">1 + 3 - 2 * 4  // =&gt; -4
-7 / 2          // =&gt; 3  (truncated toward zero)
-3 % 2          // =&gt; 1
-1 &gt; 0          // =&gt; True
-1 &lt; 0          // =&gt; False
-1 &gt;= 0         // =&gt; True
-1 &lt;= 0         // =&gt; False
-</code></pre>
-<p><strong>Division note.</strong> Integer <code>/</code> returns another integer (truncating). Gleam defines division by zero for operators to return <code>0</code> rather than crash; prefer the checked API when you want an error instead</p>
-<h2 id="integers-1"><a class="header" href="#integers-1">Integers</a></h2>
-<p>Integers in Gleam are written as usual:</p>
-<pre><code class="language-gleam">1
-2
+<p>Here are some examples of integer literals in Gleam:</p>
+<pre><code class="language-gleam">0
+1
 3
 -4
 2942930103
 </code></pre>
 <p>Gleam supports <code>_</code> in integers for clarity:</p>
-<pre><code class="language-gleam">3_000_000
+<pre><code class="language-gleam">3_000_000 vs 3000000
+10_000_000 vs 10000000
+20_000_000_000 vs 20000000000
 </code></pre>
-<p><em>In the given example, the <code>_</code> has no syntactic and semantic meaning.</em></p>
-<p>Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with <code>0b</code>, <code>0o</code> and <code>0x</code> respectively:</p>
+<p>The <code>_</code> has no syntactic and semantic meaning. Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with <code>0b</code>, <code>0o</code> and <code>0x</code> respectively:</p>
 <pre><code class="language-gleam">0b0101000101
 0o712
 0xFf // `f` and `F` here are the same
@@ -380,8 +457,8 @@ int.max(3, 4)    // =&gt; 4
 // Same as running to_base36()
 48 |&gt; to_base_string(36) // =&gt; Ok("1C")
 </code></pre>
-<h2 id="floating-point-numbers"><a class="header" href="#floating-point-numbers">Floating-point numbers</a></h2>
-<p><code>Float</code>-s are numbers that have a decimal point:</p>
+<h2 id="floats"><a class="header" href="#floats">Floats</a></h2>
+<p>Here are some examples of float literals:</p>
 <pre><code class="language-gleam">1.6
 -0.3
 8.0
@@ -480,11 +557,11 @@ float.max(3.1, 4.2)             // =&gt; 4.2
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="booleans.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../basics/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="strings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../basics/strings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -494,11 +571,11 @@ float.max(3.1, 4.2)             // =&gt; 4.2
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="booleans.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../basics/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="strings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../basics/strings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -513,17 +590,17 @@ float.max(3.1, 4.2)             // =&gt; 4.2
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="syntax.js"></script>
-        <script src="highlight.js"></script>
+        <script src="../syntax.js"></script>
+        <script src="../highlight.js"></script>
 
 
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Booleans - Gleam programming language</title>
+        <title>Basics - Gleam programming language</title>
 
 
         <!-- Custom HTML head -->
@@ -12,36 +12,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="./theme/catppuccin.css">
-        <link rel="stylesheet" href="./theme/custom.css">
+        <link rel="stylesheet" href=".././theme/catppuccin.css">
+        <link rel="stylesheet" href=".././theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -147,13 +147,13 @@
                     <h1 class="menu-title">Gleam programming language</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/booleans.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/intro.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -187,130 +187,31 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="booleans"><a class="header" href="#booleans">Booleans</a></h1>
-<p>In Gleam, boolean literals are either <code>True</code> or <code>False</code>. Their type is <code>Bool</code>.</p>
-<h2 id="basic-boolean-operators"><a class="header" href="#basic-boolean-operators">Basic Boolean Operators</a></h2>
-<pre><code class="language-gleam">False &amp;&amp; False // =&gt; False
-False &amp;&amp; True  // =&gt; False
-True &amp;&amp; False  // =&gt; False
-True &amp;&amp; True   // =&gt; True
-
-False || False // =&gt; False
-False || True  // =&gt; True
-True || False  // =&gt; True
-True || True   // =&gt; True
-</code></pre>
-<p><code>&amp;&amp;</code> is logical <strong>AND</strong>: it returns <code>True</code> only if <em>both</em> operands are <code>True</code>.</p>
-<p><code>||</code> is logical <strong>OR</strong>: it returns <code>False</code> only if <em>both</em> operands are <code>False</code>.</p>
-<p>Both <code>&amp;&amp;</code> and <code>||</code> short‐circuit:</p>
-<ul>
-<li><code>&amp;&amp;</code> does not evaluate its right operand if the left is <code>False</code>, since the result is already known to be <code>False</code>.</li>
-<li><code>||</code> does not evaluate its right operand if the left is <code>True</code>, since the result must be <code>True</code>.</li>
-</ul>
-<p>Here is an example of such behaviour:</p>
-<pre><code class="language-gleam">import gleam/io
-
-fn foo() -&gt; Bool {
-   io.println("test")
-   True
-}
-
-pub fn main() {
-   echo False &amp;&amp; foo()
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:9
-False
-</code></pre>
-<p>In this case <code>"test"</code> isn’t printed because <code>False &amp;&amp; …</code> immediately yields <code>False</code> without calling <code>test()</code>. If instead you write:</p>
-<pre><code class="language-gleam">import gleam/io
-
-fn test() -&gt; Bool {
-   io.println("test")
-   True
-}
-
-pub fn main() {
-   echo True &amp;&amp; test()
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>test
-src/main.gleam:9
-True
-</code></pre>
-<p>Because the left side (<code>True</code>) doesn't block evaluation, so <code>test()</code> is called.</p>
-<h2 id="printing-booleans"><a class="header" href="#printing-booleans">Printing Booleans</a></h2>
-<p>If you want to print a <code>Bool</code>, you must first convert it to a <code>String</code> using <code>bool.to_string</code>. For example:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
-
-pub fn main() {
-  io.println(bool.to_string(True))
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>True
-</code></pre>
-<p>Alternatively, for debugging you can use <code>echo</code>:</p>
+                        <h1 id="comments"><a class="header" href="#comments">Comments</a></h1>
+<p>Let us now modify our previous hello world program:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
-  echo False
-  echo "True"
+  // Print hello world
+  io.println("Hello world!")
 }
 </code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:4
-False
-src/main.gleam:5
-"True"
+<p>Gleam allows you to write comments in your code. In Gleam, comments must start with two slashes and continue until the end of the line. For comments that extend beyond a single line, you’ll need to include <code>//</code> on each line, like this:</p>
+<pre><code class="language-gleam">// Hello, world! I have a lot to say, so much that it will take multiple
+// lines of text. Therefore, I will start each line with // to denote it
+// as part of a multi-line comment.
 </code></pre>
-<h2 id="negation"><a class="header" href="#negation">Negation</a></h2>
-<p>You can negate booleans in two ways:</p>
-<ul>
-<li>Using the <code>!</code> operator: <code>!True</code> → <code>False</code>, <code>!False</code> → <code>True</code></li>
-<li>Using <code>bool.negate</code> from the <code>gleam/bool</code> module:</li>
-</ul>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
-
-pub fn main() {
-  echo !True
-  echo bool.negate(False)
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:4
-False
-src/main.gleam:5
-True
-</code></pre>
-<h2 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe Operator</a></h2>
-<p>It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
-
-pub fn main() {
-  True
-  |&gt; bool.to_string
-  |&gt; io.println
-}
-</code></pre>
-<p>This does the same as:</p>
-<pre><code class="language-gleam">io.println(bool.to_string(True))
-</code></pre>
+<p>Comments don't have any semantic meaning and don't affect the way the program behaves. Instead, they are used for clarity and for documenting your code.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="basics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../quick-start.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="numbers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../basics/booleans-and-numbers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -320,11 +221,11 @@ pub fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="basics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../quick-start.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="numbers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../basics/booleans-and-numbers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -339,17 +240,17 @@ pub fn main() {
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="syntax.js"></script>
-        <script src="highlight.js"></script>
+        <script src="../syntax.js"></script>
+        <script src="../highlight.js"></script>
 
 
 
