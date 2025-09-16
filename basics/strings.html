@@ -282,7 +282,7 @@ string.from_utf_codepoints(cps) // "🏳️‍🌈"
 <pre><code class="language-gleam">let assert Ok(cp) = string.utf_codepoint(97)         // 'a'
 string.utf_codepoint_to_int(cp)                      // 97
 </code></pre>
-<p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29/?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
+<p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
 <h3 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h3>
 <pre><code class="language-gleam">string.first("icecream")   // Ok("i")
 string.last("icecream")    // Ok("m")
@@ -297,7 +297,7 @@ string.to_option("hats")   // Some("hats")
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <ul>
 <li><strong><code>gleam/string</code> module docs (HexDocs)</strong> - API reference. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
-<li><strong>Gleam Tour: Strings</strong> - literals, escapes, concatenation. (<a href="https://tour.gleam.run/basics/strings/?utm_source=chatgpt.com" title="Strings">tour.gleam.run</a>)</li>
+<li><strong>Gleam Tour: Strings</strong> - literals, escapes, concatenation. (<a href="https://tour.gleam.run/basics/strings" title="Strings">tour.gleam.run</a>)</li>
 <li><strong>Unicode UAX #29</strong> - grapheme/word/sentence boundaries. (<a href="https://www.unicode.org/reports/tr29/tr29-32.html?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</li>
 <li><strong>Erlang Unicode usage</strong> - background for BEAM target. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang - stdlib v7.0.2">Erlang.org</a>)</li>
 <li><strong>MDN: JavaScript Strings</strong> - UTF-16 code-unit representation. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>

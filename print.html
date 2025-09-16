@@ -428,8 +428,8 @@ Hello, world!
 <div style="break-before: page; page-break-before: always;"></div><h2 id="who-this-tutorial-is-for"><a class="header" href="#who-this-tutorial-is-for">Who this tutorial is for</a></h2>
 <p>This tutorial is for people who’ve written code before and don’t need hand-holding on the absolute basics. If you already know what variables, functions, types, and control flow are, you’re in the right place.</p>
 <p>We'll go fast on “intro to programming” stuff and focus on how Gleam does things - immutability, pattern matching, and writing clear, safe code.</p>
-<p>You <strong>don't</strong> need prior functional-programming experience. If you’ve mostly lived in Python/JS/Go/C++ and you’re curious about a friendly functional language on the BEAM, you’ll be fine. Plenty of respected language guides set similar expectations - for example, <em>Learn You a Haskell</em> explicitly targets people who’ve programmed before but are new to FP, which is the same vibe we’re going for. (<a href="https://learnyouahaskell.com/?utm_source=chatgpt.com" title="Learn You a Haskell for Great Good!">learnyouahaskell.com</a>)</p>
-<p>Think of this as a practical, programmer-to-programmer tour. Like the Go Tour and the Rust Book, we’ll move quickly from syntax to real patterns and habits, assuming you can already read code and run tools; the goal is to level up how you build, not teach what a loop is. (<a href="https://go.dev/tour/?utm_source=chatgpt.com" title="A Tour of Go">Go.dev</a>)</p>
+<p>You <strong>don't</strong> need prior functional-programming experience. If you’ve mostly lived in Python/JS/Go/C++ and you’re curious about a friendly functional language on the BEAM, you’ll be fine. Plenty of respected language guides set similar expectations - for example, <em>Learn You a Haskell</em> explicitly targets people who’ve programmed before but are new to FP, which is the same vibe we’re going for. (<a href="https://learnyouahaskell.com" title="Learn You a Haskell for Great Good!">learnyouahaskell.com</a>)</p>
+<p>Think of this as a practical, programmer-to-programmer tour. Like the Go Tour and the Rust Book, we’ll move quickly from syntax to real patterns and habits, assuming you can already read code and run tools; the goal is to level up how you build, not teach what a loop is. (<a href="https://go.dev/tour" title="A Tour of Go">Go.dev</a>)</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
 <p>Let us now modify our previous hello world program:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -905,7 +905,7 @@ string.from_utf_codepoints(cps) // "🏳️‍🌈"
 <pre><code class="language-gleam">let assert Ok(cp) = string.utf_codepoint(97)         // 'a'
 string.utf_codepoint_to_int(cp)                      // 97
 </code></pre>
-<p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29/?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
+<p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
 <h3 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h3>
 <pre><code class="language-gleam">string.first("icecream")   // Ok("i")
 string.last("icecream")    // Ok("m")
@@ -920,7 +920,7 @@ string.to_option("hats")   // Some("hats")
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <ul>
 <li><strong><code>gleam/string</code> module docs (HexDocs)</strong> - API reference. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
-<li><strong>Gleam Tour: Strings</strong> - literals, escapes, concatenation. (<a href="https://tour.gleam.run/basics/strings/?utm_source=chatgpt.com" title="Strings">tour.gleam.run</a>)</li>
+<li><strong>Gleam Tour: Strings</strong> - literals, escapes, concatenation. (<a href="https://tour.gleam.run/basics/strings" title="Strings">tour.gleam.run</a>)</li>
 <li><strong>Unicode UAX #29</strong> - grapheme/word/sentence boundaries. (<a href="https://www.unicode.org/reports/tr29/tr29-32.html?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</li>
 <li><strong>Erlang Unicode usage</strong> - background for BEAM target. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang - stdlib v7.0.2">Erlang.org</a>)</li>
 <li><strong>MDN: JavaScript Strings</strong> - UTF-16 code-unit representation. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
