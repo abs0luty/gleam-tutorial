@@ -2,7 +2,9 @@
 
 ## Lists 
 
-A **list** is an ordered collection of values. Lists are **generic**-their type records the element type: `List(Int)`, `List(String)`, etc. Under the hood they’re **immutable singly-linked lists**, which makes adding/removing at the **front** the "head" very cheap, but operating on the **end** expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing. 
+A **list** is an ordered collection of values. Lists are **generic**-their type records the element type: `List(Int)`, `List(String)`, etc. 
+
+Under the hood they're **immutable singly-linked lists**, which makes adding/removing at the **front** the "head" very cheap, but operating on the **end** expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing. 
 
 On both BEAM and JavaScript targets, Gleam exposes the same list semantics; you use the standard library’s `gleam/list` for everyday operations such as `map`, `filter`, `fold`, etc.
 
@@ -38,21 +40,20 @@ case nums {
 
 There’s also a dedicated *prefix* syntax for building from an existing list and a matching deconstruction pattern for peeling off the head, shown in the stdlib docs.
 
-## Performance model (important!)
-
-* **Fast:** prepend, examine head (`first`, `rest`), single pass transforms (`map`, `filter`, `fold`).
-* **Linear / costly:** `length`, `append` needs to traverse, operations that reach into the middle or end. When you find yourself "indexing," consider a different data structure (e.g., a dict keyed by position) or rethink the algorithm to stream or fold.
-
-## Everyday operators & utilities (from `gleam/list`)
+## Everyday operators & utilities
 
 Below are the most common tools. All are **pure** and return new lists.
 
 ### Length, emptiness, membership
 
 ```gleam
-list.length([1, 2, 3])   // 3
-list.is_empty([])        // True
-list.contains([1, 0], 0) // True
+import gleam/list
+
+pub fn main() {
+  echo list.length([1, 2, 3])   // 3
+  echo list.is_empty([])        // True
+  echo list.contains([1, 0], 0) // True
+}
 ```
 
 `length` is linear-it walks the list. 

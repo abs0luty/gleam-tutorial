@@ -1,71 +1,168 @@
+# Booleans
+
+In Gleam, boolean literals are either `True` or `False`. Their type is `Bool`. You can apply binary operations on these boolean values, such as:
+
+```gleam
+False && False // => False
+True && False  // => False
+True && True   // => True
+False || False // => False
+True || False  // => True
+True || True   // => True
+```
+
+`&&` is logical **AND**: it returns `True` only if *both* operands are `True`.
+
+`||` is logical **OR**: it returns `False` only if *both* operands are `False`.
+
+Both `&&` and `||` short‐circuit:
+
+* `&&` does not evaluate its right operand if the left is `False`, since the result is already known to be `False`.
+* `||` does not evaluate its right operand if the left is `True`, since the result must be `True`.
+
+Here is an example of such behaviour:
+```gleam
+import gleam/io
+
+fn foo() -> Bool {
+  io.println("test")
+  True
+}
+
+pub fn main() {
+  let _ = False && foo()
+}
+```
+
+In this case `test` isn't printed because `False && ...` immediately yields `False` without calling `test()`. If instead you write:
+
+```gleam
+import gleam/io
+
+fn test() -> Bool {
+  io.println("test")
+  True
+}
+
+pub fn main() {
+  let _ = True && test()
+}
+```
+
+Output:
+
+```
+test
+```
+
+Because the left side (`True`) doesn't block evaluation, so `test()` is called.
+
+## Printing Booleans
+
+If you want to print a `Bool`, you must first convert it to a `String` using `bool.to_string`. For example:
+
+```gleam
+import gleam/io
+import gleam/bool
+
+pub fn main() {
+  io.println(bool.to_string(True))
+}
+```
+
+Output:
+
+```
+True
+```
+
+Alternatively, for debugging you can use `echo`:
+
+```gleam
+import gleam/io
+
+pub fn main() {
+  echo False
+  echo "True"
+}
+```
+
+Output:
+
+```
+src/main.gleam:4
+False
+src/main.gleam:5
+"True"
+```
+
+## Negation
+
+You can negate booleans in two ways:
+
+* Using the `!` operator: `!True` → `False`, `!False` → `True`
+* Using `bool.negate` from the `gleam/bool` module:
+
+```gleam
+import gleam/io
+import gleam/bool
+
+pub fn main() {
+  echo !True
+  echo bool.negate(False)
+}
+```
+
+Output:
+
+```
+src/main.gleam:4
+False
+src/main.gleam:5
+True
+```
+
+## Pipe Operator
+
+It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:
+
+```gleam
+import gleam/io
+import gleam/bool
+
+pub fn main() {
+  True
+  |> bool.to_string
+  |> io.println
+}
+```
+
+This does the same as:
+
+```gleam
+io.println(bool.to_string(True))
+```
+
 # Numbers
 
 Gleam has two numeric types: **`Int`** for whole numbers and **`Float`** for fractional values.
 
-## How numbers are stored (BEAM vs JavaScript)
+* On the **BEAM** target, `Int` values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. `Float` is the runtime’s 64-bit IEEE-754 double, but BEAM has no `NaN`/`Infinity` values exposed in the same way as JavaScript. 
+  
+  Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return `0` for operators and offers checked functions in the stdlib. 
 
-* **On BEAM (Erlang runtime):**
-  `Int` values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. `Float` is the runtime’s 64-bit IEEE-754 double, but BEAM has no `NaN`/`Infinity` values exposed in the same way as JavaScript. Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return `0` for operators and offers checked functions in the stdlib. 
+* On the **JavaScript** target, `Float` is a 64-bit IEEE-754 double, matching JS `Number`. `Int` operations obey the host’s numeric semantics; keep integers within JS’s **safe integer** range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers. 
+  
+  Gleam’s stdlib exposes the same checked APIs (`int.divide`, `float.divide`, etc.). 
 
-* **On JavaScript:**
-  `Float` is a 64-bit IEEE-754 double, matching JS `Number`. `Int` operations obey the host’s numeric semantics; keep integers within JS’s **safe integer** range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers. Gleam’s stdlib exposes the same checked APIs (`int.divide`, `float.divide`, etc.). 
-
-> Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via a library designed for Gleam/JS.
-
-## Integers
-
-Integers are written normally:
-
-```gleam
-1
-2
-3
--4
-2942930103
-```
-
-You can insert underscores for readability:
-
-```gleam
-3_000_000
-```
-
-Underscores have no semantic meaning.
-
-Gleam supports binary, octal, and hexadecimal literals with `0b`, `0o`, and `0x`:
-
-```gleam
-0b0101000101
-0o712
-0xFf  // `f` and `F` are equivalent
-```
-
-### Operators and comparisons
-
-```gleam
-1 + 3 - 2 * 4  // => -4
-7 / 2          // => 3  (truncated toward zero)
-3 % 2          // => 1
-1 > 0          // => True
-1 < 0          // => False
-1 >= 0         // => True
-1 <= 0         // => False
-```
-
-**Division note.** Integer `/` returns another integer (truncating). Gleam defines division by zero for operators to return `0` rather than crash; prefer the checked API when you want an error instead
-
-[1]: https://stackoverflow.com/questions/39268564/is-there-a-size-limit-for-erlang-integers?utm_source=chatgpt.com "Is there a size limit for Erlang integers?"
-[2]: https://tour.gleam.run/basics/floats/?utm_source=chatgpt.com "Floats"
-[3]: https://v8.dev/features/bigint?utm_source=chatgpt.com "BigInt: arbitrary-precision integers in JavaScript"
-
+  > Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via [the library designed for JS target](https://hexdocs.pm/bigi/index.html).
 
 ## Integers
-
-Integers in Gleam are written as usual:
+Here are some examples of integer literals in Gleam:
 
 ```gleam
+0
 1
-2
 3
 -4
 2942930103
@@ -74,12 +171,12 @@ Integers in Gleam are written as usual:
 Gleam supports `_` in integers for clarity:
 
 ```gleam
-3_000_000
+3_000_000 vs 3000000
+10_000_000 vs 10000000
+20_000_000_000 vs 20000000000
 ```
 
-_In the given example, the `_` has no syntactic and semantic meaning._
-
-Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with `0b`, `0o` and `0x` respectively:
+The `_` has no syntactic and semantic meaning. Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with `0b`, `0o` and `0x` respectively:
 
 ```gleam
 0b0101000101
@@ -253,9 +350,9 @@ If you want to convert a number to any base from `2` to `36`, you can use `to_ba
 48 |> to_base_string(36) // => Ok("1C")
 ```
 
-## Floating-point numbers
+## Floats
 
-`Float`-s are numbers that have a decimal point:
+Here are some examples of float literals:
 
 ```gleam
 1.6
