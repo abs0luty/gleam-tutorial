@@ -187,7 +187,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="booleans"><a class="header" href="#booleans">Booleans</a></h1>
+                        <h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
 <p>In Gleam, boolean literals are either <code>True</code> or <code>False</code>. Their type is <code>Bool</code>. You can apply binary operations on these boolean values, such as:</p>
 <pre><code class="language-gleam">False &amp;&amp; False // =&gt; False
 True &amp;&amp; False  // =&gt; False
@@ -231,7 +231,7 @@ pub fn main() {
 <pre><code>test
 </code></pre>
 <p>Because the left side (<code>True</code>) doesn't block evaluation, so <code>test()</code> is called.</p>
-<h2 id="printing-booleans"><a class="header" href="#printing-booleans">Printing Booleans</a></h2>
+<h3 id="printing-booleans"><a class="header" href="#printing-booleans">Printing Booleans</a></h3>
 <p>If you want to print a <code>Bool</code>, you must first convert it to a <code>String</code> using <code>bool.to_string</code>. For example:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
@@ -257,7 +257,7 @@ False
 src/main.gleam:5
 "True"
 </code></pre>
-<h2 id="negation"><a class="header" href="#negation">Negation</a></h2>
+<h3 id="negation"><a class="header" href="#negation">Negation</a></h3>
 <p>You can negate booleans in two ways:</p>
 <ul>
 <li>Using the <code>!</code> operator: <code>!True</code> → <code>False</code>, <code>!False</code> → <code>True</code></li>
@@ -277,7 +277,7 @@ False
 src/main.gleam:5
 True
 </code></pre>
-<h2 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe Operator</a></h2>
+<h3 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe Operator</a></h3>
 <p>It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
@@ -291,7 +291,7 @@ pub fn main() {
 <p>This does the same as:</p>
 <pre><code class="language-gleam">io.println(bool.to_string(True))
 </code></pre>
-<h1 id="numbers"><a class="header" href="#numbers">Numbers</a></h1>
+<h2 id="numbers"><a class="header" href="#numbers">Numbers</a></h2>
 <p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
 <ul>
 <li>
@@ -306,7 +306,7 @@ pub fn main() {
 </blockquote>
 </li>
 </ul>
-<h2 id="integers"><a class="header" href="#integers">Integers</a></h2>
+<h3 id="integers"><a class="header" href="#integers">Integers</a></h3>
 <p>Here are some examples of integer literals in Gleam:</p>
 <pre><code class="language-gleam">0
 1
@@ -457,7 +457,7 @@ int.max(3, 4)    // =&gt; 4
 // Same as running to_base36()
 48 |&gt; to_base_string(36) // =&gt; Ok("1C")
 </code></pre>
-<h2 id="floats"><a class="header" href="#floats">Floats</a></h2>
+<h3 id="floats"><a class="header" href="#floats">Floats</a></h3>
 <p>Here are some examples of float literals:</p>
 <pre><code class="language-gleam">1.6
 -0.3
@@ -557,7 +557,7 @@ float.max(3.1, 4.2)             // =&gt; 4.2
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../basics/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../basics/comments.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -571,7 +571,7 @@ float.max(3.1, 4.2)             // =&gt; 4.2
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../basics/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../basics/comments.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

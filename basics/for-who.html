@@ -153,7 +153,7 @@
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/intro.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/for-who.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -187,21 +187,11 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="comments"><a class="header" href="#comments">Comments</a></h1>
-<p>Let us now modify our previous hello world program:</p>
-<pre><code class="language-gleam">import gleam/io
-
-pub fn main() {
-  // Print hello world
-  io.println("Hello world!")
-}
-</code></pre>
-<p>Gleam allows you to write comments in your code. In Gleam, comments must start with two slashes and continue until the end of the line. For comments that extend beyond a single line, you’ll need to include <code>//</code> on each line, like this:</p>
-<pre><code class="language-gleam">// Hello, world! I have a lot to say, so much that it will take multiple
-// lines of text. Therefore, I will start each line with // to denote it
-// as part of a multi-line comment.
-</code></pre>
-<p>Comments don't have any semantic meaning and don't affect the way the program behaves. Instead, they are used for clarity and for documenting your code.</p>
+                        <h2 id="who-this-tutorial-is-for"><a class="header" href="#who-this-tutorial-is-for">Who this tutorial is for</a></h2>
+<p>This tutorial is for people who’ve written code before and don’t need hand-holding on the absolute basics. If you already know what variables, functions, types, and control flow are, you’re in the right place.</p>
+<p>We'll go fast on “intro to programming” stuff and focus on how Gleam does things - immutability, pattern matching, and writing clear, safe code.</p>
+<p>You <strong>don't</strong> need prior functional-programming experience. If you’ve mostly lived in Python/JS/Go/C++ and you’re curious about a friendly functional language on the BEAM, you’ll be fine. Plenty of respected language guides set similar expectations - for example, <em>Learn You a Haskell</em> explicitly targets people who’ve programmed before but are new to FP, which is the same vibe we’re going for. (<a href="https://learnyouahaskell.com/?utm_source=chatgpt.com" title="Learn You a Haskell for Great Good!">learnyouahaskell.com</a>)</p>
+<p>Think of this as a practical, programmer-to-programmer tour. Like the Go Tour and the Rust Book, we’ll move quickly from syntax to real patterns and habits, assuming you can already read code and run tools; the goal is to level up how you build, not teach what a loop is. (<a href="https://go.dev/tour/?utm_source=chatgpt.com" title="A Tour of Go">Go.dev</a>)</p>
 
                     </main>
 
@@ -211,7 +201,7 @@ pub fn main() {
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../basics/booleans-and-numbers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../basics/comments.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -225,7 +215,7 @@ pub fn main() {
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../basics/booleans-and-numbers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../basics/comments.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

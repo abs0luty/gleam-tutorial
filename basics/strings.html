@@ -187,20 +187,17 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="strings"><a class="header" href="#strings">Strings</a></h1>
-<p>In Gleam, <strong>strings are UTF-8 binaries</strong> written with double quotes. They are immutable and may contain any Unicode text.</p>
-<h2 id="encoding-model"><a class="header" href="#encoding-model">Encoding model</a></h2>
+                        <h2 id="strings"><a class="header" href="#strings">Strings</a></h2>
+<p>In Gleam, <strong>strings are UTF-8 binaries</strong>. They are immutable and may contain any Unicode text.</p>
 <p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, "é" may be one code point or a letter plus a combining accent). Under the hood:</p>
 <ul>
 <li>On the <strong>BEAM</strong> target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang - stdlib v7.0.2">Erlang.org</a>)</li>
 <li>On the <strong>JavaScript</strong> target, the host runtime represents strings as sequences of <strong>UTF-16 code units</strong>; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
 </ul>
-<h2 id="literals-and-concatenation"><a class="header" href="#literals-and-concatenation">Literals and concatenation</a></h2>
 <p>Strings are written with double quotes and support common escapes (e.g., <code>\"</code>, <code>\\</code>, <code>\n</code>, <code>\t</code>, <code>\u{...}</code>). Concatenate with <code>&lt;&gt;</code>:</p>
 <pre><code class="language-gleam">"Hello, Gleam!\n" &lt;&gt; "\u{1F44B}"  // "Hello, Gleam! 👋"
 </code></pre>
-<h2 id="core-operations-grapheme-aware-unless-noted"><a class="header" href="#core-operations-grapheme-aware-unless-noted">Core operations (grapheme-aware unless noted)</a></h2>
-<h3 id="emptiness--length"><a class="header" href="#emptiness--length">Emptiness &amp; length</a></h3>
+<h3 id="check-emptiness--length"><a class="header" href="#check-emptiness--length">Check emptiness &amp; length:</a></h3>
 <pre><code class="language-gleam">import gleam/string
 
 pub fn main() {
@@ -286,19 +283,17 @@ string.from_utf_codepoints(cps) // "🏳️‍🌈"
 string.utf_codepoint_to_int(cp)                      // 97
 </code></pre>
 <p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29/?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
-<h2 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h2>
+<h3 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h3>
 <pre><code class="language-gleam">string.first("icecream")   // Ok("i")
 string.last("icecream")    // Ok("m")
 string.capitalise("mamouna") // "Mamouna"
 string.to_option("")       // None
 string.to_option("hats")   // Some("hats")
 </code></pre>
-<h2 id="performance--target-notes"><a class="header" href="#performance--target-notes">Performance &amp; target notes</a></h2>
-<ul>
-<li>Most operations here are <strong>linear in graphemes</strong> (e.g., <code>length</code>, <code>reverse</code>, <code>replace</code>, <code>split</code>, <code>join</code>, <code>repeat</code>). <code>byte_size</code> is constant time on BEAM, linear on JS. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
-<li>BEAM recommends keeping Unicode text as <strong>UTF-8 binaries</strong>; this aligns with Gleam’s <code>String</code>. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com" title="unicode - stdlib v7.0.3">Erlang.org</a>)</li>
-<li>On JS, remember that built-in host APIs (outside Gleam) can expose <strong>UTF-16 code-unit</strong> semantics (e.g., <code>.length</code> in raw JS). Gleam’s own functions provide Unicode-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
-</ul>
+<h3 id="performance--target-notes"><a class="header" href="#performance--target-notes">Performance &amp; target notes</a></h3>
+<p>Most operations here are <strong>linear in graphemes</strong> (e.g., <code>length</code>, <code>reverse</code>, <code>replace</code>, <code>split</code>, <code>join</code>, <code>repeat</code>). <code>byte_size</code> is constant time on BEAM, linear on JS. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
+<p>BEAM recommends keeping Unicode text as <strong>UTF-8 binaries</strong>; this aligns with Gleam’s <code>String</code>. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com" title="unicode - stdlib v7.0.3">Erlang.org</a>)</p>
+<p>On JS, remember that built-in host APIs (outside Gleam) can expose <strong>UTF-16 code-unit</strong> semantics (e.g., <code>.length</code> in raw JS). Gleam’s own functions provide Unicode-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <ul>
 <li><strong><code>gleam/string</code> module docs (HexDocs)</strong> - API reference. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>

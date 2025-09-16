@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Assignments - Gleam programming language</title>
+        <title>Pattern matching - Gleam programming language</title>
 
 
         <!-- Custom HTML head -->
@@ -12,36 +12,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="./theme/catppuccin.css">
-        <link rel="stylesheet" href="./theme/custom.css">
+        <link rel="stylesheet" href=".././theme/catppuccin.css">
+        <link rel="stylesheet" href=".././theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -147,13 +147,13 @@
                     <h1 class="menu-title">Gleam programming language</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/assignments.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/assignments-and-pattern-matching.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -187,17 +187,120 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="assignments"><a class="header" href="#assignments">Assignments</a></h1>
+                        <h2 id="assignments"><a class="header" href="#assignments">Assignments</a></h2>
+<p>In Gleam you bind values with <code>let</code>. Names use <code>snake_case</code>, bindings are <strong>immutable</strong>, and you can <strong>re-bind</strong> a name later to a new value (the old value doesn’t change; you just shadow the name).</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  let x = "Original"
+  io.println(x)
+
+  // Copy the value
+  let y = x
+  io.println(y)
+
+  // Shadow x with a new value
+  let x = "New"
+  io.println(x)
+
+  // y still points to the original value
+  io.println(y)
+}
+</code></pre>
+<p>If you create a variable and never use it, the compiler warns you. Prefix it with an underscore to show that’s intentional.</p>
+<pre><code class="language-gleam">pub fn main() {
+  // Intentional: silence the unused warning
+  let _score = 1000
+}
+</code></pre>
+<p>You can add type annotations to <code>let</code> bindings. They help readers but don’t change how type checking works (other than catching mismatches).</p>
+<pre><code class="language-gleam">pub fn main() {
+  let _name: String = "Gleam"
+  let _is_cool: Bool = True
+  let _version: Int = 1
+}
+</code></pre>
+<h2 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h2>
+<p>Gleam lets you <strong>pattern match</strong> both when assigning and in <code>case</code> expressions.</p>
+<h3 id="let-clause"><a class="header" href="#let-clause">Let clause</a></h3>
+<p>With plain <code>let</code>, your pattern has to be <strong>total</strong> for the value’s shape - i.e., it must always match.</p>
+<pre><code class="language-gleam">pub fn main() {
+  // Tuple destructuring: always matches a 2-tuple
+  let point = #(3, 4)
+  let #(x, y) = point
+
+  // Exact-length list destructuring (must be exactly two elements)
+  let [a, b] = [10, 20]
+
+  io.println(int.to_string(x + y))
+  io.println(int.to_string(a + b))
+}
+</code></pre>
+<p>If the value might not have the exact shape (e.g., the list might be empty), use a <code>case</code> instead of a plain <code>let</code>.</p>
+<h3 id="case-expression"><a class="header" href="#case-expression">Case expression</a></h3>
+<p><code>case</code> lets you handle multiple shapes safely. You can match strings using the concatenation operator (<code>&lt;&gt;</code>):</p>
+<pre><code class="language-gleam">import gleam/io
+
+pub fn main() {
+  io.println(get_name("Hello, Joe"))
+  io.println(get_name("Hello, Mike"))
+  io.println(get_name("System still working?"))
+}
+
+fn get_name(x: String) -&gt; String {
+  case x {
+    "Hello, " &lt;&gt; name -&gt; name
+    _ -&gt; "Unknown"
+  }
+}
+</code></pre>
+<p>When working with lists you can match on length and contents. Use <code>..</code> to capture "the rest" of the elements.</p>
+<pre><code class="language-gleam">import gleam/int
+import gleam/list
+import gleam/io
+
+pub fn main() {
+  let xs = list.repeat(int.random(5), times: int.random(3))
+  io.println(list.to_string(xs, int.to_string))
+
+  let result = case xs {
+    [] -&gt; "Empty list"
+    [1] -&gt; "List of just 1"
+    [4, ..] -&gt; "List starting with 4"
+    [_, _] -&gt; "List of 2 elements"
+    _ -&gt; "Some other list"
+  }
+
+  io.println(result)
+}
+</code></pre>
+<h2 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h2>
+<p>Sometimes you <em>know</em> a value has a certain shape and want to crash immediately if it doesn’t. <code>let assert</code> is like <code>let</code>, but it allows <strong>partial</strong> patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with <code>as</code>.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let a = unsafely_get_first_element([123])
+  io.println(int.to_string(a))
+
+  // This will panic at runtime with our custom message:
+  let b = unsafely_get_first_element([])
+  io.println(int.to_string(b))
+}
+
+pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
+  // Partial pattern: will panic on []
+  let assert [first, ..] = items as "List should not be empty"
+  first
+}
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="basics/tuples-and-lists.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../basics/tuples-and-lists.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="pattern-matching.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -207,11 +310,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="basics/tuples-and-lists.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../basics/tuples-and-lists.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="pattern-matching.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -226,17 +329,17 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="syntax.js"></script>
-        <script src="highlight.js"></script>
+        <script src="../syntax.js"></script>
+        <script src="../highlight.js"></script>
 
 
 
