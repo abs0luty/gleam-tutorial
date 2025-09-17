@@ -425,7 +425,10 @@ Hello, world!
     Running hello_world.main
 Hello, world!
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="who-this-tutorial-is-for"><a class="header" href="#who-this-tutorial-is-for">Who this tutorial is for</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="who-this-tutorial-is-made-for"><a class="header" href="#who-this-tutorial-is-made-for">Who this tutorial is made for</a></h2>
+<p align="center">
+<img width="70%" src="https://i.programmerhumor.io/2022/06/programmerhumor-io-programming-memes-f08900c4b6466e7.png" />
+</p>
 <p>This tutorial is for people who’ve written code before and don’t need hand-holding on the absolute basics. If you already know what variables, functions, types, and control flow are, you’re in the right place.</p>
 <p>We'll go fast on “intro to programming” stuff and focus on how Gleam does things - immutability, pattern matching, and writing clear, safe code.</p>
 <p>You <strong>don't</strong> need prior functional-programming experience. If you’ve mostly lived in Python/JS/Go/C++ and you’re curious about a friendly functional language on the BEAM, you’ll be fine. Plenty of respected language guides set similar expectations - for example, <em>Learn You a Haskell</em> explicitly targets people who’ve programmed before but are new to FP, which is the same vibe we’re going for. (<a href="https://learnyouahaskell.com" title="Learn You a Haskell for Great Good!">learnyouahaskell.com</a>)</p>
@@ -439,12 +442,11 @@ pub fn main() {
   io.println("Hello world!")
 }
 </code></pre>
-<p>Gleam allows you to write comments in your code. In Gleam, comments must start with two slashes and continue until the end of the line. For comments that extend beyond a single line, you’ll need to include <code>//</code> on each line, like this:</p>
+<p>Gleam allows you to write comments in your code by prefixing them with <code>//</code>:</p>
 <pre><code class="language-gleam">// Hello, world! I have a lot to say, so much that it will take multiple
 // lines of text. Therefore, I will start each line with // to denote it
 // as part of a multi-line comment.
 </code></pre>
-<p>Comments don't have any semantic meaning and don't affect the way the program behaves. Instead, they are used for clarity and for documenting your code.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
 <p>In Gleam, boolean literals are either <code>True</code> or <code>False</code>. Their type is <code>Bool</code>. You can apply binary operations on these boolean values, such as:</p>
 <pre><code class="language-gleam">False &amp;&amp; False // =&gt; False
@@ -537,7 +539,7 @@ src/main.gleam:5
 True
 </code></pre>
 <h3 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe Operator</a></h3>
-<p>It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:</p>
+<p>It's common in Gleam to compose function calls using the pipe operator:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
 
@@ -550,6 +552,7 @@ pub fn main() {
 <p>This does the same as:</p>
 <pre><code class="language-gleam">io.println(bool.to_string(True))
 </code></pre>
+<p>We'll dive deeper in later sections of this tutorial.</p>
 <h2 id="numbers"><a class="header" href="#numbers">Numbers</a></h2>
 <p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
 <ul>
@@ -596,7 +599,7 @@ pub fn main() {
 <p><strong>Note</strong>: In Gleam division between integers returns another integer, which is the result of the division rounded down.</p>
 </blockquote>
 <blockquote>
-<p><strong>Note</strong>: In Gleam division doesn't handle edge case with divisor being <code>0</code>:</p>
+<p><strong>Note</strong>: In Gleam division returns <code>0</code> when divisor is <code>0</code>:</p>
 <pre><code class="language-gleam">2 / 0 // =&gt; 0
 1 / 0 // =&gt; 0
 0 / 0 // =&gt; 0
@@ -616,7 +619,7 @@ fn main() {
 }
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: There is currently no maximum value for integers in Gleam, however there is a difference in behaviour for javascript and erlang targets for converting big integers to strings. Example:</p>
+<p><strong>Note</strong>: As mentioned before, there is a difference in behaviour for javascript and erlang targets for converting big integers to strings. Example:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/int
 
@@ -671,7 +674,7 @@ Found type:
 
     Int
 </code></pre>
-<p>So <code>2</code> must be changed to <code>2.0</code>. See the <a href="basics/booleans-and-numbers.html#floating-point-numbers">floating point numbers section</a> below.</p>
+<p>So <code>2</code> must be changed to <code>2.0</code>. See the <a href="basics/booleans-and-numbers.html#floats">floating point numbers section</a> below.</p>
 </blockquote>
 <p>If you want to convert an integer to float, you can use <code>to_float</code> function:</p>
 <pre><code class="language-gleam">3  |&gt; to_float // 3.0
@@ -753,7 +756,7 @@ Hint: remove it.
 </code></pre>
 </blockquote>
 <blockquote>
-<p><strong>Note</strong>: It is a little more difficult with comparison operators. <code>==</code> and <code>!=</code> work for both integers and floats. <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> however only work for integers. So you need to use analogs: <code>&gt;.</code>, <code>&lt;.</code>, <code>&gt;=.</code>, <code>&lt;=.</code>:</p>
+<p><strong>Note</strong>: Situation is a little more complex with comparison operators. <code>==</code> and <code>!=</code> work for both integers and floats. <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> however only work for integers. So you need to use analogs: <code>&gt;.</code>, <code>&lt;.</code>, <code>&gt;=.</code>, <code>&lt;=.</code>:</p>
 <pre><code class="language-gleam">2.0 &gt;.  1.0  // =&gt; True
 2.0 &lt;=. 2.0  // =&gt; True
 2.0 &lt;.  2.0  // =&gt; True
@@ -762,7 +765,7 @@ Hint: remove it.
 </code></pre>
 </blockquote>
 <blockquote>
-<p><strong>Note</strong>: In Gleam as with integers division doesn't handle edge case with divisor being <code>0.0</code>:</p>
+<p><strong>Note</strong>: In Gleam, as with integers, division returns <code>0.0</code> when divisor is <code>0.0</code>:</p>
 <pre><code class="language-gleam">2.0 /. 0.0 // =&gt; 0.0
 1.0 /. 0.0 // =&gt; 0.0
 0.0 /. 0.0 // =&gt; 0.0
