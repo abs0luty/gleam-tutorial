@@ -125,7 +125,7 @@ True
 
 ### Pipe Operator
 
-It's common in Gleam to compose function calls using the pipe operator. You can use it with booleans too. For example:
+It's common in Gleam to compose function calls using the pipe operator:
 
 ```gleam
 import gleam/io
@@ -143,6 +143,8 @@ This does the same as:
 ```gleam
 io.println(bool.to_string(True))
 ```
+
+We'll dive deeper in later sections of this tutorial.
 
 ## Numbers
 
@@ -199,7 +201,7 @@ Gleam supports basic primitive operations with integers:
 
 > **Note**: In Gleam division between integers returns another integer, which is the result of the division rounded down.
 
-> **Note**: In Gleam division doesn't handle edge case with divisor being `0`:
+> **Note**: In Gleam division returns `0` when divisor is `0`:
 >
 > ```gleam
 > 2 / 0 // => 0
@@ -226,7 +228,7 @@ fn main() {
 }
 ```
 
-> **Note**: There is currently no maximum value for integers in Gleam, however there is a difference in behaviour for javascript and erlang targets for converting big integers to strings. Example:
+> **Note**: As mentioned before, there is a difference in behaviour for javascript and erlang targets for converting big integers to strings. Example:
 > ```gleam
 > import gleam/io
 > import gleam/int
@@ -294,7 +296,7 @@ If you want the result of the base being raised to the power of exponent, you ca
 >
 >     Int
 > ```
-> So `2` must be changed to `2.0`. See the [floating point numbers section](#floating-point-numbers) below.
+> So `2` must be changed to `2.0`. See the [floating point numbers section](#floats) below.
 
 If you want to convert an integer to float, you can use `to_float` function:
 
@@ -398,7 +400,7 @@ You can also use scientific notation with floats:
 > 0.0 /. 0.0 // => 0.0
 > ```
 
-> **Note**: It is a little more difficult with comparison operators. `==` and `!=` work for both integers and floats. `>`, `<`, `>=`, `<=` however only work for integers. So you need to use analogs: `>.`, `<.`, `>=.`, `<=.`:
+> **Note**: Situation is a little more complex with comparison operators. `==` and `!=` work for both integers and floats. `>`, `<`, `>=`, `<=` however only work for integers. So you need to use analogs: `>.`, `<.`, `>=.`, `<=.`:
 > ```gleam
 > 2.0 >.  1.0  // => True
 > 2.0 <=. 2.0  // => True
@@ -407,7 +409,7 @@ You can also use scientific notation with floats:
 > 2.0 !=  2.0  // => False
 > ```
 
-> **Note**: In Gleam as with integers division doesn't handle edge case with divisor being `0.0`:
+> **Note**: In Gleam, as with integers, division returns `0.0` when divisor is `0.0`:
 > ```gleam
 > 2.0 /. 0.0 // => 0.0
 > 1.0 /. 0.0 // => 0.0

@@ -1,4 +1,8 @@
-## Who this tutorial is for
+## Who this tutorial is made for
+
+<p align="center">
+<img width="70%" src="https://i.programmerhumor.io/2022/06/programmerhumor-io-programming-memes-f08900c4b6466e7.png" />
+</p>
 
 This tutorial is for people who’ve written code before and don’t need hand-holding on the absolute basics. If you already know what variables, functions, types, and control flow are, you’re in the right place. 
 
