@@ -188,16 +188,18 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="strings"><a class="header" href="#strings">Strings</a></h2>
-<p>In Gleam, <strong>strings are UTF-8 binaries</strong>. They are immutable and may contain any Unicode text.</p>
-<p>Gleam treats user-visible characters as <strong>grapheme clusters</strong> (for example, "é" may be one code point or a letter plus a combining accent). Under the hood:</p>
+<p>In Gleam, <strong>strings are UTF-8 binaries</strong>. They're immutable and can hold any Unicode text. Gleam aims for <strong>grapheme-aware</strong> behavior by default (the "user-visible characters" you expect), so things like length, reversing, and slicing won't split a character in half even when it's composed of multiple code points.</p>
 <ul>
-<li>On the <strong>BEAM</strong> target, strings are UTF-8 binaries; Erlang provides Unicode-aware stdlib functions for them. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang - stdlib v7.0.2">Erlang.org</a>)</li>
-<li>On the <strong>JavaScript</strong> target, the host runtime represents strings as sequences of <strong>UTF-16 code units</strong>; Gleam’s stdlib layers APIs so you still get grapheme-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
+<li>On the <strong>BEAM</strong> target, strings are UTF-8 binaries and Erlang's Unicode-aware functions back a lot of the heavy lifting. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html" title="Using Unicode in Erlang  -  stdlib v7.0.2">Erlang.org</a>)</li>
+<li>On the <strong>JavaScript</strong> target, the host uses UTF-16 code units under the hood, but Gleam's stdlib gives you grapheme-aware APIs so you don't have to reason in code units. (<a href="https://unicode.org/reports/tr29/" title="UAX #29: Unicode Text Segmentation">MDN Web Docs</a>)</li>
 </ul>
-<p>Strings are written with double quotes and support common escapes (e.g., <code>\"</code>, <code>\\</code>, <code>\n</code>, <code>\t</code>, <code>\u{...}</code>). Concatenate with <code>&lt;&gt;</code>:</p>
+<p>Strings use double quotes and typical escapes (<code>\"</code>, <code>\\</code>, <code>\n</code>, <code>\t</code>, <code>\u{...}</code>). Concatenate with <code>&lt;&gt;</code>:</p>
 <pre><code class="language-gleam">"Hello, Gleam!\n" &lt;&gt; "\u{1F44B}"  // "Hello, Gleam! 👋"
 </code></pre>
-<h3 id="check-emptiness--length"><a class="header" href="#check-emptiness--length">Check emptiness &amp; length:</a></h3>
+<h3 id="check-emptiness--length"><a class="header" href="#check-emptiness--length">Check emptiness &amp; length</a></h3>
+<p><code>string.is_empty</code> is a fast, zero-allocation check.</p>
+<p><code>string.length</code> counts <strong>graphemes</strong> (linear time because it must walk boundaries).</p>
+<p><code>string.byte_size</code> reports the <strong>UTF-8 byte length</strong> (constant time on BEAM; linear on JS because it has to encode). This split is intentional: use <code>length</code> for UX-facing counts and <code>byte_size</code> for binary/IO concerns.</p>
 <pre><code class="language-gleam">import gleam/string
 
 pub fn main() {
@@ -208,99 +210,104 @@ pub fn main() {
   echo string.byte_size("ß↑e̊")   // 8 (bytes)
 }
 </code></pre>
-<p><code>length</code> runs in linear time because it walks graphemes. <code>byte_size</code> returns UTF-8 bytes (constant time on BEAM, linear on JS).</p>
 <h3 id="reverse"><a class="header" href="#reverse">Reverse</a></h3>
+<p><code>string.reverse</code> flips by <strong>graphemes</strong>, not bytes or code points, so diacritics, emoji sequences, and composed characters stay intact:</p>
 <pre><code class="language-gleam">string.reverse("stressed") // "desserts"
 </code></pre>
-<p>Linear time, operates on graphemes.</p>
 <h3 id="replace-all-occurrences"><a class="header" href="#replace-all-occurrences">Replace (all occurrences)</a></h3>
+<p><code>string.replace</code> swaps <strong>all</strong> non-overlapping matches of a substring. It's grapheme-safe and doesn't interpret patterns - just literal substring replacement - so you don't have to worry about regex semantics here. Use it for path munging, simple templating, or normalizing separators:</p>
 <pre><code class="language-gleam">string.replace(in: "www.example.com", each: ".", with: "-")
 // "www-example-com"
 </code></pre>
 <h3 id="case-conversion"><a class="header" href="#case-conversion">Case conversion</a></h3>
+<p><code>lowercase</code> and <code>uppercase</code> are Unicode-aware and rely on target primitives under the hood (BEAM/JS). That means locale-agnostic rules (e.g., Turkish dotted/dotless "i" special cases are not locale-sensitive). Use these for case-folding before comparisons or when normalizing tags.</p>
 <pre><code class="language-gleam">string.lowercase("X-FILES") // "x-files"
 string.uppercase("skinner") // "SKINNER"
 </code></pre>
-<p>Useful for case-insensitive work; implemented via target-specific primitives.</p>
 <h3 id="ordering--comparison"><a class="header" href="#ordering--comparison">Ordering &amp; comparison</a></h3>
+<p><code>string.compare(a, b)</code> is <strong>lexicographic over graphemes</strong>, returning <code>order.Lt</code>, <code>Eq</code>, or <code>Gt</code>:</p>
 <pre><code class="language-gleam">string.compare("Anthony", "Anthony") // order.Eq
 string.compare("A", "B")             // order.Lt
 </code></pre>
-<p>Comparison is lexicographic over graphemes.</p>
 <h3 id="substrings--slicing"><a class="header" href="#substrings--slicing">Substrings &amp; slicing</a></h3>
+<p><code>slice</code> takes a starting grapheme index and a length (also in graphemes). Negative <code>at_index</code> counts from the end. Out-of-range indices are safe and yield <code>""</code>, which is great for defensive string handling:</p>
 <pre><code class="language-gleam">string.slice(from: "gleam", at_index: 1, length: 2)  // "le"
 string.slice(from: "gleam", at_index: -2, length: 2) // "am"
 </code></pre>
-<p>Negative <code>at_index</code> counts from the end; out-of-range is safe and returns <code>""</code>.</p>
 <h3 id="cropping--dropping"><a class="header" href="#cropping--dropping">Cropping &amp; dropping</a></h3>
+<p><code>crop(from, before)</code> finds the first occurrence of <code>before</code> and returns the remainder, useful for stripping prefixes without worrying about indices.</p>
+<p><code>drop_start</code>/<code>drop_end</code> remove a fixed <strong>grapheme</strong> count from the start/end, which makes them predictable with multicodepoint characters:</p>
 <pre><code class="language-gleam">string.crop(from: "The Lone Gunmen", before: "Lone") // "Lone Gunmen"
 string.drop_start(from: "  hats", up_to: 2)          // "hats"
 string.drop_end(from: "hats  ", up_to: 2)            // "hats"
 </code></pre>
 <h3 id="contains--prefix--suffix"><a class="header" href="#contains--prefix--suffix">Contains / prefix / suffix</a></h3>
+<p><code>contains</code>, <code>starts_with</code>, and <code>ends_with</code> check literal substrings. They're case-sensitive and don't handle locale collation, so normalize with <code>lowercase</code> if you want case-insensitive logic:</p>
 <pre><code class="language-gleam">string.contains(does: "theory", contain: "ory") // True
 string.starts_with("theory", "the")             // True
 string.ends_with("theory", "ory")               // True
 </code></pre>
 <h3 id="splitting"><a class="header" href="#splitting">Splitting</a></h3>
+<p><code>split</code> returns <strong>all</strong> pieces, including a trailing empty string if the input ends with the separator - handy for filesystem-like paths where the trailing slash is meaningful.</p>
+<p><code>split_once</code> stops after the first separator and returns <code>Ok(#(left, right))</code>, or <code>Error(Nil)</code> if missing - perfect for "key:value" style parsing:</p>
 <pre><code class="language-gleam">string.split("home/gleam/desktop/", on: "/")
 // ["home","gleam","desktop",""]
 
 string.split_once("home/gleam/desktop/", on: "/")
 // Ok(#("home", "gleam/desktop/"))
 </code></pre>
-<p><code>split_once</code> returns <code>Error(Nil)</code> if the separator is missing.</p>
 <h3 id="joining--building"><a class="header" href="#joining--building">Joining &amp; building</a></h3>
+<p><code>append</code>, <code>concat</code>, and <code>join</code> <strong>copy</strong> data and are linear in the total output size - great for one-off joins:</p>
 <pre><code class="language-gleam">string.append(to: "butter", suffix: "fly")  // "butterfly"
-string.concat(["never","the","less"])       // "nevertheless"
-string.join(["home","evan","Desktop"], with: "/") // "home/evan/Desktop"
+string.concat(["never", "the", "less"])       // "nevertheless"
+string.join(["home", "evan", "Desktop"], with: "/") // "home/evan/Desktop"
 </code></pre>
 <h3 id="repeating--padding"><a class="header" href="#repeating--padding">Repeating &amp; padding</a></h3>
+<p><code>repeat</code> is linear in the final size and won't split graphemes.</p>
+<p><code>pad_start</code>/<code>pad_end</code> pad in <strong>graphemes</strong>, so a multi-codepoint pad string counts as one grapheme per repeat, matching user expectations for alignment:</p>
 <pre><code class="language-gleam">string.repeat("ha", times: 3)        // "hahaha"
 string.pad_start("121", to: 5, with: ".") // "..121"
 string.pad_end("123", to: 5, with: ".")   // "123.."
 </code></pre>
 <h3 id="trimming"><a class="header" href="#trimming">Trimming</a></h3>
+<p><code>trim</code>, <code>trim_start</code>, and <code>trim_end</code> remove Unicode whitespace per the standard definition (not just ASCII spaces):</p>
 <pre><code class="language-gleam">string.trim("  hats  \n")       // "hats"
 string.trim_start("  hats  \n") // "hats  \n"
 string.trim_end("  hats  \n")   // "  hats"
 </code></pre>
-<p>Whitespace is defined per Unicode "Pattern_White_Space" (UAX #31). (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
 <h2 id="working-at-grapheme--code-point-level"><a class="header" href="#working-at-grapheme--code-point-level">Working at grapheme / code point level</a></h2>
 <h3 id="pop--iterate-graphemes"><a class="header" href="#pop--iterate-graphemes">Pop &amp; iterate graphemes</a></h3>
+<p><code>pop_grapheme</code> returns the first grapheme and the rest - a clean, Unicode-safe way to peel characters from the front.</p>
+<p><code>to_graphemes</code> gives you a list of grapheme clusters for iteration, cursor logic, or UI navigation.</p>
 <pre><code class="language-gleam">string.pop_grapheme("gleam") // Ok(#("g", "leam"))
-string.to_graphemes("abc")   // ["a","b","c"]
+string.to_graphemes("abc")   // ["a", "b", "c"]
 </code></pre>
 <h3 id="code-points-unicode-scalars"><a class="header" href="#code-points-unicode-scalars">Code points (Unicode scalars)</a></h3>
-<p>Convert a <code>String</code> to a list of Unicode <strong>code points</strong> and back:</p>
+<p>These APIs expose raw <strong>Unicode scalar values</strong> (code points), which is useful for serialization, custom parsing, or implementing algorithms that work below the grapheme layer (e.g., normalization, filters):</p>
 <pre><code class="language-gleam">let cps = string.to_utf_codepoints("🏳️‍🌈")
 // [UtfCodepoint(127987), 65039, 8205, 127752]
 
 string.from_utf_codepoints(cps) // "🏳️‍🌈"
 </code></pre>
-<p>Construct / inspect code points:</p>
+<p>Creating/inspecting scalars:</p>
 <pre><code class="language-gleam">let assert Ok(cp) = string.utf_codepoint(97)         // 'a'
 string.utf_codepoint_to_int(cp)                      // 97
 </code></pre>
-<p>These functions expose the scalar values; grapheme boundaries still follow UAX #29. (<a href="https://unicode.org/reports/tr29" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</p>
 <h3 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h3>
-<pre><code class="language-gleam">string.first("icecream")   // Ok("i")
-string.last("icecream")    // Ok("m")
+<p><code>first</code>/<code>last</code> return the first/last <strong>grapheme</strong> as an <code>Ok(...)</code> or an <code>Error(Nil)</code> for empty strings.</p>
+<p><code>capitalise</code> uppercases the first grapheme and lowercases the rest - handy for display names, but note it's not locale-aware title-casing.</p>
+<p><code>to_option</code> converts <code>""</code> to <code>None</code> and non-empty strings to <code>Some</code>, which models "maybe present text" more cleanly than sentinel empty strings.</p>
+<pre><code class="language-gleam">string.first("icecream")     // Ok("i")
+string.last("icecream")      // Ok("m")
 string.capitalise("mamouna") // "Mamouna"
-string.to_option("")       // None
-string.to_option("hats")   // Some("hats")
+string.to_option("")         // None
+string.to_option("hats")     // Some("hats")
 </code></pre>
-<h3 id="performance--target-notes"><a class="header" href="#performance--target-notes">Performance &amp; target notes</a></h3>
-<p>Most operations here are <strong>linear in graphemes</strong> (e.g., <code>length</code>, <code>reverse</code>, <code>replace</code>, <code>split</code>, <code>join</code>, <code>repeat</code>). <code>byte_size</code> is constant time on BEAM, linear on JS. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</p>
-<p>BEAM recommends keeping Unicode text as <strong>UTF-8 binaries</strong>; this aligns with Gleam’s <code>String</code>. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode.html?utm_source=chatgpt.com" title="unicode - stdlib v7.0.3">Erlang.org</a>)</p>
-<p>On JS, remember that built-in host APIs (outside Gleam) can expose <strong>UTF-16 code-unit</strong> semantics (e.g., <code>.length</code> in raw JS). Gleam’s own functions provide Unicode-aware behavior. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <ul>
-<li><strong><code>gleam/string</code> module docs (HexDocs)</strong> - API reference. (<a href="https://hexdocs.pm/gleam_stdlib/gleam/string.html?utm_source=chatgpt.com" title="gleam/string · gleam_stdlib · v0.63.0">hexdocs.pm</a>)</li>
-<li><strong>Gleam Tour: Strings</strong> - literals, escapes, concatenation. (<a href="https://tour.gleam.run/basics/strings" title="Strings">tour.gleam.run</a>)</li>
-<li><strong>Unicode UAX #29</strong> - grapheme/word/sentence boundaries. (<a href="https://www.unicode.org/reports/tr29/tr29-32.html?utm_source=chatgpt.com" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</li>
-<li><strong>Erlang Unicode usage</strong> - background for BEAM target. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html?utm_source=chatgpt.com" title="Using Unicode in Erlang - stdlib v7.0.2">Erlang.org</a>)</li>
-<li><strong>MDN: JavaScript Strings</strong> - UTF-16 code-unit representation. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String?utm_source=chatgpt.com" title="String - JavaScript">MDN Web Docs</a>)</li>
+<li><strong>Erlang Unicode usage / <code>unicode</code> module</strong>  -  background for BEAM target and UTF-8 binaries. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html" title="Using Unicode in Erlang  -  stdlib v7.0.2">Erlang.org</a>)</li>
+<li><strong>Unicode UAX #29</strong>  -  grapheme/word/sentence boundaries (what "grapheme-aware" means). (<a href="https://unicode.org/reports/tr29/" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</li>
+<li><strong>MDN: JavaScript Strings</strong>  -  UTF-16 code units and <code>.length</code> behavior on the JS target. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" title="String: length - JavaScript | MDN - Mozilla">MDN Web Docs</a>)</li>
 </ul>
 
                     </main>

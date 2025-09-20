@@ -4,7 +4,7 @@
   background: #eff1f5;
 }
 .latte .hljs-keyword {
-  color: #8839ef;
+  color: #d20f39;
 }
 .latte .hljs-built_in {
   color: #d20f39;
@@ -180,7 +180,8 @@
   background: #303446;
 }
 .frappe .hljs-keyword {
-  color: #ca9ee6;
+  /* color: #ca9ee6; */
+  color: #e78284;
 }
 .frappe .hljs-built_in {
   color: #e78284;
@@ -356,7 +357,8 @@
   background: #24273a;
 }
 .macchiato .hljs-keyword {
-  color: #c6a0f6;
+  /* color: #c6a0f6; */
+  color: #ed8796
 }
 .macchiato .hljs-built_in {
   color: #ed8796;
@@ -532,7 +534,8 @@
   background: #1e1e2e;
 }
 .mocha .hljs-keyword {
-  color: #cba6f7;
+  /* color: #cba6f7; */
+  color: #f38ba8
 }
 .mocha .hljs-built_in {
   color: #f38ba8;

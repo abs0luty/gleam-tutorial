@@ -188,29 +188,31 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
-<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>-their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc.</p>
-<p>Under the hood they're <strong>immutable singly-linked lists</strong>, which makes adding/removing at the <strong>front</strong> the "head" very cheap, but operating on the <strong>end</strong> expensive. As a result, you typically build and traverse lists from the front, and avoid random indexing.</p>
-<p>On both BEAM and JavaScript targets, Gleam exposes the same list semantics; you use the standard library’s <code>gleam/list</code> for everyday operations such as <code>map</code>, <code>filter</code>, <code>fold</code>, etc.</p>
+<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>—their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc.</p>
+<p>Under the hood they're <strong>immutable singly-linked</strong> lists. That makes adding or removing at the <strong>front</strong> O(1) and anything that touches the <strong>end</strong> O(n).</p>
+<p>So in Gleam you usually <strong>build from the front</strong> and avoid random indexing. These rules are the same on both Erlang/BEAM and JS targets; you use <code>gleam/list</code> for all the usual suspects like <code>map</code>, <code>filter</code>, <code>fold</code>, and friends.</p>
 <h3 id="literal-syntax"><a class="header" href="#literal-syntax">Literal syntax</a></h3>
+<p>Use square brackets. Empty is <code>[]</code>. Elements are homogeneous by type parameter:</p>
 <pre><code class="language-gleam">let empty = []
 let nums  = [1, 2, 3]
 </code></pre>
 <h3 id="prepend-constant-time"><a class="header" href="#prepend-constant-time">Prepend (constant time)</a></h3>
+<p>Prepending doesn't copy the whole list, so it's the idiomatic way to build sequences efficiently:</p>
 <pre><code class="language-gleam">let tail = [2, 3, 4]
 let all  = [1, ..tail]     // -&gt; [1, 2, 3, 4]
 </code></pre>
+<p>That spread syntax is specific to <strong>prefixing</strong>. It's not a general "concatenate two lists" shortcut. The language even warns if you accidentally try to use it as concat.</p>
 <h2 id="pattern-matching--deconstruction"><a class="header" href="#pattern-matching--deconstruction">Pattern matching &amp; deconstruction</a></h2>
-<p>Pattern match lists in <code>case</code> expressions:</p>
+<p>You can destructure lists right in a <code>case</code>. It's a clean way to branch on empty vs non-empty and bind the head and tail:</p>
 <pre><code class="language-gleam">case nums {
   [] -&gt; "empty"
   [first] -&gt; "one: " &lt;&gt; int.to_string(first)
   [head, ..rest] -&gt; "head " &lt;&gt; int.to_string(head)
 }
 </code></pre>
-<p><code>[]</code> matches an empty list, <code>[_]</code> a single-element list, and <code>[_, _, ..]</code> matches lists with at least two elements. The <code>..</code> "spread" binds the remaining tail.</p>
-<p>There’s also a dedicated <em>prefix</em> syntax for building from an existing list and a matching deconstruction pattern for peeling off the head, shown in the stdlib docs.</p>
+<p><code>[]</code> matches empty, <code>[x]</code> matches single-element, and <code>[h, ..t]</code> peels one off the front.</p>
 <h2 id="everyday-operators--utilities"><a class="header" href="#everyday-operators--utilities">Everyday operators &amp; utilities</a></h2>
-<p>Below are the most common tools. All are <strong>pure</strong> and return new lists.</p>
+<p>All functions are <strong>pure</strong> and return new lists. The important cost model: anything that must walk the list is <strong>linear</strong>; operations that only touch the head are <strong>constant time</strong>.</p>
 <h3 id="length-emptiness-membership"><a class="header" href="#length-emptiness-membership">Length, emptiness, membership</a></h3>
 <pre><code class="language-gleam">import gleam/list
 
@@ -220,75 +222,83 @@ pub fn main() {
   echo list.contains([1, 0], 0) // True
 }
 </code></pre>
-<p><code>length</code> is linear-it walks the list.</p>
+<p><code>length</code> and <code>contains</code> traverse the list, so they're O(n). Use them when you need them, but don't call them in tight loops if you can carry the info through folds instead.</p>
 <h3 id="head--tail"><a class="header" href="#head--tail">Head &amp; tail</a></h3>
 <pre><code class="language-gleam">list.first([1, 2])  // Ok(1)
 list.rest([1, 2])   // Ok([2])
 </code></pre>
-<p>Constant time; no copying.</p>
+<p>These do not copy. They're constant time and the safest way to peek or step through a list one element at a time.</p>
 <h3 id="map--filter--fold"><a class="header" href="#map--filter--fold">Map / Filter / Fold</a></h3>
 <pre><code class="language-gleam">list.map([2, 4, 6], fn(x) { x * 2 })     // [4, 8, 12]
-list.filter([2, 4, 6, 1], fn(x) { x&gt;2 }) // [4, 6]
+list.filter([2, 4, 6, 1], fn(x) { x &gt; 2 }) // [4, 6]
 list.fold([1, 2, 3], 0, fn(acc, x) { acc + x }) // 6
 </code></pre>
-<p>These are your "loops" in functional Gleam.</p>
+<p>These are your <strong>loops</strong>. Prefer them over manual recursion for clarity.</p>
 <h3 id="find--predicates"><a class="header" href="#find--predicates">Find &amp; predicates</a></h3>
 <pre><code class="language-gleam">list.find([1, 2, 3], fn(x) { x &gt; 2 }) // Ok(3)
 list.any([3, 4], fn(x) { x &gt; 3 })     // True
 list.all([4, 5], fn(x) { x &gt; 3 })     // True
 </code></pre>
-<p>Short-circuiting versions of "any"/"all".</p>
+<p><code>any</code>/<code>all</code> <strong>short-circuit</strong>, which is handy for guards and validations without scanning the whole list unnecessarily.</p>
 <h3 id="zipping--unzipping"><a class="header" href="#zipping--unzipping">Zipping &amp; unzipping</a></h3>
-<pre><code class="language-gleam">list.zip([1, 2], ["a", "b"])     // [#(1, "a"), #(2, "b")]
-list.unzip([#(1, 2), #(3, 4)])     // #([1, 3], [2, 4])
+<pre><code class="language-gleam">list.zip([1, 2], ["a", "b"])           // [#(1, "a"), #(2, "b")]
+list.unzip([#(1, 2), #(3, 4)])         // #([1, 3], [2, 4])
 </code></pre>
-<p><code>strict_zip</code> fails if lengths differ.</p>
+<p>If you need equal lengths guaranteed, use <code>strict_zip</code> which returns <code>Error(Nil)</code> on mismatch. Great for pairing coordinates, ids to names, etc.</p>
 <h3 id="append-flatten-flat_map"><a class="header" href="#append-flatten-flat_map">Append, flatten, flat_map</a></h3>
-<pre><code class="language-gleam">list.append([1, 2], [3])                     // [1, 2, 3]  // linear
+<pre><code class="language-gleam">list.append([1, 2], [3])                     // [1, 2, 3]
 list.flatten([[1], [2, 3], []])              // [1, 2, 3]
 list.flat_map([2, 4], fn(x) { [x, x + 1] })  // [2, 3, 4, 5]
 </code></pre>
-<p><code>append</code> traverses and copies the first list; prefer building with prepends during folds then <code>reverse</code>.</p>
+<p><code>append</code> must <strong>copy the first list</strong>, so it's O(n).</p>
+<p>In hot paths, build by <strong>prepending inside a fold</strong> and finish with a single <code>reverse</code>. That keeps each step O(1) and has one linear pass at the end.</p>
 <h3 id="take--drop-safe-slicing"><a class="header" href="#take--drop-safe-slicing">Take &amp; drop (safe slicing)</a></h3>
 <pre><code class="language-gleam">list.take([1, 2, 3, 4], 2) // [1, 2]
 list.drop([1, 2, 3, 4], 2) // [3, 4]
 </code></pre>
-<p>Linear, non-throwing.</p>
+<p>Both are linear. <code>drop</code> doesn't copy nodes it skips, which makes it an efficient way to "advance" a cursor in streaming code.</p>
 <h3 id="unique-sort"><a class="header" href="#unique-sort">Unique, sort</a></h3>
 <pre><code class="language-gleam">list.unique([1, 1, 4, 7, 3, 3, 4]) // [1, 4, 7, 3]
 list.sort([4, 3, 6, 5, 4, 1, 2], by: int.compare) // [1, 2, 3, 4, 4, 5, 6]
 </code></pre>
-<p>Stable merge sort under the hood.</p>
+<p><code>unique</code> runs in <strong>log-linear</strong> time; it preserves the <strong>first occurrence</strong> order.</p>
+<p><code>sort</code> takes a comparator and returns a new sorted list.</p>
 <h3 id="windows-chunks-partitions"><a class="header" href="#windows-chunks-partitions">Windows, chunks, partitions</a></h3>
-<pre><code class="language-gleam">list.window([1, 2, 3, 4, 5], by: 3)       // [[1, 2, 3],[2, 3, 4],[3, 4, 5]]
-list.sized_chunk([1, 2, 3, 4, 5, 6], into: 2) // [[1, 2],[3, 4],[5, 6]]
-list.partition([1, 2, 3, 4, 5], int.is_odd)  // #([1, 3, 5], [2, 4])
+<pre><code class="language-gleam">list.window([1, 2, 3, 4, 5], by: 3)            // [[1,2,3],[2,3,4],[3,4,5]]
+list.sized_chunk([1, 2, 3, 4, 5, 6], into: 2)  // [[1,2],[3,4],[5,6]]
+list.partition([1, 2, 3, 4, 5], int.is_odd)    // #([1,3,5], [2,4])
 </code></pre>
-<p>Convenient for streaming/rolling analyses.</p>
+<p>Use sliding <code>window</code> for rolling metrics, <code>sized_chunk</code> for batching, and <code>partition</code> to split by a predicate in one pass.</p>
+<blockquote>
+<p><strong>Note</strong>: <code>transpose</code> isn't tail-recursive on JS and can blow the stack with huge lists.</p>
+</blockquote>
 <h3 id="ranges--repetition"><a class="header" href="#ranges--repetition">Ranges &amp; repetition</a></h3>
 <pre><code class="language-gleam">list.range(0, 5)        // [0, 1, 2, 3, 4, 5]
 list.repeat("a", 3)     // ["a", "a", "a"]
 </code></pre>
-<p>Handy for generating test data or indices.</p>
-<h2 id="when-not-to-use-a-list"><a class="header" href="#when-not-to-use-a-list">When <em>not</em> to use a list</a></h2>
-<p>If you often need <strong>random access</strong> by index or frequent <strong>updates in the middle/end</strong>, a linked list is a poor fit. Consider representing your data differently (e.g., keyed <code>dict</code>, or reorganize the algorithm to stream/fold). The tour explicitly discourages index-based list algorithms for this reason.</p>
+<p>Great for generating test data, producing index sequences, or simple stubs.</p>
+<h2 id="when-not-to-use-a-list"><a class="header" href="#when-not-to-use-a-list">When not to use a list</a></h2>
+<p>If you need <strong>random access</strong> or frequent updates in the <strong>middle/end</strong>, a singly-linked list is the wrong tool.</p>
+<p>Consider <code>gleam/dict</code> for keyed lookups, or restructure the algorithm around streaming with folds. Index-based algorithms are rare in Gleam because lists are linked. If you must, <code>list.at</code> exists but returns a <code>Result</code> and is still O(n).</p>
 <h2 id="tuples"><a class="header" href="#tuples">Tuples</a></h2>
-<p>A <strong>tuple</strong> quickly groups a fixed number of values, possibly of <strong>different types</strong>. For example, <code>#(1, "Hi!")</code> has type <code>#(Int, String)</code>, and <code>#(1.4, 10, 48)</code> has type <code>#(Float, Int, Int)</code>. They’re commonly used to <strong>return two or three values</strong> from a function. If the group has meaning, consider a <strong>custom type</strong> or record for clarity.</p>
+<p>A <strong>tuple</strong> groups a fixed number of values, possibly of <strong>different types</strong>. They're perfect for small, ad-hoc groupings or multi-value returns, like <code>#(status_code, body)</code> or <code>#(x, y)</code>. If the group has domain meaning, prefer a custom type or record to make the fields self-describing. Tuples are immutable and have a fixed arity.</p>
 <h3 id="literal-syntax-1"><a class="header" href="#literal-syntax-1">Literal syntax</a></h3>
 <pre><code class="language-gleam">let pair = #(200, "OK")
 let triple = #("x", 10, True)
 </code></pre>
+<p>Arity is part of the type. For example, <code>#(Int, String)</code> is a different type from <code>#(Int, String, Bool)</code>.</p>
 <h3 id="positional-accessors-no-pattern-match-needed"><a class="header" href="#positional-accessors-no-pattern-match-needed">Positional accessors (no pattern match needed)</a></h3>
 <pre><code class="language-gleam">pair.0   // 200
 pair.1   // "OK"
 triple.2 // True
 </code></pre>
-<p>These zero-based accessors are convenient for quick reads.</p>
+<p>These <strong>zero-based</strong> accessors are convenient for quick reads and are part of the official tour. They're great when you only need one field and don't want a full <code>case</code>.</p>
 <h3 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h3>
 <pre><code class="language-gleam">case triple {
   #(name, count, active) -&gt; name &lt;&gt; " " &lt;&gt; int.to_string(count)
 }
 </code></pre>
+<p>Pattern matching shines when you want to destructure and name everything at once. If you find yourself passing tuples around widely, consider a custom type for readability.</p>
 
                     </main>
 

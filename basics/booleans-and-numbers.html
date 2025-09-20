@@ -359,7 +359,7 @@ fn main() {
 }
 </code></pre>
 <blockquote>
-<p><strong>Note</strong>: As mentioned before, there is a difference in behaviour for javascript and erlang targets for converting big integers to strings. Example:</p>
+<p><strong>Note</strong>: As mentioned before, there is a difference in how integers work for javascript and erlang targets, including converting big integers to strings. Here's an example:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/int
 
@@ -373,7 +373,7 @@ fn main() {
 <p>Output when running the code using javascript target (<code>gleam run --target javascript</code>):</p>
 <pre><code>10000000000000000
 </code></pre>
-<p>As of recently, gleam started to output a warning when dealing with big numbers in JS target:</p>
+<p>As of recently, Gleam compiler started to output a warning when dealing with big numbers in JS target:</p>
 <pre><code>warning: Int is outside JavaScript's safe integer range
   ┌─ /Users/adi.salimgereyev/hello_world/src/hello_world.gleam:5:14
   │
