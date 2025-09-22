@@ -535,8 +535,8 @@ False
 src/main.gleam:5
 True
 </code></pre>
-<h3 id="pipe-operator"><a class="header" href="#pipe-operator">Pipe Operator</a></h3>
-<p>It's common in Gleam to compose function calls using the pipe operator:</p>
+<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
+<p>It's common in Gleam to compose function calls using the <strong>pipe operator</strong>:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
 
@@ -549,7 +549,7 @@ pub fn main() {
 <p>This does the same as:</p>
 <pre><code class="language-gleam">io.println(bool.to_string(True))
 </code></pre>
-<p>We'll dive deeper in later sections of this tutorial.</p>
+<p>We'll dive deeper in <a href="basics//basics/functions.html#pipelines">later sections of this tutorial</a>.</p>
 <h2 id="numbers"><a class="header" href="#numbers">Numbers</a></h2>
 <p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
 <ul>
@@ -1226,7 +1226,7 @@ fn twice(argument: value, my_function: fn(value) -&gt; value) -&gt; value {
 }
 </code></pre>
 <p>Result: reusable functions with strong static guarantees - no runtime type checks needed.</p>
-<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
+<h3 id="pipelines-1"><a class="header" href="#pipelines-1">Pipelines</a></h3>
 <p>The <strong>pipe operator</strong> <code>|&gt;</code> passes the value on the left into the function on the right, letting you read transformations <strong>top-to-bottom</strong>. It tries to place the piped value as the <strong>first argument</strong>; if that doesn't fit, it treats the right side as a function that returns a function (so <code>b(1,2)(a)</code>). Capture <code>_</code> helps target a different parameter position.</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/string
