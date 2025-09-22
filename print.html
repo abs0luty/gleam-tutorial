@@ -218,7 +218,7 @@ pub fn main() {
 </code></pre>
 <h2 id="use-syntax"><a class="header" href="#use-syntax">Use syntax</a></h2>
 <p>Gleam's <code>use</code> syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the "pyramid of doom".</p>
-<p>It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain. In short: same power, vastly clearer shape:</p>
+<p>It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain:</p>
 <pre><code class="language-gleam">pub fn with_use() -&gt; Result(String, Nil) {
   use username &lt;- result.try(get_username())
   use password &lt;- result.try(get_password())
@@ -226,7 +226,7 @@ pub fn main() {
   greeting &lt;&gt; ", " &lt;&gt; username
 }
 </code></pre>
-<p>Without <code>use</code>, the same logic requires nested anonymous functions and is harder to read:</p>
+<p>Without <code>use</code>, the same logic requires nested anonymous functions:</p>
 <pre><code class="language-gleam">pub fn without_use() -&gt; Result(String, Nil) {
   result.try(get_username(), fn(username) {
     result.try(get_password(), fn(password) {
@@ -934,7 +934,7 @@ string.to_option("hats")     // Some("hats")
 <li><strong>MDN: JavaScript Strings</strong>  -  UTF-16 code units and <code>.length</code> behavior on the JS target. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" title="String: length - JavaScript | MDN - Mozilla">MDN Web Docs</a>)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
-<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong>—their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc.</p>
+<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong> - their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc.</p>
 <p>Under the hood they're <strong>immutable singly-linked</strong> lists. That makes adding or removing at the <strong>front</strong> O(1) and anything that touches the <strong>end</strong> O(n).</p>
 <p>So in Gleam you usually <strong>build from the front</strong> and avoid random indexing. These rules are the same on both Erlang/BEAM and JS targets; you use <code>gleam/list</code> for all the usual suspects like <code>map</code>, <code>filter</code>, <code>fold</code>, and friends.</p>
 <h3 id="literal-syntax"><a class="header" href="#literal-syntax">Literal syntax</a></h3>
@@ -1091,7 +1091,7 @@ pub fn main() {
 }
 </code></pre>
 <h3 id="case-expression"><a class="header" href="#case-expression">Case expression</a></h3>
-<p><code>case</code> lets you handle multiple shapes safely. You can match strings using the concatenation operator (<code>&lt;&gt;</code>):</p>
+<p><code>case</code> lets you handle multiple shapes safely. You can match strings using concatenation syntax:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
@@ -1127,7 +1127,7 @@ pub fn main() {
   io.println(result)
 }
 </code></pre>
-<h2 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h2>
+<h3 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h3>
 <p>Sometimes you <em>know</em> a value has a certain shape and want to crash immediately if it doesn’t. <code>let assert</code> is like <code>let</code>, but it allows <strong>partial</strong> patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with <code>as</code>.</p>
 <pre><code class="language-gleam">pub fn main() {
   let a = unsafely_get_first_element([123])
@@ -1144,7 +1144,153 @@ pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
   first
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>In Gleam, the <code>fn</code> keyword defines a function. Like blocks, the body is a series of expressions evaluated top-to-bottom, and <strong>the last expression's value is returned</strong> - there's no <code>return</code> keyword.</p>
+<p>Functions are <strong>private by default</strong>. Add <code>pub</code> to make them usable from other modules. Type annotations for parameters and return types are optional but encouraged for clarity.</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo double(10)
+}
+
+fn double(a: Int) -&gt; Int {       // private
+  multiply(a, 2)
+}
+
+fn multiply(a: Int, b: Int) -&gt; Int {
+  a * b
+}
+</code></pre>
+<h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-order functions</a></h3>
+<p>Functions are values. You can <strong>pass them around</strong>, store them in variables, and return them - this is the basis for map/filter/fold and composition patterns. The parameter type for a function value is written with <code>fn(...) -&gt; ...</code>.</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo twice(1, add_one)    // pass a function
+  let my_function = add_one // store a function
+  echo my_function(100)
+}
+
+fn twice(argument: Int, passed_function: fn(Int) -&gt; Int) -&gt; Int {
+  passed_function(passed_function(argument))
+}
+
+fn add_one(argument: Int) -&gt; Int {
+  argument + 1
+}
+</code></pre>
+<h3 id="anonymous-functions"><a class="header" href="#anonymous-functions">Anonymous functions</a></h3>
+<p>Anonymous functions use <code>fn(...) { ... }</code>. They're interchangeable with named functions and <strong>capture variables</strong> in scope (closures), which is handy for customizing behavior with local data.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let add_one = fn(a) { a + 1 }
+  echo twice(1, add_one)
+
+  echo twice(1, fn(a) { a * 2 })  // inline
+
+  let secret_number = 42
+  let secret = fn() { secret_number } // captures 42
+  echo secret()
+}
+
+fn twice(argument: Int, my_function: fn(Int) -&gt; Int) -&gt; Int {
+  my_function(my_function(argument))
+}
+</code></pre>
+<p>Closures let you "bake in" environment values without threading them through every call.</p>
+<h3 id="function-captures"><a class="header" href="#function-captures">Function captures</a></h3>
+<p>For the common "wrap a function and pass one argument through" case, use <strong>function capture</strong>: replace the flowing argument with <code>_</code>. It's shorthand for <code>fn(x) { some_fun(..., x, ...) }</code>.</p>
+<pre><code class="language-gleam">pub fn main() {
+  // These are equivalent
+  let add_one_v1 = fn(x) { add(1, x) }
+  let add_one_v2 = add(1, _)
+
+  echo add_one_v1(10)
+  echo add_one_v2(10)
+}
+
+fn add(a: Int, b: Int) -&gt; Int {
+  a + b
+}
+</code></pre>
+<p>This reads nicely in pipelines or when reordering parameters.</p>
+<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic functions</a></h3>
+<p>When your logic doesn't care about a concrete type, use a <strong>type variable</strong> (lowercase) to make a function generic. The compiler instantiates it with a specific type at each call site. This is stricter than "any" - it must be <strong>the same</strong> type throughout that call.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let add_one = fn(x) { x + 1 }
+  let exclaim = fn(x) { x &lt;&gt; "!" }
+
+  // twice(10, exclaim)          // invalid: types conflict
+
+  echo twice(10, add_one)        // value = Int here
+  echo twice("Hello", exclaim)   // value = String here
+}
+
+fn twice(argument: value, my_function: fn(value) -&gt; value) -&gt; value {
+  my_function(my_function(argument))
+}
+</code></pre>
+<p>Result: reusable functions with strong static guarantees - no runtime type checks needed.</p>
+<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
+<p>The <strong>pipe operator</strong> <code>|&gt;</code> passes the value on the left into the function on the right, letting you read transformations <strong>top-to-bottom</strong>. It tries to place the piped value as the <strong>first argument</strong>; if that doesn't fit, it treats the right side as a function that returns a function (so <code>b(1,2)(a)</code>). Capture <code>_</code> helps target a different parameter position.</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/string
+
+pub fn main() {
+  // Without the pipe operator
+  io.println(string.drop_start(string.drop_end("Hello, Joe!", 1), 7))
+
+  // With the pipe operator
+  "Hello, Mike!"
+  |&gt; string.drop_end(1)
+  |&gt; string.drop_start(7)
+  |&gt; io.println
+
+  // Reordering with a capture
+  "1"
+  |&gt; string.append("2")
+  |&gt; string.append("3", _)
+  |&gt; io.println
+}
+</code></pre>
+<p>Pipes are the idiomatic way to <strong>compose</strong> in Gleam - most stdlib functions put the "subject" first to make piping natural.</p>
+<h3 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled arguments</a></h3>
+<p>Give arguments <strong>labels</strong> to self-document calls and avoid "what does the second <code>Int</code> mean?" moments. Labels are written <strong>before</strong> the parameter name in the definition; at call sites you can supply them in any order. Unlabelled args must come first. No runtime cost.</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo calculate(1, add: 2, multiply: 3)
+  echo calculate(1, multiply: 3, add: 2) // order doesn't matter
+  echo calculate(1, 2, 3)                // labels optional when calling
+}
+
+fn calculate(value: Int, add addend: Int, multiply multiplier: Int) {
+  value * multiplier + addend
+}
+</code></pre>
+<p>Labels shine in APIs with multiple same-typed parameters.</p>
+<h3 id="label-shorthand"><a class="header" href="#label-shorthand">Label shorthand</a></h3>
+<p>If local variable names match the labels, you can <strong>omit</strong> the names at the call site - nice for records and functions with many labelled args. This shorthand is part of the language and widely used in examples and blog posts.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let quantity = 5.0
+  let unit_price = 10.0
+  let discount = 0.2
+
+  // Regular label syntax
+  echo calculate_total_cost(
+    quantity: quantity,
+    unit_price: unit_price,
+    discount: discount,
+  )
+
+  // Shorthand (names match labels)
+  echo calculate_total_cost(quantity:, unit_price:, discount:)
+}
+
+fn calculate_total_cost(
+  quantity quantity: Float,
+  unit_price price: Float,
+  discount discount: Float,
+) -&gt; Float {
+  let subtotal = quantity *. price
+  let discount = subtotal *. discount
+  subtotal -. discount
+}
+</code></pre>
+<p>Shorthand keeps the call sites tidy without sacrificing readability.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="result"><a class="header" href="#result">Result</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="expression-blocks"><a class="header" href="#expression-blocks">Expression blocks</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="panic-and-assert"><a class="header" href="#panic-and-assert">Panic and assert</a></h1>
@@ -1157,7 +1303,7 @@ pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="escape-sequences"><a class="header" href="#escape-sequences">escape sequences</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="tail-call-optimisation"><a class="header" href="#tail-call-optimisation">Tail call optimisation</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="phantom-types"><a class="header" href="#phantom-types">Phantom types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled arguments</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-arguments-1"><a class="header" href="#labelled-arguments-1">Labelled arguments</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-fields"><a class="header" href="#labelled-fields">Labelled fields</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="dict"><a class="header" href="#dict">Dict</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pairs"><a class="header" href="#pairs">Pairs</a></h1>

@@ -12,36 +12,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="./theme/catppuccin.css">
-        <link rel="stylesheet" href="./theme/custom.css">
+        <link rel="stylesheet" href=".././theme/catppuccin.css">
+        <link rel="stylesheet" href=".././theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +108,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -147,13 +147,13 @@
                     <h1 class="menu-title">Gleam programming language</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/functions.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/functions.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -187,17 +187,163 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+                        <h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>In Gleam, the <code>fn</code> keyword defines a function. Like blocks, the body is a series of expressions evaluated top-to-bottom, and <strong>the last expression's value is returned</strong> - there's no <code>return</code> keyword.</p>
+<p>Functions are <strong>private by default</strong>. Add <code>pub</code> to make them usable from other modules. Type annotations for parameters and return types are optional but encouraged for clarity.</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo double(10)
+}
+
+fn double(a: Int) -&gt; Int {       // private
+  multiply(a, 2)
+}
+
+fn multiply(a: Int, b: Int) -&gt; Int {
+  a * b
+}
+</code></pre>
+<h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-order functions</a></h3>
+<p>Functions are values. You can <strong>pass them around</strong>, store them in variables, and return them - this is the basis for map/filter/fold and composition patterns. The parameter type for a function value is written with <code>fn(...) -&gt; ...</code>.</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo twice(1, add_one)    // pass a function
+  let my_function = add_one // store a function
+  echo my_function(100)
+}
+
+fn twice(argument: Int, passed_function: fn(Int) -&gt; Int) -&gt; Int {
+  passed_function(passed_function(argument))
+}
+
+fn add_one(argument: Int) -&gt; Int {
+  argument + 1
+}
+</code></pre>
+<h3 id="anonymous-functions"><a class="header" href="#anonymous-functions">Anonymous functions</a></h3>
+<p>Anonymous functions use <code>fn(...) { ... }</code>. They're interchangeable with named functions and <strong>capture variables</strong> in scope (closures), which is handy for customizing behavior with local data.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let add_one = fn(a) { a + 1 }
+  echo twice(1, add_one)
+
+  echo twice(1, fn(a) { a * 2 })  // inline
+
+  let secret_number = 42
+  let secret = fn() { secret_number } // captures 42
+  echo secret()
+}
+
+fn twice(argument: Int, my_function: fn(Int) -&gt; Int) -&gt; Int {
+  my_function(my_function(argument))
+}
+</code></pre>
+<p>Closures let you "bake in" environment values without threading them through every call.</p>
+<h3 id="function-captures"><a class="header" href="#function-captures">Function captures</a></h3>
+<p>For the common "wrap a function and pass one argument through" case, use <strong>function capture</strong>: replace the flowing argument with <code>_</code>. It's shorthand for <code>fn(x) { some_fun(..., x, ...) }</code>.</p>
+<pre><code class="language-gleam">pub fn main() {
+  // These are equivalent
+  let add_one_v1 = fn(x) { add(1, x) }
+  let add_one_v2 = add(1, _)
+
+  echo add_one_v1(10)
+  echo add_one_v2(10)
+}
+
+fn add(a: Int, b: Int) -&gt; Int {
+  a + b
+}
+</code></pre>
+<p>This reads nicely in pipelines or when reordering parameters.</p>
+<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic functions</a></h3>
+<p>When your logic doesn't care about a concrete type, use a <strong>type variable</strong> (lowercase) to make a function generic. The compiler instantiates it with a specific type at each call site. This is stricter than "any" - it must be <strong>the same</strong> type throughout that call.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let add_one = fn(x) { x + 1 }
+  let exclaim = fn(x) { x &lt;&gt; "!" }
+
+  // twice(10, exclaim)          // invalid: types conflict
+
+  echo twice(10, add_one)        // value = Int here
+  echo twice("Hello", exclaim)   // value = String here
+}
+
+fn twice(argument: value, my_function: fn(value) -&gt; value) -&gt; value {
+  my_function(my_function(argument))
+}
+</code></pre>
+<p>Result: reusable functions with strong static guarantees - no runtime type checks needed.</p>
+<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
+<p>The <strong>pipe operator</strong> <code>|&gt;</code> passes the value on the left into the function on the right, letting you read transformations <strong>top-to-bottom</strong>. It tries to place the piped value as the <strong>first argument</strong>; if that doesn't fit, it treats the right side as a function that returns a function (so <code>b(1,2)(a)</code>). Capture <code>_</code> helps target a different parameter position.</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/string
+
+pub fn main() {
+  // Without the pipe operator
+  io.println(string.drop_start(string.drop_end("Hello, Joe!", 1), 7))
+
+  // With the pipe operator
+  "Hello, Mike!"
+  |&gt; string.drop_end(1)
+  |&gt; string.drop_start(7)
+  |&gt; io.println
+
+  // Reordering with a capture
+  "1"
+  |&gt; string.append("2")
+  |&gt; string.append("3", _)
+  |&gt; io.println
+}
+</code></pre>
+<p>Pipes are the idiomatic way to <strong>compose</strong> in Gleam - most stdlib functions put the "subject" first to make piping natural.</p>
+<h3 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled arguments</a></h3>
+<p>Give arguments <strong>labels</strong> to self-document calls and avoid "what does the second <code>Int</code> mean?" moments. Labels are written <strong>before</strong> the parameter name in the definition; at call sites you can supply them in any order. Unlabelled args must come first. No runtime cost.</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo calculate(1, add: 2, multiply: 3)
+  echo calculate(1, multiply: 3, add: 2) // order doesn't matter
+  echo calculate(1, 2, 3)                // labels optional when calling
+}
+
+fn calculate(value: Int, add addend: Int, multiply multiplier: Int) {
+  value * multiplier + addend
+}
+</code></pre>
+<p>Labels shine in APIs with multiple same-typed parameters.</p>
+<h3 id="label-shorthand"><a class="header" href="#label-shorthand">Label shorthand</a></h3>
+<p>If local variable names match the labels, you can <strong>omit</strong> the names at the call site - nice for records and functions with many labelled args. This shorthand is part of the language and widely used in examples and blog posts.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let quantity = 5.0
+  let unit_price = 10.0
+  let discount = 0.2
+
+  // Regular label syntax
+  echo calculate_total_cost(
+    quantity: quantity,
+    unit_price: unit_price,
+    discount: discount,
+  )
+
+  // Shorthand (names match labels)
+  echo calculate_total_cost(quantity:, unit_price:, discount:)
+}
+
+fn calculate_total_cost(
+  quantity quantity: Float,
+  unit_price price: Float,
+  discount discount: Float,
+) -&gt; Float {
+  let subtotal = quantity *. price
+  let discount = subtotal *. discount
+  subtotal -. discount
+}
+</code></pre>
+<p>Shorthand keeps the call sites tidy without sacrificing readability.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="basics/pattern-matching.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../basics/pattern-matching.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="result.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../result.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -207,11 +353,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="basics/pattern-matching.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../basics/pattern-matching.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="result.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../result.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -226,17 +372,17 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="syntax.js"></script>
-        <script src="highlight.js"></script>
+        <script src="../syntax.js"></script>
+        <script src="../highlight.js"></script>
 
 
 

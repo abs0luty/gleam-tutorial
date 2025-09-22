@@ -200,7 +200,7 @@
 }
 </code></pre>
 <h3 id="case-expression"><a class="header" href="#case-expression">Case expression</a></h3>
-<p><code>case</code> lets you handle multiple shapes safely. You can match strings using the concatenation operator (<code>&lt;&gt;</code>):</p>
+<p><code>case</code> lets you handle multiple shapes safely. You can match strings using concatenation syntax:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
@@ -236,7 +236,7 @@ pub fn main() {
   io.println(result)
 }
 </code></pre>
-<h2 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h2>
+<h3 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h3>
 <p>Sometimes you <em>know</em> a value has a certain shape and want to crash immediately if it doesn’t. <code>let assert</code> is like <code>let</code>, but it allows <strong>partial</strong> patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with <code>as</code>.</p>
 <pre><code class="language-gleam">pub fn main() {
   let a = unsafely_get_first_element([123])
@@ -262,7 +262,7 @@ pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../basics/functions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -276,7 +276,7 @@ pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../basics/functions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

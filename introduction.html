@@ -220,7 +220,7 @@ pub fn main() {
 </code></pre>
 <h2 id="use-syntax"><a class="header" href="#use-syntax">Use syntax</a></h2>
 <p>Gleam's <code>use</code> syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the "pyramid of doom".</p>
-<p>It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain. In short: same power, vastly clearer shape:</p>
+<p>It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain:</p>
 <pre><code class="language-gleam">pub fn with_use() -&gt; Result(String, Nil) {
   use username &lt;- result.try(get_username())
   use password &lt;- result.try(get_password())
@@ -228,7 +228,7 @@ pub fn main() {
   greeting &lt;&gt; ", " &lt;&gt; username
 }
 </code></pre>
-<p>Without <code>use</code>, the same logic requires nested anonymous functions and is harder to read:</p>
+<p>Without <code>use</code>, the same logic requires nested anonymous functions:</p>
 <pre><code class="language-gleam">pub fn without_use() -&gt; Result(String, Nil) {
   result.try(get_username(), fn(username) {
     result.try(get_password(), fn(password) {
