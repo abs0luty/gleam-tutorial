@@ -278,21 +278,6 @@ False
 src/main.gleam:5
 True
 </code></pre>
-<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
-<p>It's common in Gleam to compose function calls using the <strong>pipe operator</strong>:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
-
-pub fn main() {
-  True
-  |&gt; bool.to_string
-  |&gt; io.println
-}
-</code></pre>
-<p>This does the same as:</p>
-<pre><code class="language-gleam">io.println(bool.to_string(True))
-</code></pre>
-<p>We'll dive deeper in <a href="/basics/functions.html#pipelines">later sections of this tutorial</a>.</p>
 <h2 id="numbers"><a class="header" href="#numbers">Numbers</a></h2>
 <p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
 <ul>
@@ -345,9 +330,9 @@ pub fn main() {
 0 / 0 // =&gt; 0
 </code></pre>
 <p>This is why it is generally recommended to use <code>int.divide</code> function which returns an error if the divisor is <code>0</code>:</p>
-<pre><code class="language-gleam">5 |&gt; int.divide(2) // =&gt; Ok(2)
-5 |&gt; int.divide(0) // =&gt; Error(Nil)
-0 |&gt; int.divide(0) // =&gt; Error(Nil)
+<pre><code class="language-gleam">int.divide(5, 2) // =&gt; Ok(2)
+int.divide(5, 0) // =&gt; Error(Nil)
+int.divide(0, 0) // =&gt; Error(Nil)
 </code></pre>
 </blockquote>
 <p>To print the integer in Gleam, you need to first convert it to string. You can do that using <code>int.to_string</code> function:</p>
@@ -355,7 +340,7 @@ pub fn main() {
 import gleam/int
 
 fn main() {
-  io.println(3 |&gt; int.to_string)
+  io.println(int.to_string(3))
 }
 </code></pre>
 <blockquote>
@@ -389,14 +374,14 @@ properties for more information.
 </code></pre>
 </blockquote>
 <p>You can find the absolute value of the integer using <code>int.absolute_value</code> function:</p>
-<pre><code class="language-gleam">-12 |&gt; int.absolute_value // =&gt; 12
-12  |&gt; int.absolute_value // =&gt; 12
-0   |&gt; int.absolute_value // =&gt; 0
+<pre><code class="language-gleam">int.absolute_value(-12) // =&gt; 12
+int.absolute_value(12)  // =&gt; 12
+int.absolute_value(0)   // =&gt; 0
 </code></pre>
 <p>If you want the result of the base being raised to the power of exponent, you can use <code>power</code> function:</p>
-<pre><code class="language-gleam">3 |&gt; int.power(of: 2.0) // =&gt; 9
-2 |&gt; int.power(of: 2.0) // =&gt; 4
-2 |&gt; int.power(of: 4.0) // =&gt; 16
+<pre><code class="language-gleam">int.power(3, of: 2.0)  // =&gt; 9
+int.power(2, of: 2.0)  // =&gt; 4
+int.power(2, of: 4.0)  // =&gt; 16
 </code></pre>
 <blockquote>
 <p><strong>Note</strong>: <code>power</code> accepts second argument only as floating point number. Gleam doesn't have implicit <code>Int</code> to <code>Float</code> cast:</p>
@@ -417,47 +402,48 @@ Found type:
 <p>So <code>2</code> must be changed to <code>2.0</code>. See the <a href="#floats">floating point numbers section</a> below.</p>
 </blockquote>
 <p>If you want to convert an integer to float, you can use <code>to_float</code> function:</p>
-<pre><code class="language-gleam">3  |&gt; to_float // 3.0
--3 |&gt; to_float // -3.0
-0  |&gt; to_float // 0.0
+<pre><code class="language-gleam">int.to_float(3)  // 3.0
+int.to_float(-3) // -3.0
+int.to_float(0)  // 0.0
 </code></pre>
 <p>Here are some other useful methods for integers:</p>
 <pre><code class="language-gleam">// Returns the minimum of two numbers
-int.min(2, 3)    // =&gt; 2
+int.min(2, 3)  // =&gt; 2
 
 // Returns the maximum of two numbers
-int.max(3, 4)    // =&gt; 4
-
-// Returns true if the number is even
-2 |&gt; int.is_even // =&gt; True
-3 |&gt; int.is_even // =&gt; False
-
-// Returns true if the number is odd
-2 |&gt; int.is_odd  // =&gt; False
-3 |&gt; int.is_odd  // =&gt; True
+int.max(3, 4)  // =&gt; 4
 
 // Returns the negative of the number
-1 |&gt; int.negate  // =&gt; -1
+int.negate(1)  // =&gt; -1
 
 // Returns the square root of the number
-4   |&gt; int.square_root // =&gt; Ok(2.0)
--16 |&gt; int.square_root // =&gt; Error(Nil)
+int.square_root(4)   // =&gt; Ok(2.0)
+int.square_root(-16) // =&gt; Error(Nil)
+
+// Returns true if the number is even
+int.is_even(2) // =&gt; True
+int.is_even(3) // =&gt; False
+
+// Returns true if the number is odd
+int.is_odd(2)  // =&gt; False
+int.is_odd(3)  // =&gt; True
+
 </code></pre>
 <p>You can convert integers to different common bases:</p>
-<pre><code class="language-gleam">2  |&gt; to_base2 // =&gt; "10"
-15 |&gt; to_base8 // =&gt; "17"
-48 |&gt; to_base16 // =&gt; "30"
-48 |&gt; to_base36 // =&gt; "1C"
+<pre><code class="language-gleam">int.to_base2(2)   // =&gt; "10"
+int.to_base8(15)  // =&gt; "17"
+int.to_base16(48) // =&gt; "30"
+int.to_base36(48) // =&gt; "1C"
 </code></pre>
 <p>If you want to convert a number to any base from <code>2</code> to <code>36</code>, you can use <code>to_base_string</code>:</p>
 <pre><code class="language-gleam">// 37 is bigger than 36
-48 |&gt; to_base_string(37) // =&gt; Error(InvalidBase)
+int.to_base_string(48, 37) // =&gt; Error(InvalidBase)
 
 // 1 is less than 2
-48 |&gt; to_base_string(1)  // =&gt; Error(InvalidBase)
+int.to_base_string(48, 1)  // =&gt; Error(InvalidBase)
 
 // Same as running to_base36()
-48 |&gt; to_base_string(36) // =&gt; Ok("1C")
+int.to_base_string(48, 36) // =&gt; Ok("1C")
 </code></pre>
 <h3 id="floats"><a class="header" href="#floats">Floats</a></h3>
 <p>Here are some examples of float literals:</p>
@@ -513,46 +499,46 @@ Hint: remove it.
 <p>This is why it is generally recommended to use <code>float.divide</code> function which returns an error if the divisor is 0:</p>
 <pre><code class="language-gleam">import gleam/float
 
-5.0 |&gt; float.divide(2.0) // =&gt; Ok(2.5)
-5.0 |&gt; float.divide(0.0) // =&gt; Error(Nil)
-0.0 |&gt; float.divide(0.0) // =&gt; Error(Nil)
+float.divide(5.0, 2.0) // =&gt; Ok(2.5)
+float.divide(5.0, 0.0) // =&gt; Error(Nil)
+float.divide(0.0, 0.0) // =&gt; Error(Nil)
 </code></pre>
 </blockquote>
 <p>You can find the absolute value of the float using <code>float.absolute_value</code> function:</p>
-<pre><code class="language-gleam">-12.0 |&gt; float.absolute_value // =&gt; 12.0
-12.0  |&gt; float.absolute_value // =&gt; 12.0
-0.0   |&gt; float.absolute_value // =&gt; 0.0
+<pre><code class="language-gleam">float.absolute_value(-12.0) // =&gt; 12.0
+float.absolute_value(12.0)  // =&gt; 12.0
+float.absolute_value(0.0)   // =&gt; 0.0
 </code></pre>
 <p>You can also round float number to the next lowest or the next highest whole number using <code>ceiling</code> and <code>floor</code> functions:</p>
-<pre><code class="language-gleam">2.3 |&gt; float.ceiling // =&gt; 3.0
-2.3 |&gt; float.floor   // =&gt; 2.0
+<pre><code class="language-gleam">float.ceiling(2.3) // =&gt; 3.0
+float.floor(2.3)   // =&gt; 2.0
 </code></pre>
 <p>Or you can round to the nearest whole number using <code>round</code>:</p>
-<pre><code class="language-gleam">2.3 |&gt; float.round // =&gt; 2.0
-2.5 |&gt; float.round // =&gt; 3.0
+<pre><code class="language-gleam">float.round(2.3)  // =&gt; 2.0
+float.round(2.5)  // =&gt; 3.0
 </code></pre>
 <p>Here are some other useful methods for floats:</p>
 <pre><code class="language-gleam">// Returns the minimum of two numbers
-float.min(2.0, 3.3)             // =&gt; 2.0
+float.min(2.0, 3.3)  // =&gt; 2.0
 
 // Returns the maximum of two numbers
-float.max(3.1, 4.2)             // =&gt; 4.2
+float.max(3.1, 4.2)  // =&gt; 4.2
 
 // Returns the negative of the number
-1.0 |&gt; float.negate             // =&gt; -1.0
+float.negate(1.0)    // =&gt; -1.0
 
 // Returns the value as `Int`, truncating all decimal digits
-2.4287898428 |&gt; float.truncate  // =&gt; 2
+float.truncate(2.4287898428)  // =&gt; 2
 
 // Returns the results of the base being raised to the power of the exponent
-2.0  |&gt; float.power(-1.0)    // =&gt; Ok(0.5)
-2.0  |&gt; float.power(2.0)     // =&gt; Ok(4.0)
-4.0  |&gt; float.power(of: 2.0) // =&gt; Ok(16.0)
--1.0 |&gt; float.power(0.5)     // =&gt; Error(Nil)
+float.power(2.0, -1.0)     // =&gt; Ok(0.5)
+float.power(2.0, 2.0)      // =&gt; Ok(4.0)
+float.power(4.0, of: 2.0)  // =&gt; Ok(16.0)
+float.power(-1.0, 0.5)     // =&gt; Error(Nil)
 
 // Returns the square root
-4.0   |&gt; float.square_root   // =&gt; Ok(2.0)
--16.0 |&gt; float.square_root   // =&gt; Error(Nil)
+float.square_root(4.0)   // =&gt; Ok(2.0)
+float.square_root(-16.0) // =&gt; Error(Nil)
 </code></pre>
 
                     </main>
