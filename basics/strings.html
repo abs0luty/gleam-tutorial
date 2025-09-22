@@ -199,7 +199,7 @@
 <h3 id="check-emptiness--length"><a class="header" href="#check-emptiness--length">Check emptiness &amp; length</a></h3>
 <p><code>string.is_empty</code> is a fast, zero-allocation check.</p>
 <p><code>string.length</code> counts <strong>graphemes</strong> (linear time because it must walk boundaries).</p>
-<p><code>string.byte_size</code> reports the <strong>UTF-8 byte length</strong> (constant time on BEAM; linear on JS because it has to encode). This split is intentional: use <code>length</code> for UX-facing counts and <code>byte_size</code> for binary/IO concerns.</p>
+<p><code>string.byte_size</code> reports the <strong>UTF-8 byte length</strong> (constant time on BEAM; linear on JS because it has to encode).</p>
 <pre><code class="language-gleam">import gleam/string
 
 pub fn main() {
