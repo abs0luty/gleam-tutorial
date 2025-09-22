@@ -1,4 +1,4 @@
-# Gleam programming language tutorial
+# Gleam language tutorial
 
 ## Building locally
 
