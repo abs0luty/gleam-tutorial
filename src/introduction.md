@@ -43,7 +43,7 @@ pub fn main() {
 
 Gleam's `use` syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the "pyramid of doom". 
 
-It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain. In short: same power, vastly clearer shape:
+It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain:
 
 ```gleam
 pub fn with_use() -> Result(String, Nil) {
@@ -54,7 +54,7 @@ pub fn with_use() -> Result(String, Nil) {
 }
 ```
 
-Without `use`, the same logic requires nested anonymous functions and is harder to read:
+Without `use`, the same logic requires nested anonymous functions:
 ```gleam
 pub fn without_use() -> Result(String, Nil) {
   result.try(get_username(), fn(username) {

@@ -17,7 +17,7 @@ Strings use double quotes and typical escapes (`\"`, `\\`, `\n`, `\t`, `\u{...}`
 
 `string.length` counts **graphemes** (linear time because it must walk boundaries).
 
-`string.byte_size` reports the **UTF-8 byte length** (constant time on BEAM; linear on JS because it has to encode). This split is intentional: use `length` for UX-facing counts and `byte_size` for binary/IO concerns. 
+`string.byte_size` reports the **UTF-8 byte length** (constant time on BEAM; linear on JS because it has to encode). 
 
 ```gleam
 import gleam/string

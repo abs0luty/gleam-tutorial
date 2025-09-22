@@ -18,7 +18,7 @@ pub fn main() {
 
 ### Case expression
 
-`case` lets you handle multiple shapes safely. You can match strings using the concatenation operator (`<>`):
+`case` lets you handle multiple shapes safely. You can match strings using concatenation syntax:
 ```gleam
 import gleam/io
 
@@ -58,7 +58,7 @@ When working with lists you can match on length and contents. Use `..` to captur
   }
   ```
 
-## `let assert`
+### `let assert`
 
 Sometimes you *know* a value has a certain shape and want to crash immediately if it doesn’t. `let assert` is like `let`, but it allows **partial** patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with `as`.
 

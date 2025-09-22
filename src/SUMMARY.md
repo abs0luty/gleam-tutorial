@@ -9,7 +9,7 @@
   * [Tuples and lists](./basics/tuples-and-lists.md)
   * [Assignments](./basics/assignments.md)
   * [Pattern matching](./basics/pattern-matching.md)
-  * [Functions](./functions.md)
+  * [Functions](./basics/functions.md)
   * [Result and optional types](./result.md)
   * [Expression blocks](./expression-blocks.md)
   * [Panic and assert](./panic.md)

@@ -1,6 +1,6 @@
 ## Lists
 
-A **list** is an ordered collection of values. Lists are **generic**—their type records the element type: `List(Int)`, `List(String)`, etc. 
+A **list** is an ordered collection of values. Lists are **generic** - their type records the element type: `List(Int)`, `List(String)`, etc. 
 
 Under the hood they're **immutable singly-linked** lists. That makes adding or removing at the **front** O(1) and anything that touches the **end** O(n). 
 

@@ -123,9 +123,9 @@ src/main.gleam:5
 True
 ```
 
-### Pipe Operator
+### Pipelines
 
-It's common in Gleam to compose function calls using the pipe operator:
+It's common in Gleam to compose function calls using the **pipe operator**:
 
 ```gleam
 import gleam/io
@@ -144,7 +144,7 @@ This does the same as:
 io.println(bool.to_string(True))
 ```
 
-We'll dive deeper in later sections of this tutorial.
+We'll dive deeper in [later sections of this tutorial](/basics/functions.html#pipelines).
 
 ## Numbers
 
