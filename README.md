@@ -1,8 +1,4 @@
-<p align="center">
-<img src="./banner.png" alt="Gleam tutorial banner">
-</p>
-
-If you want to see the tutorial [click here](https://abs0luty.github.io/gleam-tutorial).
+# Gleam programming language tutorial
 
 ## Building locally
 
