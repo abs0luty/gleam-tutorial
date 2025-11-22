@@ -1,5 +1,9 @@
 # Gleam language tutorial
 
+## Status
+
+The tutorial is active development and is not finished.
+
 ## Building locally
 
 If you want to build the book from source on your machine, clone the repo and run `mdbook build`:
