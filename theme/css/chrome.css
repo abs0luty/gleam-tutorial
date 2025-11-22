@@ -118,15 +118,54 @@ html:not(.js) .left-buttons button {
 .mobile-nav-chapters,
 .mobile-nav-chapters:visited,
 .menu-bar .icon-button,
-.menu-bar a i {
+.menu-bar a i,
+.menu-bar .fa {
     color: var(--icons);
 }
 
 .menu-bar i:hover,
+.menu-bar .fa:hover,
 .menu-bar .icon-button:hover,
 .nav-chapters:hover,
-.mobile-nav-chapters i:hover {
+.mobile-nav-chapters i:hover,
+.mobile-nav-chapters .fa:hover {
     color: var(--icons-hover);
+}
+
+/* Fallback icons for when FontAwesome assets are not bundled */
+.fa {
+    font-family: "Arial", "Helvetica", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    display: inline-block;
+    line-height: 1;
+}
+.fa:before { display: inline-block; }
+.fa-bars:before { content: "\2630"; }
+.fa-paint-brush:before { content: "\1F3A8"; }
+.fa-search:before { content: "\1F50D"; }
+.fa-print:before { content: "\1F5B6"; }
+.fa-edit:before { content: "\270E"; }
+.fa-angle-left:before { content: "\2039"; }
+.fa-angle-right:before { content: "\203A"; }
+.fa-spinner:before { content: "\267B"; }
+.fa-play:before { content: "\25B6"; }
+.fa-history:before { content: "\21BA"; }
+.fa-eye:before { content: "\1F441"; }
+.fa-eye-slash:before { content: "\1F648"; }
+.fa-copy:before { content: "\2398"; }
+.fab-github:before { content: "GH"; letter-spacing: -1px; }
+.fa-language:before { content: "\1F310"; }
+.fa-font:before { content: "F"; }
+.fa-save:before { content: "\1F4BE"; }
+.fa-spin {
+    animation: rotating 2s linear infinite;
+    display: inline-block;
+}
+
+@keyframes rotating {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Nav Icons */
@@ -187,8 +226,8 @@ html:not(.js) .left-buttons button {
 }
 
 /* Use the correct buttons for RTL layouts*/
-[dir=rtl] .previous i.fa-angle-left:before {content:"\f105";}
-[dir=rtl] .next i.fa-angle-right:before { content:"\f104"; }
+[dir=rtl] .previous i.fa-angle-left:before {content:"\203A";}
+[dir=rtl] .next i.fa-angle-right:before { content:"\2039"; }
 
 @media only screen and (max-width: 1080px) {
     .nav-wide-wrapper { display: none; }
@@ -569,8 +608,10 @@ html:not(.sidebar-resizing) .sidebar {
 }
 
 .chapter li {
-    display: flex;
     color: var(--sidebar-non-existant);
+}
+.chapter-link-wrapper {
+    display: flex;
 }
 .chapter li a {
     display: block;
@@ -587,7 +628,8 @@ html:not(.sidebar-resizing) .sidebar {
     color: var(--sidebar-active);
 }
 
-.chapter li > a.toggle {
+.chapter li > a.toggle,
+.chapter-fold-toggle {
     cursor: pointer;
     display: block;
     margin-inline-start: auto;
@@ -596,12 +638,13 @@ html:not(.sidebar-resizing) .sidebar {
     opacity: 0.68;
 }
 
-.chapter li > a.toggle div {
+.chapter li > a.toggle div,
+.chapter-fold-toggle div {
     transition: transform 0.5s;
 }
 
 /* collapse the section */
-.chapter li:not(.expanded) + li > ol {
+.chapter li:not(.expanded) > ol {
     display: none;
 }
 
@@ -610,7 +653,8 @@ html:not(.sidebar-resizing) .sidebar {
     margin-block-start: 0.6em;
 }
 
-.chapter li.expanded > a.toggle div {
+.chapter li.expanded > a.toggle div,
+.chapter li.expanded > span > .chapter-fold-toggle div {
     transform: rotate(90deg);
 }
 
