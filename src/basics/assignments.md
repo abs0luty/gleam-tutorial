@@ -1,42 +1,38 @@
 ## Assignments
 
-In Gleam you bind values with `let`. Names use `snake_case`, bindings are **immutable**, and you can **re-bind** a name later to a new value (the old value doesn’t change; you just shadow the name).
+Use `let` to bind values. Names use `snake_case`. Bindings are immutable, but you can bind the same name again later and shadow the previous value. This does not change the original value, it only replaces which value the name refers to.
 
 ```gleam
 import gleam/io
 
 pub fn main() {
-  let x = "Original"
-  io.println(x)
+  let title = "Morning"
+  io.println(title) // Morning
 
-  // Copy the value
-  let y = x
-  io.println(y)
+  let copy = title
+  io.println(copy)  // Morning
 
-  // Shadow x with a new value
-  let x = "New"
-  io.println(x)
+  let title = "Evening"
+  io.println(title) // Evening
 
-  // y still points to the original value
-  io.println(y)
+  io.println(copy)  // Morning
 }
-```
+````
 
-If you create a variable and never use it, the compiler warns you. Prefix it with an underscore to show that’s intentional.
+If a binding is never used, the compiler warns you. Prefix the name with an underscore when this is intentional.
 
 ```gleam
 pub fn main() {
-  // Intentional: silence the unused warning
-  let _score = 1000
+  let _unused_score = 500
 }
 ```
 
-You can add type annotations to `let` bindings. They help readers but don’t change how type checking works (other than catching mismatches).
+You can add type annotations to bindings. These help with clarity and catch mismatches during type checking.
 
 ```gleam
 pub fn main() {
-  let _name: String = "Gleam"
-  let _is_cool: Bool = True
-  let _version: Int = 1
+  let _label: String = "Gleam"
+  let _active: Bool = True
+  let _count: Int = 3
 }
 ```

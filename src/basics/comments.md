@@ -1,20 +1,22 @@
 ## Comments
 
-Let us now modify our previous hello world program:
+You can add comments to your Gleam code with `//`. They help explain intent and improve readability.
+
+Here’s a simple example that adds a comment above a print call:
 
 ```gleam
 import gleam/io
 
 pub fn main() {
-  // Print hello world
+  // Show a message
   io.println("Hello world!")
 }
-```
+````
 
-Gleam allows you to write comments in your code by prefixing them with `//`:
+For longer explanations, use `//` at the start of each line:
 
 ```gleam
-// Hello, world! I have a lot to say, so much that it will take multiple
-// lines of text. Therefore, I will start each line with // to denote it
-// as part of a multi-line comment.
+// This is a longer comment.
+// Each line starts with //
+// so the compiler treats it as a comment.
 ```

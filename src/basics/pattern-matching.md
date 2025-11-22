@@ -1,24 +1,26 @@
-## Pattern matching
+## Pattern Matching
 
-Gleam lets you **pattern match** both when assigning and in `case` expressions.
+Gleam supports pattern matching in variable bindings and `case` expressions. This allows you to unpack data and handle different shapes clearly and safely.
 
-### Let clause
+### Let Bindings
 
-With plain `let`, your pattern has to be **total** for the value’s shape - i.e., it must always match.
+With `let`, your pattern must always match the value. It's for shapes you know are guaranteed.
 
 ```gleam
 pub fn main() {
-  // Tuple destructuring: always matches a 2-tuple
   let point = #(3, 4)
   let #(x, y) = point
 
   io.println(int.to_string(x + y))
 }
-```
+````
 
-### Case expression
+This works because `point` is a 2-tuple, and the pattern matches that exactly.
 
-`case` lets you handle multiple shapes safely. You can match strings using concatenation syntax:
+### Case Expressions
+
+Use `case` to match multiple possible shapes. For strings, you can match a prefix using concatenation:
+
 ```gleam
 import gleam/io
 
@@ -36,45 +38,45 @@ fn get_name(x: String) -> String {
 }
 ```
 
-When working with lists you can match on length and contents. Use `..` to capture "the rest" of the elements.
-  ```gleam
-  import gleam/int
-  import gleam/list
-  import gleam/io
+Lists can be matched by length or contents. The `..` syntax captures the remaining elements:
 
-  pub fn main() {
-    let xs = list.repeat(int.random(5), times: int.random(3))
-    io.println(list.to_string(xs, int.to_string))
+```gleam
+import gleam/int
+import gleam/list
+import gleam/io
 
-    let result = case xs {
-      [] -> "Empty list"
-      [1] -> "List of just 1"
-      [4, ..] -> "List starting with 4"
-      [_, _] -> "List of 2 elements"
-      _ -> "Some other list"
-    }
+pub fn main() {
+  let xs = list.repeat(int.random(5), times: int.random(3))
 
-    io.println(result)
+  let result = case xs {
+    [] -> "Empty list"
+    [1] -> "List of just 1"
+    [4, ..] -> "List starting with 4"
+    [_, _] -> "List of 2 elements"
+    _ -> "Some other list"
   }
-  ```
 
-### `let assert`
+  io.println(result)
+}
+```
 
-Sometimes you *know* a value has a certain shape and want to crash immediately if it doesn’t. `let assert` is like `let`, but it allows **partial** patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with `as`.
+### Let Assert
+
+Use `let assert` when you expect a certain shape and want the program to fail fast if that shape isn't matched. It allows partial patterns and will panic if the match fails. You can add a custom message.
 
 ```gleam
 pub fn main() {
   let a = unsafely_get_first_element([123])
   io.println(int.to_string(a))
 
-  // This will panic at runtime with our custom message:
   let b = unsafely_get_first_element([])
-  io.println(int.to_string(b))
+  io.println(int.to_string(b))  // Panics here
 }
 
 pub fn unsafely_get_first_element(items: List(a)) -> a {
-  // Partial pattern: will panic on []
   let assert [first, ..] = items as "List should not be empty"
   first
 }
 ```
+
+Use this only when you're certain about the input, or when failing is acceptable.

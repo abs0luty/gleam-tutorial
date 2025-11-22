@@ -1,12 +1,9 @@
-## Who this tutorial is made for
+## Who This Tutorial Is For
 
-This tutorial is for people who’ve written code before and don’t need hand-holding on the absolute basics. If you already know what variables, functions, types, and control flow are, you’re in the right place. 
+This guide is for people who already know how to code. If you're familiar with variables, functions, types, and control flow, you're in the right spot.
 
-We'll go fast on "intro to programming" stuff and focus on how BEAM and Gleam do things.
+We won’t explain the basics of programming. Instead, we’ll focus on how things work in Gleam and on the BEAM. If you’re coming from Python, JavaScript, Go, C++, or similar, you’ll be fine - even if functional programming is new to you.
 
-You **don't** need prior functional-programming experience. If you’ve mostly lived in Python/JS/Go/C++ and you're curious about a friendly functional language on the BEAM, you'll be fine. Plenty of respected language guides set similar expectations - for example, *Learn You a Haskell* explicitly targets people who've programmed before but are new to FP, which is the same vibe we're going for. ([learnyouahaskell.com][1])
+You don’t need to know FP going in. This is aimed at curious developers who want a solid intro to a functional language that runs on the BEAM. It follows the style of guides like *Learn You a Haskell*, which assume programming experience but not a background in FP.  
 
-Think of this as a practical, programmer-to-programmer tour. Like the Go Tour and the Rust Book, we'll move quickly from syntax to real patterns and habits, assuming you can already read code and run tools; the goal is to level up how you build, not teach what a loop is. ([Go.dev][2])
-
-[1]: https://learnyouahaskell.com "Learn You a Haskell for Great Good!"
-[2]: https://go.dev/tour "A Tour of Go"
+Think of this as a fast-moving tour from one developer to another. Like the Go Tour or the Rust Book, it covers practical syntax and patterns instead of explaining what a loop is.

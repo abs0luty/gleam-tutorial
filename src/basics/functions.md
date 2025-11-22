@@ -1,185 +1,163 @@
 ## Functions
 
-In Gleam, the `fn` keyword defines a function. Like blocks, the body is a series of expressions evaluated top-to-bottom, and **the last expression's value is returned** - there's no `return` keyword. 
+Use `fn` to define a function. Gleam runs the body top to bottom and returns the final value. There's no `return` keyword.
 
-Functions are **private by default**. Add `pub` to make them usable from other modules. Type annotations for parameters and return types are optional but encouraged for clarity. 
-
-```gleam
-pub fn main() {
-  echo double(10)
-}
-
-fn double(a: Int) -> Int {       // private
-  multiply(a, 2)
-}
-
-fn multiply(a: Int, b: Int) -> Int {
-  a * b
-}
-```
-
-### Higher-order functions
-
-Functions are values. You can **pass them around**, store them in variables, and return them - this is the basis for map/filter/fold and composition patterns. The parameter type for a function value is written with `fn(...) -> ...`.
+Functions are private unless marked `pub`. Type annotations help with clarity but aren't required.
 
 ```gleam
 pub fn main() {
-  echo twice(1, add_one)    // pass a function
-  let my_function = add_one // store a function
-  echo my_function(100)
+  greet("Alex")
 }
 
-fn twice(argument: Int, passed_function: fn(Int) -> Int) -> Int {
-  passed_function(passed_function(argument))
+fn greet(name: String) {
+  let message = make_message(name)
+  io.println(message)
 }
 
-fn add_one(argument: Int) -> Int {
-  argument + 1
+fn make_message(name: String) -> String {
+  "Welcome, " <> name <> "!"
 }
-```
+````
 
-### Anonymous functions 
+### Higher-Order Functions
 
-Anonymous functions use `fn(...) { ... }`. They're interchangeable with named functions and **capture variables** in scope (closures), which is handy for customizing behavior with local data.
+Functions can be passed around like any other value. You can use them to build flexible logic.
 
 ```gleam
 pub fn main() {
-  let add_one = fn(a) { a + 1 }
-  echo twice(1, add_one)
-
-  echo twice(1, fn(a) { a * 2 })  // inline
-
-  let secret_number = 42
-  let secret = fn() { secret_number } // captures 42
-  echo secret()
+  let result = apply_twice(square, 3)
+  io.println(int.to_string(result))
 }
 
-fn twice(argument: Int, my_function: fn(Int) -> Int) -> Int {
-  my_function(my_function(argument))
+fn square(n: Int) -> Int {
+  n * n
+}
+
+fn apply_twice(f: fn(Int) -> Int, x: Int) -> Int {
+  f(f(x))
 }
 ```
 
-Closures let you "bake in" environment values without threading them through every call.
+### Anonymous Functions
 
-### Function captures
-
-For the common "wrap a function and pass one argument through" case, use **function capture**: replace the flowing argument with `_`. It's shorthand for `fn(x) { some_fun(..., x, ...) }`.
+You can define unnamed functions inline. These can also capture values from their environment.
 
 ```gleam
 pub fn main() {
-  // These are equivalent
-  let add_one_v1 = fn(x) { add(1, x) }
-  let add_one_v2 = add(1, _)
+  let double = fn(n) { n * 2 }
+  let result = double_and_add(double, 5)
+  io.println(int.to_string(result))
 
-  echo add_one_v1(10)
-  echo add_one_v2(10)
+  let base = 10
+  let add_base = fn(x) { x + base }
+  io.println(int.to_string(add_base(5)))
 }
 
-fn add(a: Int, b: Int) -> Int {
-  a + b
+fn double_and_add(f: fn(Int) -> Int, x: Int) -> Int {
+  f(x) + x
 }
 ```
 
-This reads nicely in pipelines or when reordering parameters. 
+### Function Captures
 
-### Generic functions
-
-When your logic doesn't care about a concrete type, use a **type variable** (lowercase) to make a function generic. The compiler instantiates it with a specific type at each call site. This is stricter than "any" - it must be **the same** type throughout that call. 
+Use `_` to partially apply a function and create a new one.
 
 ```gleam
 pub fn main() {
-  let add_one = fn(x) { x + 1 }
-  let exclaim = fn(x) { x <> "!" }
-
-  // twice(10, exclaim)          // invalid: types conflict
-
-  echo twice(10, add_one)        // value = Int here
-  echo twice("Hello", exclaim)   // value = String here
+  let greet = say("Hi", _)
+  io.println(greet("Sam"))
 }
 
-fn twice(argument: value, my_function: fn(value) -> value) -> value {
-  my_function(my_function(argument))
+fn say(prefix: String, name: String) -> String {
+  prefix <> ", " <> name
 }
 ```
 
-Result: reusable functions with strong static guarantees - no runtime type checks needed.
+This simplifies your code and makes pipelines easier to read.
+
+### Generic Functions
+
+Generic functions work with any type, as long as it's consistent within the call.
+
+```gleam
+pub fn main() {
+  io.println(duplicate("hey"))
+  io.println(int.to_string(duplicate(42)))
+}
+
+fn duplicate(x: value) -> Tuple(value, value) {
+  #(x, x)
+}
+```
+
+The compiler ensures the types are used consistently and doesn't allow mismatches.
 
 ### Pipelines
 
-The **pipe operator** `|>` passes the value on the left into the function on the right, letting you read transformations **top-to-bottom**. It tries to place the piped value as the **first argument**; if that doesn't fit, it treats the right side as a function that returns a function (so `b(1,2)(a)`). Capture `_` helps target a different parameter position. 
+The pipe operator passes the result of one expression into the next. It improves readability by following the data flow.
 
 ```gleam
-import gleam/io
 import gleam/string
+import gleam/io
 
 pub fn main() {
-  // Without the pipe operator
-  io.println(string.drop_start(string.drop_end("Hello, Joe!", 1), 7))
-
-  // With the pipe operator
-  "Hello, Mike!"
-  |> string.drop_end(1)
-  |> string.drop_start(7)
-  |> io.println
-
-  // Reordering with a capture
-  "1"
-  |> string.append("2")
-  |> string.append("3", _)
+  "   Hello World!  "
+  |> string.trim
+  |> string.uppercase
+  |> string.append("!!!")
   |> io.println
 }
 ```
 
-Pipes are the idiomatic way to **compose** in Gleam - most stdlib functions put the "subject" first to make piping natural. 
+You can also use `_` to place the piped value into another argument slot.
 
-### Labelled arguments
+```gleam
+"42"
+|> string.concat(["Value: ", _])
+|> io.println
+```
 
-Give arguments **labels** to self-document calls and avoid "what does the second `Int` mean?" moments. Labels are written **before** the parameter name in the definition; at call sites you can supply them in any order. Unlabelled args must come first. No runtime cost. 
+### Labelled Arguments
+
+Labels help show what each argument means. They're useful when multiple arguments share a type.
 
 ```gleam
 pub fn main() {
-  echo calculate(1, add: 2, multiply: 3)
-  echo calculate(1, multiply: 3, add: 2) // order doesn't matter
-  echo calculate(1, 2, 3)                // labels optional when calling
+  let total = compute_cost(units: 4, price_per_unit: 25)
+  io.println(int.to_string(total))
 }
 
-fn calculate(value: Int, add addend: Int, multiply multiplier: Int) {
-  value * multiplier + addend
+fn compute_cost(units units: Int, price_per_unit cost: Int) -> Int {
+  units * cost
 }
 ```
 
-Labels shine in APIs with multiple same-typed parameters. 
+Labels can be written in any order at the call site.
 
-### Label shorthand
+### Label Shorthand
 
-If local variable names match the labels, you can **omit** the names at the call site - nice for records and functions with many labelled args. This shorthand is part of the language and widely used in examples and blog posts.
+If your variable names match the parameter labels, you can use shorthand syntax.
 
 ```gleam
 pub fn main() {
-  let quantity = 5.0
-  let unit_price = 10.0
-  let discount = 0.2
+  let width = 10
+  let height = 5
+  let unit = "cm"
 
-  // Regular label syntax
-  echo calculate_total_cost(
-    quantity: quantity,
-    unit_price: unit_price,
-    discount: discount,
-  )
-
-  // Shorthand (names match labels)
-  echo calculate_total_cost(quantity:, unit_price:, discount:)
+  describe_rectangle(width:, height:, unit:)
 }
 
-fn calculate_total_cost(
-  quantity quantity: Float,
-  unit_price price: Float,
-  discount discount: Float,
-) -> Float {
-  let subtotal = quantity *. price
-  let discount = subtotal *. discount
-  subtotal -. discount
+fn describe_rectangle(
+  width width: Int,
+  height height: Int,
+  unit unit: String,
+) {
+  let info = int.to_string(width) <> " x " <>
+             int.to_string(height) <> " " <>
+             unit
+
+  io.println(info)
 }
 ```
 
-Shorthand keeps the call sites tidy without sacrificing readability. 
+This keeps function calls compact and clear.

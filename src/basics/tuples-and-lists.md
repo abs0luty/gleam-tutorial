@@ -1,189 +1,181 @@
 ## Lists
 
-A **list** is an ordered collection of values. Lists are **generic** - their type records the element type: `List(Int)`, `List(String)`, etc. 
+A list is an ordered collection of values. Lists are generic, so their type tracks the kind of elements they hold, like `List(Int)` or `List(String)`.
 
-Under the hood they're **immutable singly-linked** lists. That makes adding or removing at the **front** O(1) and anything that touches the **end** O(n). 
+Internally, lists are immutable and singly-linked. This makes operations at the front fast and anything involving the end slower. For that reason, Gleam code usually builds lists from the front.
 
-So in Gleam you usually **build from the front** and avoid random indexing. These rules are the same on both Erlang/BEAM and JS targets; you use `gleam/list` for all the usual suspects like `map`, `filter`, `fold`, and friends.
+Use the `gleam/list` module for transformations like `map`, `filter`, and `fold`. This works the same on both BEAM and JavaScript targets.
 
-### Literal syntax
+### List Literals
 
-Use square brackets. Empty is `[]`. Elements are homogeneous by type parameter:
+Use square brackets. An empty list is `[]`. All elements must be the same type.
 
 ```gleam
-let empty = []
-let nums  = [1, 2, 3]
+let empty_list = []
+let letters = ["a", "b", "c"]
+````
+
+### Prepend (Fast)
+
+Adding to the front is efficient and doesn’t copy the list.
+
+```gleam
+let tail = ["b", "c"]
+let full = ["a", ..tail]  // ["a", "b", "c"]
 ```
 
-### Prepend (constant time)
+The `..` spread works only at the start of a list. It’s not a general-purpose concat operator.
 
-Prepending doesn't copy the whole list, so it's the idiomatic way to build sequences efficiently:
+### Pattern Matching
 
-```gleam
-let tail = [2, 3, 4]
-let all  = [1, ..tail]     // -> [1, 2, 3, 4]
-```
-
-That spread syntax is specific to **prefixing**. It's not a general "concatenate two lists" shortcut. The language even warns if you accidentally try to use it as concat.
-
-## Pattern matching & deconstruction
-
-You can destructure lists right in a `case`. It's a clean way to branch on empty vs non-empty and bind the head and tail:
+You can match on lists using `case`, useful for handling different shapes.
 
 ```gleam
-case nums {
-  [] -> "empty"
-  [first] -> "one: " <> int.to_string(first)
-  [head, ..rest] -> "head " <> int.to_string(head)
+case letters {
+  [] -> "Empty"
+  [x] -> "One: " <> x
+  [first, ..rest] -> "First is " <> first
 }
 ```
 
-`[]` matches empty, `[x]` matches single-element, and `[h, ..t]` peels one off the front. 
+This helps cleanly separate the empty case, a single item, or a longer list.
 
-## Everyday operators & utilities
-
-All functions are **pure** and return new lists. The important cost model: anything that must walk the list is **linear**; operations that only touch the head are **constant time**.
-
-### Length, emptiness, membership
+### Length, Emptiness, Membership
 
 ```gleam
 import gleam/list
 
-pub fn main() {
-  echo list.length([1, 2, 3])   // 3
-  echo list.is_empty([])        // True
-  echo list.contains([1, 0], 0) // True
-}
+list.length([1, 2, 3])           // 3
+list.is_empty([])                // True
+list.contains(["a", "b"], "b")   // True
 ```
 
-`length` and `contains` traverse the list, so they're O(n). Use them when you need them, but don't call them in tight loops if you can carry the info through folds instead.
+These scan the list, so avoid using them in tight loops.
 
-### Head & tail
+### Head and Tail
 
 ```gleam
-list.first([1, 2])  // Ok(1)
-list.rest([1, 2])   // Ok([2])
+list.first(["x", "y"])   // Ok("x")
+list.rest(["x", "y"])    // Ok(["y"])
 ```
 
-These do not copy. They're constant time and the safest way to peek or step through a list one element at a time.
+Both are fast and do not copy data.
 
-### Map / Filter / Fold
+### Map, Filter, Fold
 
 ```gleam
-list.map([2, 4, 6], fn(x) { x * 2 })     // [4, 8, 12]
-list.filter([2, 4, 6, 1], fn(x) { x > 2 }) // [4, 6]
+list.map([1, 2], fn(x) { x + 1 })              // [2, 3]
+list.filter([1, 2, 3], fn(x) { x > 1 })        // [2, 3]
 list.fold([1, 2, 3], 0, fn(acc, x) { acc + x }) // 6
 ```
 
-These are your **loops**. Prefer them over manual recursion for clarity.
+These replace manual recursion for most list processing.
 
-### Find & predicates
-
-```gleam
-list.find([1, 2, 3], fn(x) { x > 2 }) // Ok(3)
-list.any([3, 4], fn(x) { x > 3 })     // True
-list.all([4, 5], fn(x) { x > 3 })     // True
-```
-
-`any`/`all` **short-circuit**, which is handy for guards and validations without scanning the whole list unnecessarily.
-
-### Zipping & unzipping
+### Find, Any, All
 
 ```gleam
-list.zip([1, 2], ["a", "b"])           // [#(1, "a"), #(2, "b")]
-list.unzip([#(1, 2), #(3, 4)])         // #([1, 3], [2, 4])
+list.find([1, 2, 3], fn(x) { x == 2 })   // Ok(2)
+list.any([3, 5], fn(x) { x < 4 })        // True
+list.all([3, 5], fn(x) { x > 2 })        // True
 ```
 
-If you need equal lengths guaranteed, use `strict_zip` which returns `Error(Nil)` on mismatch. Great for pairing coordinates, ids to names, etc.
+`any` and `all` stop as soon as possible.
 
-### Append, flatten, flat\_map
+### Zip and Unzip
 
 ```gleam
-list.append([1, 2], [3])                     // [1, 2, 3]
-list.flatten([[1], [2, 3], []])              // [1, 2, 3]
-list.flat_map([2, 4], fn(x) { [x, x + 1] })  // [2, 3, 4, 5]
+list.zip([1, 2], ["a", "b"])               // [#(1, "a"), #(2, "b")]
+list.unzip([#(1, "x"), #(2, "y")])         // #([1, 2], ["x", "y"])
 ```
 
-`append` must **copy the first list**, so it's O(n). 
+Use `strict_zip` if you want to fail on length mismatch.
 
-In hot paths, build by **prepending inside a fold** and finish with a single `reverse`. That keeps each step O(1) and has one linear pass at the end.
-
-### Take & drop (safe slicing)
+### Append, Flatten, Flat Map
 
 ```gleam
-list.take([1, 2, 3, 4], 2) // [1, 2]
-list.drop([1, 2, 3, 4], 2) // [3, 4]
+list.append(["a"], ["b"])                  // ["a", "b"]
+list.flatten([["a"], ["b", "c"]])          // ["a", "b", "c"]
+list.flat_map(["x", "y"], fn(s) { [s, "!"] }) // ["x", "!", "y", "!"]
 ```
 
-Both are linear. `drop` doesn't copy nodes it skips, which makes it an efficient way to "advance" a cursor in streaming code.
+Appending copies the first list, so avoid chaining it repeatedly. Use a fold and reverse for better performance.
 
-### Unique, sort
+### Take and Drop
 
 ```gleam
-list.unique([1, 1, 4, 7, 3, 3, 4]) // [1, 4, 7, 3]
-list.sort([4, 3, 6, 5, 4, 1, 2], by: int.compare) // [1, 2, 3, 4, 4, 5, 6]
+list.take(["a", "b", "c"], 2)  // ["a", "b"]
+list.drop(["a", "b", "c"], 1)  // ["b", "c"]
 ```
 
-`unique` runs in **log-linear** time; it preserves the **first occurrence** order. 
+Both are safe and return smaller lists without error.
 
-`sort` takes a comparator and returns a new sorted list. 
-
-### Windows, chunks, partitions
+### Unique and Sort
 
 ```gleam
-list.window([1, 2, 3, 4, 5], by: 3)            // [[1,2,3],[2,3,4],[3,4,5]]
-list.sized_chunk([1, 2, 3, 4, 5, 6], into: 2)  // [[1,2],[3,4],[5,6]]
-list.partition([1, 2, 3, 4, 5], int.is_odd)    // #([1,3,5], [2,4])
+list.unique(["x", "x", "y"])             // ["x", "y"]
+list.sort([3, 1, 2], by: int.compare)    // [1, 2, 3]
 ```
 
-Use sliding `window` for rolling metrics, `sized_chunk` for batching, and `partition` to split by a predicate in one pass.
+`unique` keeps the first of each value. `sort` needs a comparison function.
 
-> **Note**: `transpose` isn't tail-recursive on JS and can blow the stack with huge lists. 
-
-### Ranges & repetition
+### Windows, Chunks, Partition
 
 ```gleam
-list.range(0, 5)        // [0, 1, 2, 3, 4, 5]
-list.repeat("a", 3)     // ["a", "a", "a"]
+list.window([1, 2, 3, 4], by: 2)        // [[1,2],[2,3],[3,4]]
+list.sized_chunk([1, 2, 3, 4], into: 2) // [[1,2],[3,4]]
+list.partition([1, 2, 3], int.is_even)  // #([2], [1, 3])
 ```
 
-Great for generating test data, producing index sequences, or simple stubs. 
+Use these to split or batch data.
 
-## When not to use a list
+### Ranges and Repeats
 
-If you need **random access** or frequent updates in the **middle/end**, a singly-linked list is the wrong tool. 
+```gleam
+list.range(1, 3)         // [1, 2, 3]
+list.repeat("hi", 2)     // ["hi", "hi"]
+```
 
-Consider `gleam/dict` for keyed lookups, or restructure the algorithm around streaming with folds. Index-based algorithms are rare in Gleam because lists are linked. If you must, `list.at` exists but returns a `Result` and is still O(n).
+Useful for generating test data or index sequences.
+
+### When Not to Use Lists
+
+If you need random access, frequent edits in the middle, or lookups by key, lists aren’t the right tool. Try `gleam/dict` for key-value data or rewrite the algorithm to use folds.
+
+`list.at` lets you read by index, but it's O(n) and returns a result:
+
+```gleam
+list.at(["a", "b"], 1) // Ok("b")
+```
 
 ## Tuples
 
-A **tuple** groups a fixed number of values, possibly of **different types**. They're perfect for small, ad-hoc groupings or multi-value returns, like `#(status_code, body)` or `#(x, y)`. If the group has domain meaning, prefer a custom type or record to make the fields self-describing. Tuples are immutable and have a fixed arity.
+Tuples hold a fixed number of values. Each element can be a different type. They’re good for short groups like a result pair or coordinates.
 
-### Literal syntax
+### Tuple Literals
 
 ```gleam
-let pair = #(200, "OK")
-let triple = #("x", 10, True)
+let status = #(404, "Not Found")
+let config = #("dev", True, 3)
 ```
 
-Arity is part of the type. For example, `#(Int, String)` is a different type from `#(Int, String, Bool)`.
+Each arity has a different type. A pair is not the same as a triple.
 
-### Positional accessors (no pattern match needed)
+### Access by Position
 
 ```gleam
-pair.0   // 200
-pair.1   // "OK"
-triple.2 // True
+status.0   // 404
+status.1   // "Not Found"
+config.2   // 3
 ```
 
-These **zero-based** accessors are convenient for quick reads and are part of the official tour. They're great when you only need one field and don't want a full `case`.
+Accessors use zero-based indexing and don't require pattern matching.
 
-### Pattern matching
+### Pattern Matching
 
 ```gleam
-case triple {
-  #(name, count, active) -> name <> " " <> int.to_string(count)
+case config {
+  #(env, active, tries) -> env <> ": " <> int.to_string(tries)
 }
 ```
 
-Pattern matching shines when you want to destructure and name everything at once. If you find yourself passing tuples around widely, consider a custom type for readability.
+Use matching when you want to name all fields. If the tuple has meaning in your domain, consider using a record or custom type instead.
