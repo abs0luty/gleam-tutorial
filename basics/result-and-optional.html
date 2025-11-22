@@ -12,36 +12,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-3865ffda.css">
+        <link rel="stylesheet" href="../css/general-5b48641a.css">
+        <link rel="stylesheet" href="../css/chrome-c0e702bf.css">
+        <link rel="stylesheet" href="../css/print-ad67d350.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
-        <link rel="stylesheet" href="./theme/catppuccin.css">
-        <link rel="stylesheet" href="./theme/custom.css">
+        <link rel="stylesheet" href=".././theme/catppuccin.css">
+        <link rel="stylesheet" href=".././theme/custom.css">
 
 
         <!-- Provide site root and default themes to javascript -->
         <script>
-            const path_to_root = "";
+            const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "../searchindex-aacf2f74.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc-d2d9e2d5.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -108,7 +107,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -147,13 +146,13 @@
                     <h1 class="menu-title">Gleam programming language</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
+                            <i id="git-repository-button" class="fa fab-github"></i>
                         </a>
-                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/result.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/result-and-optional.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
                         </a>
 
@@ -187,17 +186,146 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="result"><a class="header" href="#result">Result</a></h1>
+                        <h2 id="handling-absence-and-failure"><a class="header" href="#handling-absence-and-failure">Handling absence and failure</a></h2>
+<p>Gleam uses two types to handle missing values and fallible operations: <code>Option(a)</code> and <code>Result(a, e)</code>. These types make uncertainty explicit and force you to handle it clearly.</p>
+<h3 id="option-type"><a class="header" href="#option-type">Option Type</a></h3>
+<p>Use <code>Option(a)</code> for values that might be missing. For example, an optional parameter or a field that may be absent:</p>
+<pre><code class="language-gleam">import gleam/option.{type Option, Some, None}
+
+pub type User {
+  User(name: String, nickname: Option(String))
+}
+
+let user1 = User("Eva", Some("E"))
+let user2 = User("Tom", None)
+</code></pre>
+<h4 id="optionmap"><a class="header" href="#optionmap"><code>option.map</code></a></h4>
+<p>Transforms the inner value if it’s present:</p>
+<pre><code class="language-gleam">option.map(Some(2), fn(x) { x * 3 }) // Some(6)
+option.map(None, fn(x) { x * 3 })    // None
+</code></pre>
+<h4 id="optionthen"><a class="header" href="#optionthen"><code>option.then</code></a></h4>
+<p>Chains computations that return <code>Option</code>:</p>
+<pre><code class="language-gleam">option.then(Some(2), fn(x) { Some(x + 1) }) // Some(3)
+option.then(Some(2), fn(_) { None })        // None
+option.then(None, fn(x) { Some(x + 1) })    // None
+</code></pre>
+<h4 id="optionor-and-optionlazy_or"><a class="header" href="#optionor-and-optionlazy_or"><code>option.or</code> and <code>option.lazy_or</code></a></h4>
+<p>Use fallback options:</p>
+<pre><code class="language-gleam">option.or(Some(1), Some(2))               // Some(1)
+option.or(None, Some(2))                  // Some(2)
+option.lazy_or(Some(1), fn() { Some(3) }) // Some(1)
+option.lazy_or(None, fn() { Some(3) })    // Some(3)
+</code></pre>
+<h4 id="optionunwrap"><a class="header" href="#optionunwrap"><code>option.unwrap</code></a></h4>
+<p>Extract the value or use a default:</p>
+<pre><code class="language-gleam">option.unwrap(Some(5), 0) // 5
+option.unwrap(None, 0)    // 0
+</code></pre>
+<h4 id="optionflatten"><a class="header" href="#optionflatten"><code>option.flatten</code></a></h4>
+<p>Removes one layer of nesting:</p>
+<pre><code class="language-gleam">option.flatten(Some(Some(1))) // Some(1)
+option.flatten(Some(None))    // None
+option.flatten(None)          // None
+</code></pre>
+<h4 id="optionto_result"><a class="header" href="#optionto_result"><code>option.to_result</code></a></h4>
+<p>Converts an <code>Option</code> into a <code>Result</code>:</p>
+<pre><code class="language-gleam">option.to_result(Some(5), "missing") // Ok(5)
+option.to_result(None, "missing")    // Error("missing")
+</code></pre>
+<h3 id="result-types"><a class="header" href="#result-types">Result Types</a></h3>
+<p>Use <code>Result(a, e)</code> when a function can fail. This forces the caller to handle both the success and error cases.</p>
+<pre><code class="language-gleam">fn parse_number(s: String) -&gt; Result(Int, String) {
+  case int.parse(s) {
+    Ok(n) -&gt; Ok(n)
+    Error(_) -&gt; Error("invalid input")
+  }
+}
+</code></pre>
+<h4 id="resultmap"><a class="header" href="#resultmap"><code>result.map</code></a></h4>
+<p>Transforms the success value:</p>
+<pre><code class="language-gleam">result.map(Ok(2), fn(x) { x * 2 })     // Ok(4)
+result.map(Error("bad"), fn(x) { x })  // Error("bad")
+</code></pre>
+<h4 id="resulttry"><a class="header" href="#resulttry"><code>result.try</code></a></h4>
+<p>Chains fallible functions:</p>
+<pre><code class="language-gleam">fn safe_parse(s: String) -&gt; Result(Int, String) {
+  case int.parse(s) {
+    Ok(n) -&gt; Ok(n)
+    Error(_) -&gt; Error("not a number")
+  }
+}
+
+result.try(Ok("42"), safe_parse)   // Ok(42)
+result.try(Ok("foo"), safe_parse)  // Error("not a number")
+result.try(Error("fail"), safe_parse) // Error("fail")
+</code></pre>
+<h4 id="resultunwrap"><a class="header" href="#resultunwrap"><code>result.unwrap</code></a></h4>
+<p>Returns the success value or a fallback:</p>
+<pre><code class="language-gleam">result.unwrap(Ok("done"), "default")    // "done"
+result.unwrap(Error("fail"), "default") // "default"
+</code></pre>
+<h4 id="resultis_ok-and-resultis_error"><a class="header" href="#resultis_ok-and-resultis_error"><code>result.is_ok</code> and <code>result.is_error</code></a></h4>
+<p>Check what variant you’re working with:</p>
+<pre><code class="language-gleam">result.is_ok(Ok(1))       // True
+result.is_error(Ok(1))    // False
+result.is_error(Error(1)) // True
+</code></pre>
+<h4 id="resultall"><a class="header" href="#resultall"><code>result.all</code></a></h4>
+<p>Collects a list of <code>Result</code>s into one <code>Result</code> with a list:</p>
+<pre><code class="language-gleam">result.all([Ok(1), Ok(2)])        // Ok([1, 2])
+result.all([Ok(1), Error("x")])   // Error("x")
+</code></pre>
+<h4 id="resultlazy_or"><a class="header" href="#resultlazy_or"><code>result.lazy_or</code></a></h4>
+<p>Provides a fallback result lazily:</p>
+<pre><code class="language-gleam">result.lazy_or(Ok(1), fn() { Ok(2) })          // Ok(1)
+result.lazy_or(Error("e"), fn() { Ok(2) })     // Ok(2)
+result.lazy_or(Error("e"), fn() { Error("x") }) // Error("x")
+</code></pre>
+<h3 id="when-to-use-each"><a class="header" href="#when-to-use-each">When to Use Each</a></h3>
+<p>In other languages fallible functions may return either <code>Result</code> or <code>Option</code> depending on whether there is more information to be given about the failure. In Gleam all fallible functions return <code>Result</code>, and <code>Nil</code> is used as the error if there is no extra detail to give.</p>
+<p>This consistency removes the boilerplate that would otherwise be needed to convert between <code>Option</code> and <code>Result</code> types, and makes APIs more predictable:</p>
+<pre><code class="language-gleam">import gleam/option
+import gleam/result
+import gleam/int
+import gleam/io
+
+fn apply_multiplier(value: Int, maybe: Option(Int)) -&gt; Int {
+  case maybe {
+    Some(m) -&gt; value * m
+    None -&gt; value
+  }
+}
+
+fn parse_positive(s: String) -&gt; Result(Int, Nil) {
+  case int.parse(s) {
+    Ok(n) if n &gt; 0 -&gt; Ok(n)
+    _ -&gt; Error(Nil)
+  }
+}
+
+pub fn main() {
+  let maybe_multiplier = Some(2)
+
+  case parse_positive("10") {
+    Ok(n) -&gt;
+      let result = apply_multiplier(n, maybe_multiplier)
+      io.println(int.to_string(result))
+    Error(_) -&gt;
+      io.println("Invalid input")
+  }
+}
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="basics/functions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../basics/functions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="expression-blocks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../basics/expression-blocks.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -207,11 +335,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="basics/functions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../basics/functions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="expression-blocks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../basics/expression-blocks.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -226,17 +354,17 @@
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-5a2b5dad.js"></script>
+        <script src="../book-9576a2db.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="syntax.js"></script>
-        <script src="highlight.js"></script>
+        <script src="../syntax-1451bcbd.js"></script>
+        <script src="../highlight-5a2b5dad.js"></script>
 
 
 

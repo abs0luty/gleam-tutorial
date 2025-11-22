@@ -12,21 +12,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-3865ffda.css">
+        <link rel="stylesheet" href="../css/general-5b48641a.css">
+        <link rel="stylesheet" href="../css/chrome-c0e702bf.css">
+        <link rel="stylesheet" href="../css/print-ad67d350.css" media="print">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href=".././theme/catppuccin.css">
@@ -38,10 +37,10 @@
             const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../searchindex-aacf2f74.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../toc-d2d9e2d5.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -151,7 +150,7 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
+                            <i id="git-repository-button" class="fa fab-github"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/pattern-matching.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
@@ -187,20 +186,20 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h2>
-<p>Gleam lets you <strong>pattern match</strong> both when assigning and in <code>case</code> expressions.</p>
-<h3 id="let-clause"><a class="header" href="#let-clause">Let clause</a></h3>
-<p>With plain <code>let</code>, your pattern has to be <strong>total</strong> for the value’s shape - i.e., it must always match.</p>
+                        <h2 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern Matching</a></h2>
+<p>Gleam supports pattern matching in variable bindings and <code>case</code> expressions. This allows you to unpack data and handle different shapes clearly and safely.</p>
+<h3 id="let-bindings"><a class="header" href="#let-bindings">Let Bindings</a></h3>
+<p>With <code>let</code>, your pattern must always match the value. It’s for shapes you know are guaranteed.</p>
 <pre><code class="language-gleam">pub fn main() {
-  // Tuple destructuring: always matches a 2-tuple
   let point = #(3, 4)
   let #(x, y) = point
 
   io.println(int.to_string(x + y))
 }
 </code></pre>
-<h3 id="case-expression"><a class="header" href="#case-expression">Case expression</a></h3>
-<p><code>case</code> lets you handle multiple shapes safely. You can match strings using concatenation syntax:</p>
+<p>This works because <code>point</code> is a 2-tuple, and the pattern matches that exactly.</p>
+<h3 id="case-expressions"><a class="header" href="#case-expressions">Case Expressions</a></h3>
+<p>Use <code>case</code> to match multiple possible shapes. For strings, you can match a prefix using concatenation:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
@@ -216,14 +215,13 @@ fn get_name(x: String) -&gt; String {
   }
 }
 </code></pre>
-<p>When working with lists you can match on length and contents. Use <code>..</code> to capture "the rest" of the elements.</p>
+<p>Lists can be matched by length or contents. The <code>..</code> syntax captures the remaining elements:</p>
 <pre><code class="language-gleam">import gleam/int
 import gleam/list
 import gleam/io
 
 pub fn main() {
   let xs = list.repeat(int.random(5), times: int.random(3))
-  io.println(list.to_string(xs, int.to_string))
 
   let result = case xs {
     [] -&gt; "Empty list"
@@ -236,23 +234,22 @@ pub fn main() {
   io.println(result)
 }
 </code></pre>
-<h3 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h3>
-<p>Sometimes you <em>know</em> a value has a certain shape and want to crash immediately if it doesn’t. <code>let assert</code> is like <code>let</code>, but it allows <strong>partial</strong> patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with <code>as</code>.</p>
+<h3 id="let-assert"><a class="header" href="#let-assert">Let Assert</a></h3>
+<p>Use <code>let assert</code> when you expect a certain shape and want the program to fail fast if that shape isn’t matched. It allows partial patterns and will panic if the match fails. You can add a custom message.</p>
 <pre><code class="language-gleam">pub fn main() {
   let a = unsafely_get_first_element([123])
   io.println(int.to_string(a))
 
-  // This will panic at runtime with our custom message:
   let b = unsafely_get_first_element([])
-  io.println(int.to_string(b))
+  io.println(int.to_string(b))  // Panics here
 }
 
 pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
-  // Partial pattern: will panic on []
   let assert [first, ..] = items as "List should not be empty"
   first
 }
 </code></pre>
+<p>Use this only when you’re certain about the input, or when failing is acceptable.</p>
 
                     </main>
 
@@ -291,17 +288,17 @@ pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-5a2b5dad.js"></script>
+        <script src="../book-9576a2db.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../syntax.js"></script>
-        <script src="../highlight.js"></script>
+        <script src="../syntax-1451bcbd.js"></script>
+        <script src="../highlight-5a2b5dad.js"></script>
 
 
 

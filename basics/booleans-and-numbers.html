@@ -12,21 +12,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../css/variables-3865ffda.css">
+        <link rel="stylesheet" href="../css/general-5b48641a.css">
+        <link rel="stylesheet" href="../css/chrome-c0e702bf.css">
+        <link rel="stylesheet" href="../css/print-ad67d350.css" media="print">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="../highlight-493f70e1.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href=".././theme/catppuccin.css">
@@ -38,10 +37,10 @@
             const path_to_root = "../";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "../searchindex.js";
+            window.path_to_searchindex_js = "../searchindex-aacf2f74.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../toc.js"></script>
+        <script src="../toc-d2d9e2d5.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -151,7 +150,7 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
+                            <i id="git-repository-button" class="fa fab-github"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial/edit/main/src/basics/booleans-and-numbers.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <i id="git-edit-button" class="fa fa-edit"></i>
@@ -188,358 +187,167 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
-<p>In Gleam, boolean literals are either <code>True</code> or <code>False</code>. Their type is <code>Bool</code>. You can apply binary operations on these boolean values, such as:</p>
-<pre><code class="language-gleam">False &amp;&amp; False // =&gt; False
-True &amp;&amp; False  // =&gt; False
-True &amp;&amp; True   // =&gt; True
+<p>Gleam uses <code>True</code> and <code>False</code> as boolean values. Their type is <code>Bool</code>. You can apply logical operators like:</p>
+<pre><code class="language-gleam">False &amp;&amp; False  // False
+True &amp;&amp; False   // False
+True &amp;&amp; True    // True
 
-False || False // =&gt; False
-True || False  // =&gt; True
-True || True   // =&gt; True
+False || False  // False
+True || False   // True
+True || True    // True
 </code></pre>
-<p><code>&amp;&amp;</code> is logical <strong>AND</strong>: it returns <code>True</code> only if <em>both</em> operands are <code>True</code>.</p>
-<p><code>||</code> is logical <strong>OR</strong>: it returns <code>False</code> only if <em>both</em> operands are <code>False</code>.</p>
-<p>Both <code>&amp;&amp;</code> and <code>||</code> short‐circuit:</p>
+<p>Both operators short-circuit:</p>
 <ul>
-<li><code>&amp;&amp;</code> does not evaluate its right operand if the left is <code>False</code>, since the result is already known to be <code>False</code>.</li>
-<li><code>||</code> does not evaluate its right operand if the left is <code>True</code>, since the result must be <code>True</code>.</li>
+<li><code>False &amp;&amp; ...</code> skips the right side.</li>
+<li><code>True || ...</code> skips the right side.</li>
 </ul>
-<p>Here is an example of such behaviour:</p>
 <pre><code class="language-gleam">import gleam/io
 
-fn foo() -&gt; Bool {
-  io.println("test")
+fn message() -&gt; Bool {
+  io.println("evaluated")
   True
 }
 
 pub fn main() {
-  let _ = False &amp;&amp; foo()
+  let _ = False &amp;&amp; message()  // doesn't print anything
+  let _ = True &amp;&amp; message()   // prints "evaluated"
 }
 </code></pre>
-<p>In this case <code>test</code> isn't printed because <code>False &amp;&amp; ...</code> immediately yields <code>False</code> without calling <code>test()</code>. If instead you write:</p>
-<pre><code class="language-gleam">import gleam/io
-
-fn test() -&gt; Bool {
-  io.println("test")
-  True
-}
-
-pub fn main() {
-  let _ = True &amp;&amp; test()
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>test
-</code></pre>
-<p>Because the left side (<code>True</code>) doesn't block evaluation, so <code>test()</code> is called.</p>
 <h3 id="printing-booleans"><a class="header" href="#printing-booleans">Printing Booleans</a></h3>
-<p>If you want to print a <code>Bool</code>, you must first convert it to a <code>String</code> using <code>bool.to_string</code>. For example:</p>
+<p>Convert a <code>Bool</code> to a <code>String</code> before printing:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
 
 pub fn main() {
-  io.println(bool.to_string(True))
+  io.println(bool.to_string(False))
 }
 </code></pre>
-<p>Output:</p>
-<pre><code>True
-</code></pre>
-<p>Alternatively, for debugging you can use <code>echo</code>:</p>
-<pre><code class="language-gleam">import gleam/io
-
-pub fn main() {
-  echo False
-  echo "True"
+<p>You can also use <code>echo</code> for debugging:</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo True
 }
-</code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:4
-False
-src/main.gleam:5
-"True"
 </code></pre>
 <h3 id="negation"><a class="header" href="#negation">Negation</a></h3>
-<p>You can negate booleans in two ways:</p>
-<ul>
-<li>Using the <code>!</code> operator: <code>!True</code> → <code>False</code>, <code>!False</code> → <code>True</code></li>
-<li>Using <code>bool.negate</code> from the <code>gleam/bool</code> module:</li>
-</ul>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
+<p>Negate with <code>!</code> or <code>bool.negate</code>:</p>
+<pre><code class="language-gleam">import gleam/bool
 
-pub fn main() {
-  echo !True
-  echo bool.negate(False)
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:4
-False
-src/main.gleam:5
-True
+!True              // False
+bool.negate(False) // True
 </code></pre>
 <h2 id="numbers"><a class="header" href="#numbers">Numbers</a></h2>
-<p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
+<p>Gleam supports two numeric types:</p>
 <ul>
-<li>
-<p>On the <strong>BEAM</strong> target, <code>Int</code> values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. <code>Float</code> is the runtime’s 64-bit IEEE-754 double, but BEAM has no <code>NaN</code>/<code>Infinity</code> values exposed in the same way as JavaScript.</p>
-<p>Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return <code>0</code> for operators and offers checked functions in the stdlib.</p>
-</li>
-<li>
-<p>On the <strong>JavaScript</strong> target, <code>Float</code> is a 64-bit IEEE-754 double, matching JS <code>Number</code>. <code>Int</code> operations obey the host’s numeric semantics; keep integers within JS’s <strong>safe integer</strong> range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers.</p>
-<p>Gleam’s stdlib exposes the same checked APIs (<code>int.divide</code>, <code>float.divide</code>, etc.).</p>
-<blockquote>
-<p>Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via <a href="https://hexdocs.pm/bigi/index.html">the library designed for JS target</a>.</p>
-</blockquote>
-</li>
+<li><code>Int</code> for whole numbers</li>
+<li><code>Float</code> for decimal numbers</li>
 </ul>
 <h3 id="integers"><a class="header" href="#integers">Integers</a></h3>
-<p>Here are some examples of integer literals in Gleam:</p>
-<pre><code class="language-gleam">0
-1
-3
--4
-2942930103
+<p>Integers support basic arithmetic:</p>
+<pre><code class="language-gleam">1 + 2 - 3 * 4 // =&gt; -9
+7 / 2         // =&gt; 3
+3 % 2         // =&gt; 1
 </code></pre>
-<p>Gleam supports <code>_</code> in integers for clarity:</p>
-<pre><code class="language-gleam">3_000_000 vs 3000000
-10_000_000 vs 10000000
-20_000_000_000 vs 20000000000
+<p>Division by zero returns <code>0</code>:</p>
+<pre><code class="language-gleam">5 / 0 // =&gt; 0
 </code></pre>
-<p>The <code>_</code> has no syntactic and semantic meaning. Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with <code>0b</code>, <code>0o</code> and <code>0x</code> respectively:</p>
-<pre><code class="language-gleam">0b0101000101
-0o712
-0xFf // `f` and `F` here are the same
-</code></pre>
-<p>Gleam supports basic primitive operations with integers:</p>
-<pre><code class="language-gleam">1 + 3 - 2 * 4 // =&gt; -4
-7 / 2  // =&gt; 3 (rounded)
-3 % 2  // =&gt; 1
-1 &gt; 0  // =&gt; True
-1 &lt; 0  // =&gt; False
-1 &gt;= 0 // =&gt; True
-1 &lt;= 0 // =&gt; False
-</code></pre>
-<blockquote>
-<p><strong>Note</strong>: In Gleam division between integers returns another integer, which is the result of the division rounded down.</p>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: In Gleam division returns <code>0</code> when divisor is <code>0</code>:</p>
-<pre><code class="language-gleam">2 / 0 // =&gt; 0
-1 / 0 // =&gt; 0
-0 / 0 // =&gt; 0
-</code></pre>
-<p>This is why it is generally recommended to use <code>int.divide</code> function which returns an error if the divisor is <code>0</code>:</p>
-<pre><code class="language-gleam">int.divide(5, 2) // =&gt; Ok(2)
-int.divide(5, 0) // =&gt; Error(Nil)
-int.divide(0, 0) // =&gt; Error(Nil)
-</code></pre>
-</blockquote>
-<p>To print the integer in Gleam, you need to first convert it to string. You can do that using <code>int.to_string</code> function:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/int
+<p>Use <code>int.divide</code> to handle division safely:</p>
+<pre><code class="language-gleam">import gleam/int
 
-fn main() {
-  io.println(int.to_string(3))
-}
+int.divide(5, 2) // Ok(2)
+int.divide(5, 0) // Error(Nil)
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: As mentioned before, there is a difference in how integers work for javascript and erlang targets, including converting big integers to strings. Here's an example:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/int
-
-fn main() {
-  io.println(9_999_999_999_999_999 |&gt; int.to_string)
-}
+<p>You can write large numbers with <code>_</code>:</p>
+<pre><code class="language-gleam">1_000_000
 </code></pre>
-<p>Output when running the code using default erlang target (<code>gleam run</code>):</p>
-<pre><code>9999999999999999
+<p>Gleam also supports binary, octal, and hexadecimal:</p>
+<pre><code class="language-gleam">0b1010
+0o755
+0xFF
 </code></pre>
-<p>Output when running the code using javascript target (<code>gleam run --target javascript</code>):</p>
-<pre><code>10000000000000000
+<p>Comparison is straightforward:</p>
+<pre><code class="language-gleam">1 &gt; 0   // True
+2 &lt;= 2  // True
 </code></pre>
-<p>As of recently, Gleam compiler started to output a warning when dealing with big numbers in JS target:</p>
-<pre><code>warning: Int is outside JavaScript's safe integer range
-  ┌─ /Users/adi.salimgereyev/hello_world/src/hello_world.gleam:5:14
-  │
-5 │   io.println(9_999_999_999_999_999 |&gt; int.to_string)
-  │              ^^^^^^^^^^^^^^^^^^^^^ This is not a safe integer value on JavaScript
-
-This integer value is too large to be represented accurately by
-JavaScript's number type. To avoid this warning integer values must be in
-the range -(2^53 - 1) - (2^53 - 1).
-
-See JavaScript's Number.MAX_SAFE_INTEGER and Number.MIN_SAFE_INTEGER
-properties for more information.
+<h3 id="working-with-integers"><a class="header" href="#working-with-integers">Working with Integers</a></h3>
+<p>Convert to string:</p>
+<pre><code class="language-gleam">import gleam/int
+int.to_string(42)
 </code></pre>
-</blockquote>
-<p>You can find the absolute value of the integer using <code>int.absolute_value</code> function:</p>
-<pre><code class="language-gleam">int.absolute_value(-12) // =&gt; 12
-int.absolute_value(12)  // =&gt; 12
-int.absolute_value(0)   // =&gt; 0
+<p>Convert to float:</p>
+<pre><code class="language-gleam">int.to_float(2)  // 2.0
 </code></pre>
-<p>If you want the result of the base being raised to the power of exponent, you can use <code>power</code> function:</p>
-<pre><code class="language-gleam">int.power(3, of: 2.0)  // =&gt; 9
-int.power(2, of: 2.0)  // =&gt; 4
-int.power(2, of: 4.0)  // =&gt; 16
+<p>Other helpers:</p>
+<pre><code class="language-gleam">int.absolute_value(-10)   // 10
+int.negate(5)             // -5
+int.min(1, 3)             // 1
+int.max(1, 3)             // 3
+int.square_root(4)        // Ok(2.0)
+int.square_root(-1)       // Error(Nil)
+int.is_even(2)            // True
+int.is_odd(3)             // True
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: <code>power</code> accepts second argument only as floating point number. Gleam doesn't have implicit <code>Int</code> to <code>Float</code> cast:</p>
-<pre><code>error: Type mismatch
-   ┌─ /gleam-tutorial/hello_world/src/hello_world.gleam
-   │
-   │  3 |&gt; int.power(of: 2)
-   │                     ^
-
-Expected type:
-
-    Float
-
-Found type:
-
-    Int
+<p>Convert to base:</p>
+<pre><code class="language-gleam">int.to_base2(5)    // "101"
+int.to_base16(255) // "FF"
+int.to_base_string(48, 36) // Ok("1C")
 </code></pre>
-<p>So <code>2</code> must be changed to <code>2.0</code>. See the <a href="#floats">floating point numbers section</a> below.</p>
-</blockquote>
-<p>If you want to convert an integer to float, you can use <code>to_float</code> function:</p>
-<pre><code class="language-gleam">int.to_float(3)  // 3.0
-int.to_float(-3) // -3.0
-int.to_float(0)  // 0.0
+<p>Invalid base values return an error:</p>
+<pre><code class="language-gleam">int.to_base_string(48, 1)  // Error(InvalidBase)
+int.to_base_string(48, 37) // Error(InvalidBase)
 </code></pre>
-<p>Here are some other useful methods for integers:</p>
-<pre><code class="language-gleam">// Returns the minimum of two numbers
-int.min(2, 3)  // =&gt; 2
-
-// Returns the maximum of two numbers
-int.max(3, 4)  // =&gt; 4
-
-// Returns the negative of the number
-int.negate(1)  // =&gt; -1
-
-// Returns the square root of the number
-int.square_root(4)   // =&gt; Ok(2.0)
-int.square_root(-16) // =&gt; Error(Nil)
-
-// Returns true if the number is even
-int.is_even(2) // =&gt; True
-int.is_even(3) // =&gt; False
-
-// Returns true if the number is odd
-int.is_odd(2)  // =&gt; False
-int.is_odd(3)  // =&gt; True
-
+<h3 id="javascript-note"><a class="header" href="#javascript-note">JavaScript Note</a></h3>
+<p>On JavaScript targets, keep integers within ±(2^53 − 1) to avoid precision issues:</p>
+<pre><code class="language-gleam">int.to_string(9_999_999_999_999_999)
+// =&gt; "10000000000000000" on JS
+// =&gt; "9999999999999999" on BEAM
 </code></pre>
-<p>You can convert integers to different common bases:</p>
-<pre><code class="language-gleam">int.to_base2(2)   // =&gt; "10"
-int.to_base8(15)  // =&gt; "17"
-int.to_base16(48) // =&gt; "30"
-int.to_base36(48) // =&gt; "1C"
-</code></pre>
-<p>If you want to convert a number to any base from <code>2</code> to <code>36</code>, you can use <code>to_base_string</code>:</p>
-<pre><code class="language-gleam">// 37 is bigger than 36
-int.to_base_string(48, 37) // =&gt; Error(InvalidBase)
-
-// 1 is less than 2
-int.to_base_string(48, 1)  // =&gt; Error(InvalidBase)
-
-// Same as running to_base36()
-int.to_base_string(48, 36) // =&gt; Ok("1C")
-</code></pre>
-<h3 id="floats"><a class="header" href="#floats">Floats</a></h3>
-<p>Here are some examples of float literals:</p>
-<pre><code class="language-gleam">1.6
--0.3
+<p>The compiler warns when you exceed this range on the JS target.</p>
+<h3 id="float-numbers"><a class="header" href="#float-numbers">Float Numbers</a></h3>
+<p>Float literals:</p>
+<pre><code class="language-gleam">1.5
+-0.25
 8.0
 </code></pre>
-<p>As for integers, Gleam supports <code>_</code> in floats for clarity:</p>
-<pre><code class="language-gleam">3.141_159_265
+<p>You can use underscores for clarity:</p>
+<pre><code class="language-gleam">3.141_592
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: you cannot put <code>_</code> before <code>.</code>:</p>
-<pre><code>error: Syntax error
-   ┌─ .../hello_world/src/hello_world.gleam
-   │
-   │     -0_.3_3
-   │       ^ Numbers cannot have a trailing underscore
-
-Hint: remove it.
+<p>Scientific notation is also supported:</p>
+<pre><code class="language-gleam">6.022e23
 </code></pre>
-</blockquote>
-<p>You can also use scientific notation with floats:</p>
-<pre><code class="language-gleam">2.997e8
-6.626e-34
+<h3 id="float-operations"><a class="header" href="#float-operations">Float Operations</a></h3>
+<p>Use <code>+.</code>, <code>-.</code>, <code>*.</code>, and <code>/.</code> for float math:</p>
+<pre><code class="language-gleam">2.0 +. 3.0   // 5.0
+5.0 -. 2.0   // 3.0
+3.0 *. 2.0   // 6.0
+4.0 /. 2.0   // 2.0
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: In Gleam operators like <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code> cannot be used for floats. Instead use <code>+.</code>, <code>-.</code>, <code>*.</code> and <code>/.</code>:</p>
-<pre><code class="language-gleam">2.0 +. 2.0 // =&gt; 4.0
-3.0 -. 2.0 // =&gt; 1.0
-1.0 *. 2.0 // =&gt; 2.0
-3.0 /. 2.0 // =&gt; 1.5
-
-// As with integers
-2.0 /. 0.0 // =&gt; 0.0
-0.0 /. 0.0 // =&gt; 0.0
-</code></pre>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: Situation is a little more complex with comparison operators. <code>==</code> and <code>!=</code> work for both integers and floats. <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> however only work for integers. So you need to use analogs: <code>&gt;.</code>, <code>&lt;.</code>, <code>&gt;=.</code>, <code>&lt;=.</code>:</p>
-<pre><code class="language-gleam">2.0 &gt;.  1.0  // =&gt; True
-2.0 &lt;=. 2.0  // =&gt; True
-2.0 &lt;.  2.0  // =&gt; True
-2.0 ==  2.0  // =&gt; True
-2.0 !=  2.0  // =&gt; False
-</code></pre>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: In Gleam, as with integers, division returns <code>0.0</code> when divisor is <code>0.0</code>:</p>
-<pre><code class="language-gleam">2.0 /. 0.0 // =&gt; 0.0
-1.0 /. 0.0 // =&gt; 0.0
-0.0 /. 0.0 // =&gt; 0.0
-</code></pre>
-<p>This is why it is generally recommended to use <code>float.divide</code> function which returns an error if the divisor is 0:</p>
+<p>Dividing by zero yields <code>0.0</code>. Use <code>float.divide</code> to handle it safely:</p>
 <pre><code class="language-gleam">import gleam/float
 
-float.divide(5.0, 2.0) // =&gt; Ok(2.5)
-float.divide(5.0, 0.0) // =&gt; Error(Nil)
-float.divide(0.0, 0.0) // =&gt; Error(Nil)
+float.divide(3.0, 0.0) // Error(Nil)
 </code></pre>
-</blockquote>
-<p>You can find the absolute value of the float using <code>float.absolute_value</code> function:</p>
-<pre><code class="language-gleam">float.absolute_value(-12.0) // =&gt; 12.0
-float.absolute_value(12.0)  // =&gt; 12.0
-float.absolute_value(0.0)   // =&gt; 0.0
+<p>Comparisons use float-specific operators:</p>
+<pre><code class="language-gleam">2.0 &gt;. 1.0    // True
+2.0 &lt;=. 2.0   // True
+2.0 == 2.0    // True
+2.0 != 3.0    // True
 </code></pre>
-<p>You can also round float number to the next lowest or the next highest whole number using <code>ceiling</code> and <code>floor</code> functions:</p>
-<pre><code class="language-gleam">float.ceiling(2.3) // =&gt; 3.0
-float.floor(2.3)   // =&gt; 2.0
+<h3 id="float-helpers"><a class="header" href="#float-helpers">Float Helpers</a></h3>
+<pre><code class="language-gleam">float.absolute_value(-2.5)  // 2.5
+float.negate(1.0)           // -1.0
+float.min(2.1, 3.3)         // 2.1
+float.max(2.1, 3.3)         // 3.3
+float.truncate(2.99)        // 2
+float.ceiling(1.4)          // 2.0
+float.floor(1.4)            // 1.0
+float.round(2.5)            // 3.0
 </code></pre>
-<p>Or you can round to the nearest whole number using <code>round</code>:</p>
-<pre><code class="language-gleam">float.round(2.3)  // =&gt; 2.0
-float.round(2.5)  // =&gt; 3.0
+<h3 id="float-power-and-root"><a class="header" href="#float-power-and-root">Float Power and Root</a></h3>
+<pre><code class="language-gleam">float.power(2.0, 3.0)        // Ok(8.0)
+float.power(-1.0, 0.5)       // Error(Nil)
+float.square_root(4.0)       // Ok(2.0)
+float.square_root(-1.0)      // Error(Nil)
 </code></pre>
-<p>Here are some other useful methods for floats:</p>
-<pre><code class="language-gleam">// Returns the minimum of two numbers
-float.min(2.0, 3.3)  // =&gt; 2.0
-
-// Returns the maximum of two numbers
-float.max(3.1, 4.2)  // =&gt; 4.2
-
-// Returns the negative of the number
-float.negate(1.0)    // =&gt; -1.0
-
-// Returns the value as `Int`, truncating all decimal digits
-float.truncate(2.4287898428)  // =&gt; 2
-
-// Returns the results of the base being raised to the power of the exponent
-float.power(2.0, -1.0)     // =&gt; Ok(0.5)
-float.power(2.0, 2.0)      // =&gt; Ok(4.0)
-float.power(4.0, of: 2.0)  // =&gt; Ok(16.0)
-float.power(-1.0, 0.5)     // =&gt; Error(Nil)
-
-// Returns the square root
-float.square_root(4.0)   // =&gt; Ok(2.0)
-float.square_root(-16.0) // =&gt; Error(Nil)
-</code></pre>
+<p>As with integers, you must pass <code>Float</code> to these functions. Gleam doesn’t auto-cast from <code>Int</code>.</p>
 
                     </main>
 
@@ -578,17 +386,17 @@ float.square_root(-16.0) // =&gt; Error(Nil)
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../mark-09e88c2c.min.js"></script>
+        <script src="../searcher-c2a407aa.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="../clipboard-1626706a.min.js"></script>
+        <script src="../highlight-5a2b5dad.js"></script>
+        <script src="../book-9576a2db.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="../syntax.js"></script>
-        <script src="../highlight.js"></script>
+        <script src="../syntax-1451bcbd.js"></script>
+        <script src="../highlight-5a2b5dad.js"></script>
 
 
 

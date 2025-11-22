@@ -9,63 +9,63 @@ font-family: 'Lexend';
 font-style: normal;
 font-weight: 100;
 src: local('Lexend Thin'), local('Lexend-Thin'),
-url('../fonts/Lexend-Thin.ttf') format('truetype');
+url('../fonts/Lexend-Thin-e3b0c6e4.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 200;
 src: local('Lexend ExtraLight'), local('Lexend-ExtraLight'),
-url('../fonts/Lexend-ExtraLight.ttf') format('truetype');
+url('../fonts/Lexend-ExtraLight-7c7d6289.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 300;
 src: local('Lexend Light'), local('Lexend-Light'),
-url('../fonts/Lexend-Light.ttf') format('truetype');
+url('../fonts/Lexend-Light-2a1322b3.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 400;
 src: local('Lexend Regular'), local('Lexend-Regular'),
-url('../fonts/Lexend-Regular.ttf') format('truetype');
+url('../fonts/Lexend-Regular-5f9ed62e.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 500;
 src: local('Lexend Medium'), local('Lexend-Medium'),
-url('../fonts/Lexend-Medium.ttf') format('truetype');
+url('../fonts/Lexend-Medium-18086a9d.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 600;
 src: local('Lexend SemiBold'), local('Lexend-SemiBold'),
-url('../fonts/Lexend-SemiBold.ttf') format('truetype');
+url('../fonts/Lexend-SemiBold-6bf2212e.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 700;
 src: local('Lexend Bold'), local('Lexend-Bold'),
-url('../fonts/Lexend-Bold.ttf') format('truetype');
+url('../fonts/Lexend-Bold-db820d3c.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 800;
 src: local('Lexend ExtraBold'), local('Lexend-ExtraBold'),
-url('../fonts/Lexend-ExtraBold.ttf') format('truetype');
+url('../fonts/Lexend-ExtraBold-5779982c.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Lexend';
 font-style: normal;
 font-weight: 900;
 src: local('Lexend Black'), local('Lexend-Black'),
-url('../fonts/Lexend-Black.ttf') format('truetype');
+url('../fonts/Lexend-Black-073a809f.ttf') format('truetype');
 }
 
 @font-face {
@@ -73,63 +73,63 @@ font-family: 'Outfit';
 font-style: normal;
 font-weight: 100;
 src: local('Outfit Thin'), local('Outfit-Thin'),
-url('../fonts/Outfit-Thin.ttf') format('truetype');
+url('../fonts/Outfit-Thin-a9927979.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 200;
 src: local('Outfit ExtraLight'), local('Outfit-ExtraLight'),
-url('../fonts/Outfit-ExtraLight.ttf') format('truetype');
+url('../fonts/Outfit-ExtraLight-598a9916.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 300;
 src: local('Outfit Light'), local('Outfit-Light'),
-url('../fonts/Outfit-Light.ttf') format('truetype');
+url('../fonts/Outfit-Light-3b454ea6.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 400;
 src: local('Outfit Regular'), local('Outfit-Regular'),
-url('../fonts/Outfit-Regular.ttf') format('truetype');
+url('../fonts/Outfit-Regular-f2494536.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 500;
 src: local('Outfit Medium'), local('Outfit-Medium'),
-url('../fonts/Outfit-Medium.ttf') format('truetype');
+url('../fonts/Outfit-Medium-1669995d.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 600;
 src: local('Outfit SemiBold'), local('Outfit-SemiBold'),
-url('../fonts/Outfit-SemiBold.ttf') format('truetype');
+url('../fonts/Outfit-SemiBold-030d373c.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 700;
 src: local('Outfit Bold'), local('Outfit-Bold'),
-url('../fonts/Outfit-Bold.ttf') format('truetype');
+url('../fonts/Outfit-Bold-6654b93d.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 800;
 src: local('Outfit ExtraBold'), local('Outfit-ExtraBold'),
-url('../fonts/Outfit-ExtraBold.ttf') format('truetype');
+url('../fonts/Outfit-ExtraBold-7f452948.ttf') format('truetype');
 }
 @font-face {
 font-family: 'Outfit';
 font-style: normal;
 font-weight: 900;
 src: local('Outfit Black'), local('Outfit-Black'),
-url('../fonts/Outfit-Black.ttf') format('truetype');
+url('../fonts/Outfit-Black-f240e612.ttf') format('truetype');
 }
 
 body{font-family:"Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}

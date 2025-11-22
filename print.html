@@ -13,21 +13,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-3865ffda.css">
+        <link rel="stylesheet" href="css/general-5b48641a.css">
+        <link rel="stylesheet" href="css/chrome-c0e702bf.css">
+        <link rel="stylesheet" href="css/print-ad67d350.css" media="print">
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" id="highlight-css" href="highlight.css">
-        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
-        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="./theme/catppuccin.css">
@@ -39,10 +38,10 @@
             const path_to_root = "";
             const default_light_theme = "latte";
             const default_dark_theme = "mocha";
-            window.path_to_searchindex_js = "searchindex.js";
+            window.path_to_searchindex_js = "searchindex-aacf2f74.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="toc-d2d9e2d5.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -152,7 +151,7 @@
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/abs0luty/gleam-tutorial" title="Git repository" aria-label="Git repository">
-                            <i id="git-repository-button" class="fa fa-github"></i>
+                            <i id="git-repository-button" class="fa fab-github"></i>
                         </a>
 
                     </div>
@@ -185,7 +184,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="what-is-gleam"><a class="header" href="#what-is-gleam">What is Gleam?</a></h2>
+                        <h1 id="introduction"><a href="#introduction" class="header">Introduction</a></h1>
+<h2 id="what-is-gleam"><a class="header" href="#what-is-gleam">What is Gleam?</a></h2>
 <p><strong>Gleam</strong> is a modern, friendly programming language for building type-safe and scalable systems. It compiles to <a href="http://www.erlang.org/">Erlang</a> and JavaScript, and integrates seamlessly with other BEAM languages like Erlang, Elixir, and LFE.</p>
 <p>A simple Gleam program looks like this:</p>
 <pre><code class="language-gleam">import gleam/io
@@ -217,8 +217,8 @@ pub fn main() {
 }
 </code></pre>
 <h2 id="use-syntax"><a class="header" href="#use-syntax">Use syntax</a></h2>
-<p>Gleam's <code>use</code> syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the "pyramid of doom".</p>
-<p>It's pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain:</p>
+<p>Gleam’s <code>use</code> syntax lets you write callback-based APIs in a flat, top-to-bottom style, killing the “pyramid of doom”.</p>
+<p>It’s pure syntax sugar that rewrites the rest of the block into an anonymous function passed to the callee, so you keep the same semantics (no new runtime magic) but lose the nesting - making control flow and error cases much easier to read and maintain:</p>
 <pre><code class="language-gleam">pub fn with_use() -&gt; Result(String, Nil) {
   use username &lt;- result.try(get_username())
   use password &lt;- result.try(get_password())
@@ -293,11 +293,13 @@ pub fn register_event_handler() {
 <li><a href="https://packages.gleam.run/">Gleam package index</a></li>
 <li><a href="https://gleam.run/writing-gleam/gleam-toml/"><code>gleam.toml</code> file reference</a></li>
 <li><a href="https://gleam.run/writing-gleam/command-line-reference/">Command line reference (for <code>gleam</code> command)</a></li>
-<li><a href="https://erlangforums.com/c/beam-language-forums/gleam-forum/36">Gleam's threads on the Erlang Forums</a></li>
+<li><a href="https://erlangforums.com/c/beam-language-forums/gleam-forum/36">Gleam’s threads on the Erlang Forums</a></li>
 <li><a href="https://github.com/gleam-lang/gleam/discussions">Gleam discussions on Github</a></li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="installing-erlang"><a class="header" href="#installing-erlang">Installing Erlang</a></h2>
-<p>Since Gleam primarily compiles to Erlang (with optional JavaScript support), you'll need Erlang installed on your system first.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="quick-start"><a href="#quick-start" class="header">Quick start</a></h1>
+<h2 id="installing-erlang"><a class="header" href="#installing-erlang">Installing Erlang</a></h2>
+<p>Since Gleam primarily compiles to Erlang (with optional JavaScript support), you’ll need Erlang installed on your system first.</p>
 <p><strong>On Linux and macOS:</strong></p>
 <ul>
 <li><strong>Homebrew (macOS):</strong> <code>brew install erlang</code></li>
@@ -368,7 +370,7 @@ Download the installer from the <a href="https://forge.rust-lang.org/infra/other
 wasm-pack build --target web
 </code></pre>
 <h2 id="hello-world"><a class="header" href="#hello-world">Hello world</a></h2>
-<p>Let us now write our first Gleam program! <em>If you don't have Gleam installed, it is recommended to follow instructions in the <a href="./installation.html">previous section</a></em>. Run:</p>
+<p>Let us now write our first Gleam program! <em>If you don’t have Gleam installed, it is recommended to follow instructions in the <a href="installation.html">previous section</a></em>. Run:</p>
 <pre><code>gleam new hello_world
 cd hello_world
 </code></pre>
@@ -398,7 +400,7 @@ pub fn main() {
   io.println("Hello, world!")
 }
 </code></pre>
-<p>As you can see, Gleam doesn't require semicolons. To run the program, you can use <code>gleam run</code> command:</p>
+<p>As you can see, Gleam doesn’t require semicolons. To run the program, you can use <code>gleam run</code> command:</p>
 <pre><code>$ gleam run
   Compiling gleam_stdlib
   Compiling gleeunit
@@ -425,659 +427,428 @@ Hello, world!
     Running hello_world.main
 Hello, world!
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="who-this-tutorial-is-made-for"><a class="header" href="#who-this-tutorial-is-made-for">Who this tutorial is made for</a></h2>
-<p>This tutorial is for people who’ve written code before and don’t need hand-holding on the absolute basics. If you already know what variables, functions, types, and control flow are, you’re in the right place.</p>
-<p>We'll go fast on "intro to programming" stuff and focus on how BEAM and Gleam do things.</p>
-<p>You <strong>don't</strong> need prior functional-programming experience. If you’ve mostly lived in Python/JS/Go/C++ and you're curious about a friendly functional language on the BEAM, you'll be fine. Plenty of respected language guides set similar expectations - for example, <em>Learn You a Haskell</em> explicitly targets people who've programmed before but are new to FP, which is the same vibe we're going for. (<a href="https://learnyouahaskell.com" title="Learn You a Haskell for Great Good!">learnyouahaskell.com</a>)</p>
-<p>Think of this as a practical, programmer-to-programmer tour. Like the Go Tour and the Rust Book, we'll move quickly from syntax to real patterns and habits, assuming you can already read code and run tools; the goal is to level up how you build, not teach what a loop is. (<a href="https://go.dev/tour" title="A Tour of Go">Go.dev</a>)</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
-<p>Let us now modify our previous hello world program:</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="basics"><a href="#basics" class="header">Basics</a></h1>
+<h2 id="who-this-tutorial-is-for"><a class="header" href="#who-this-tutorial-is-for">Who This Tutorial Is For</a></h2>
+<p>This guide is for people who already know how to code. If you’re familiar with variables, functions, types, and control flow, you’re in the right spot.</p>
+<p>We won’t explain the basics of programming. Instead, we’ll focus on how things work in Gleam and on the BEAM. If you’re coming from Python, JavaScript, Go, C++, or similar, you’ll be fine - even if functional programming is new to you.</p>
+<p>You don’t need to know FP going in. This is aimed at curious developers who want a solid intro to a functional language that runs on the BEAM. It follows the style of guides like <em>Learn You a Haskell</em>, which assume programming experience but not a background in FP.</p>
+<p>Think of this as a fast-moving tour from one developer to another. Like the Go Tour or the Rust Book, it covers practical syntax and patterns instead of explaining what a loop is.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="comments-1"><a href="#comments-1" class="header">Comments</a></h1>
+<h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
+<p>You can add comments to your Gleam code with <code>//</code>. They help explain intent and improve readability.</p>
+<p>Here’s a simple example that adds a comment above a print call:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
-  // Print hello world
+  // Show a message
   io.println("Hello world!")
 }
 </code></pre>
-<p>Gleam allows you to write comments in your code by prefixing them with <code>//</code>:</p>
-<pre><code class="language-gleam">// Hello, world! I have a lot to say, so much that it will take multiple
-// lines of text. Therefore, I will start each line with // to denote it
-// as part of a multi-line comment.
+<p>For longer explanations, use <code>//</code> at the start of each line:</p>
+<pre><code class="language-gleam">// This is a longer comment.
+// Each line starts with //
+// so the compiler treats it as a comment.
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
-<p>In Gleam, boolean literals are either <code>True</code> or <code>False</code>. Their type is <code>Bool</code>. You can apply binary operations on these boolean values, such as:</p>
-<pre><code class="language-gleam">False &amp;&amp; False // =&gt; False
-True &amp;&amp; False  // =&gt; False
-True &amp;&amp; True   // =&gt; True
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="booleans-and-numbers"><a href="#booleans-and-numbers" class="header">Booleans and numbers</a></h1>
+<h2 id="booleans"><a class="header" href="#booleans">Booleans</a></h2>
+<p>Gleam uses <code>True</code> and <code>False</code> as boolean values. Their type is <code>Bool</code>. You can apply logical operators like:</p>
+<pre><code class="language-gleam">False &amp;&amp; False  // False
+True &amp;&amp; False   // False
+True &amp;&amp; True    // True
 
-False || False // =&gt; False
-True || False  // =&gt; True
-True || True   // =&gt; True
+False || False  // False
+True || False   // True
+True || True    // True
 </code></pre>
-<p><code>&amp;&amp;</code> is logical <strong>AND</strong>: it returns <code>True</code> only if <em>both</em> operands are <code>True</code>.</p>
-<p><code>||</code> is logical <strong>OR</strong>: it returns <code>False</code> only if <em>both</em> operands are <code>False</code>.</p>
-<p>Both <code>&amp;&amp;</code> and <code>||</code> short‐circuit:</p>
+<p>Both operators short-circuit:</p>
 <ul>
-<li><code>&amp;&amp;</code> does not evaluate its right operand if the left is <code>False</code>, since the result is already known to be <code>False</code>.</li>
-<li><code>||</code> does not evaluate its right operand if the left is <code>True</code>, since the result must be <code>True</code>.</li>
+<li><code>False &amp;&amp; ...</code> skips the right side.</li>
+<li><code>True || ...</code> skips the right side.</li>
 </ul>
-<p>Here is an example of such behaviour:</p>
 <pre><code class="language-gleam">import gleam/io
 
-fn foo() -&gt; Bool {
-  io.println("test")
+fn message() -&gt; Bool {
+  io.println("evaluated")
   True
 }
 
 pub fn main() {
-  let _ = False &amp;&amp; foo()
+  let _ = False &amp;&amp; message()  // doesn't print anything
+  let _ = True &amp;&amp; message()   // prints "evaluated"
 }
 </code></pre>
-<p>In this case <code>test</code> isn't printed because <code>False &amp;&amp; ...</code> immediately yields <code>False</code> without calling <code>test()</code>. If instead you write:</p>
-<pre><code class="language-gleam">import gleam/io
-
-fn test() -&gt; Bool {
-  io.println("test")
-  True
-}
-
-pub fn main() {
-  let _ = True &amp;&amp; test()
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>test
-</code></pre>
-<p>Because the left side (<code>True</code>) doesn't block evaluation, so <code>test()</code> is called.</p>
 <h3 id="printing-booleans"><a class="header" href="#printing-booleans">Printing Booleans</a></h3>
-<p>If you want to print a <code>Bool</code>, you must first convert it to a <code>String</code> using <code>bool.to_string</code>. For example:</p>
+<p>Convert a <code>Bool</code> to a <code>String</code> before printing:</p>
 <pre><code class="language-gleam">import gleam/io
 import gleam/bool
 
 pub fn main() {
-  io.println(bool.to_string(True))
+  io.println(bool.to_string(False))
 }
 </code></pre>
-<p>Output:</p>
-<pre><code>True
-</code></pre>
-<p>Alternatively, for debugging you can use <code>echo</code>:</p>
-<pre><code class="language-gleam">import gleam/io
-
-pub fn main() {
-  echo False
-  echo "True"
+<p>You can also use <code>echo</code> for debugging:</p>
+<pre><code class="language-gleam">pub fn main() {
+  echo True
 }
-</code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:4
-False
-src/main.gleam:5
-"True"
 </code></pre>
 <h3 id="negation"><a class="header" href="#negation">Negation</a></h3>
-<p>You can negate booleans in two ways:</p>
-<ul>
-<li>Using the <code>!</code> operator: <code>!True</code> → <code>False</code>, <code>!False</code> → <code>True</code></li>
-<li>Using <code>bool.negate</code> from the <code>gleam/bool</code> module:</li>
-</ul>
-<pre><code class="language-gleam">import gleam/io
-import gleam/bool
+<p>Negate with <code>!</code> or <code>bool.negate</code>:</p>
+<pre><code class="language-gleam">import gleam/bool
 
-pub fn main() {
-  echo !True
-  echo bool.negate(False)
-}
-</code></pre>
-<p>Output:</p>
-<pre><code>src/main.gleam:4
-False
-src/main.gleam:5
-True
+!True              // False
+bool.negate(False) // True
 </code></pre>
 <h2 id="numbers"><a class="header" href="#numbers">Numbers</a></h2>
-<p>Gleam has two numeric types: <strong><code>Int</code></strong> for whole numbers and <strong><code>Float</code></strong> for fractional values.</p>
+<p>Gleam supports two numeric types:</p>
 <ul>
-<li>
-<p>On the <strong>BEAM</strong> target, <code>Int</code> values are arbitrary-precision integers (limited only by memory). Small integers are optimized; larger ones transparently become bignums. <code>Float</code> is the runtime’s 64-bit IEEE-754 double, but BEAM has no <code>NaN</code>/<code>Infinity</code> values exposed in the same way as JavaScript.</p>
-<p>Dividing by zero would normally crash in Erlang, but Gleam defines division by zero to return <code>0</code> for operators and offers checked functions in the stdlib.</p>
-</li>
-<li>
-<p>On the <strong>JavaScript</strong> target, <code>Float</code> is a 64-bit IEEE-754 double, matching JS <code>Number</code>. <code>Int</code> operations obey the host’s numeric semantics; keep integers within JS’s <strong>safe integer</strong> range (±(2^53−1)) to avoid precision loss, or use library types/BigInt when you need larger exact integers.</p>
-<p>Gleam’s stdlib exposes the same checked APIs (<code>int.divide</code>, <code>float.divide</code>, etc.).</p>
-<blockquote>
-<p>Tip: If you depend on integers exceeding the JS safe range, prefer algorithms that avoid huge intermediates, or use a BigInt-backed approach via <a href="https://hexdocs.pm/bigi/index.html">the library designed for JS target</a>.</p>
-</blockquote>
-</li>
+<li><code>Int</code> for whole numbers</li>
+<li><code>Float</code> for decimal numbers</li>
 </ul>
 <h3 id="integers"><a class="header" href="#integers">Integers</a></h3>
-<p>Here are some examples of integer literals in Gleam:</p>
-<pre><code class="language-gleam">0
-1
-3
--4
-2942930103
+<p>Integers support basic arithmetic:</p>
+<pre><code class="language-gleam">1 + 2 - 3 * 4 // =&gt; -9
+7 / 2         // =&gt; 3
+3 % 2         // =&gt; 1
 </code></pre>
-<p>Gleam supports <code>_</code> in integers for clarity:</p>
-<pre><code class="language-gleam">3_000_000 vs 3000000
-10_000_000 vs 10000000
-20_000_000_000 vs 20000000000
+<p>Division by zero returns <code>0</code>:</p>
+<pre><code class="language-gleam">5 / 0 // =&gt; 0
 </code></pre>
-<p>The <code>_</code> has no syntactic and semantic meaning. Gleam as many other languages also supports integers in different bases: binary, octal and hexadecimal integers start with <code>0b</code>, <code>0o</code> and <code>0x</code> respectively:</p>
-<pre><code class="language-gleam">0b0101000101
-0o712
-0xFf // `f` and `F` here are the same
-</code></pre>
-<p>Gleam supports basic primitive operations with integers:</p>
-<pre><code class="language-gleam">1 + 3 - 2 * 4 // =&gt; -4
-7 / 2  // =&gt; 3 (rounded)
-3 % 2  // =&gt; 1
-1 &gt; 0  // =&gt; True
-1 &lt; 0  // =&gt; False
-1 &gt;= 0 // =&gt; True
-1 &lt;= 0 // =&gt; False
-</code></pre>
-<blockquote>
-<p><strong>Note</strong>: In Gleam division between integers returns another integer, which is the result of the division rounded down.</p>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: In Gleam division returns <code>0</code> when divisor is <code>0</code>:</p>
-<pre><code class="language-gleam">2 / 0 // =&gt; 0
-1 / 0 // =&gt; 0
-0 / 0 // =&gt; 0
-</code></pre>
-<p>This is why it is generally recommended to use <code>int.divide</code> function which returns an error if the divisor is <code>0</code>:</p>
-<pre><code class="language-gleam">int.divide(5, 2) // =&gt; Ok(2)
-int.divide(5, 0) // =&gt; Error(Nil)
-int.divide(0, 0) // =&gt; Error(Nil)
-</code></pre>
-</blockquote>
-<p>To print the integer in Gleam, you need to first convert it to string. You can do that using <code>int.to_string</code> function:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/int
+<p>Use <code>int.divide</code> to handle division safely:</p>
+<pre><code class="language-gleam">import gleam/int
 
-fn main() {
-  io.println(int.to_string(3))
-}
+int.divide(5, 2) // Ok(2)
+int.divide(5, 0) // Error(Nil)
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: As mentioned before, there is a difference in how integers work for javascript and erlang targets, including converting big integers to strings. Here's an example:</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/int
-
-fn main() {
-  io.println(9_999_999_999_999_999 |&gt; int.to_string)
-}
+<p>You can write large numbers with <code>_</code>:</p>
+<pre><code class="language-gleam">1_000_000
 </code></pre>
-<p>Output when running the code using default erlang target (<code>gleam run</code>):</p>
-<pre><code>9999999999999999
+<p>Gleam also supports binary, octal, and hexadecimal:</p>
+<pre><code class="language-gleam">0b1010
+0o755
+0xFF
 </code></pre>
-<p>Output when running the code using javascript target (<code>gleam run --target javascript</code>):</p>
-<pre><code>10000000000000000
+<p>Comparison is straightforward:</p>
+<pre><code class="language-gleam">1 &gt; 0   // True
+2 &lt;= 2  // True
 </code></pre>
-<p>As of recently, Gleam compiler started to output a warning when dealing with big numbers in JS target:</p>
-<pre><code>warning: Int is outside JavaScript's safe integer range
-  ┌─ /Users/adi.salimgereyev/hello_world/src/hello_world.gleam:5:14
-  │
-5 │   io.println(9_999_999_999_999_999 |&gt; int.to_string)
-  │              ^^^^^^^^^^^^^^^^^^^^^ This is not a safe integer value on JavaScript
-
-This integer value is too large to be represented accurately by
-JavaScript's number type. To avoid this warning integer values must be in
-the range -(2^53 - 1) - (2^53 - 1).
-
-See JavaScript's Number.MAX_SAFE_INTEGER and Number.MIN_SAFE_INTEGER
-properties for more information.
+<h3 id="working-with-integers"><a class="header" href="#working-with-integers">Working with Integers</a></h3>
+<p>Convert to string:</p>
+<pre><code class="language-gleam">import gleam/int
+int.to_string(42)
 </code></pre>
-</blockquote>
-<p>You can find the absolute value of the integer using <code>int.absolute_value</code> function:</p>
-<pre><code class="language-gleam">int.absolute_value(-12) // =&gt; 12
-int.absolute_value(12)  // =&gt; 12
-int.absolute_value(0)   // =&gt; 0
+<p>Convert to float:</p>
+<pre><code class="language-gleam">int.to_float(2)  // 2.0
 </code></pre>
-<p>If you want the result of the base being raised to the power of exponent, you can use <code>power</code> function:</p>
-<pre><code class="language-gleam">int.power(3, of: 2.0)  // =&gt; 9
-int.power(2, of: 2.0)  // =&gt; 4
-int.power(2, of: 4.0)  // =&gt; 16
+<p>Other helpers:</p>
+<pre><code class="language-gleam">int.absolute_value(-10)   // 10
+int.negate(5)             // -5
+int.min(1, 3)             // 1
+int.max(1, 3)             // 3
+int.square_root(4)        // Ok(2.0)
+int.square_root(-1)       // Error(Nil)
+int.is_even(2)            // True
+int.is_odd(3)             // True
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: <code>power</code> accepts second argument only as floating point number. Gleam doesn't have implicit <code>Int</code> to <code>Float</code> cast:</p>
-<pre><code>error: Type mismatch
-   ┌─ /gleam-tutorial/hello_world/src/hello_world.gleam
-   │
-   │  3 |&gt; int.power(of: 2)
-   │                     ^
-
-Expected type:
-
-    Float
-
-Found type:
-
-    Int
+<p>Convert to base:</p>
+<pre><code class="language-gleam">int.to_base2(5)    // "101"
+int.to_base16(255) // "FF"
+int.to_base_string(48, 36) // Ok("1C")
 </code></pre>
-<p>So <code>2</code> must be changed to <code>2.0</code>. See the <a href="basics/booleans-and-numbers.html#floats">floating point numbers section</a> below.</p>
-</blockquote>
-<p>If you want to convert an integer to float, you can use <code>to_float</code> function:</p>
-<pre><code class="language-gleam">int.to_float(3)  // 3.0
-int.to_float(-3) // -3.0
-int.to_float(0)  // 0.0
+<p>Invalid base values return an error:</p>
+<pre><code class="language-gleam">int.to_base_string(48, 1)  // Error(InvalidBase)
+int.to_base_string(48, 37) // Error(InvalidBase)
 </code></pre>
-<p>Here are some other useful methods for integers:</p>
-<pre><code class="language-gleam">// Returns the minimum of two numbers
-int.min(2, 3)  // =&gt; 2
-
-// Returns the maximum of two numbers
-int.max(3, 4)  // =&gt; 4
-
-// Returns the negative of the number
-int.negate(1)  // =&gt; -1
-
-// Returns the square root of the number
-int.square_root(4)   // =&gt; Ok(2.0)
-int.square_root(-16) // =&gt; Error(Nil)
-
-// Returns true if the number is even
-int.is_even(2) // =&gt; True
-int.is_even(3) // =&gt; False
-
-// Returns true if the number is odd
-int.is_odd(2)  // =&gt; False
-int.is_odd(3)  // =&gt; True
-
+<h3 id="javascript-note"><a class="header" href="#javascript-note">JavaScript Note</a></h3>
+<p>On JavaScript targets, keep integers within ±(2^53 − 1) to avoid precision issues:</p>
+<pre><code class="language-gleam">int.to_string(9_999_999_999_999_999)
+// =&gt; "10000000000000000" on JS
+// =&gt; "9999999999999999" on BEAM
 </code></pre>
-<p>You can convert integers to different common bases:</p>
-<pre><code class="language-gleam">int.to_base2(2)   // =&gt; "10"
-int.to_base8(15)  // =&gt; "17"
-int.to_base16(48) // =&gt; "30"
-int.to_base36(48) // =&gt; "1C"
-</code></pre>
-<p>If you want to convert a number to any base from <code>2</code> to <code>36</code>, you can use <code>to_base_string</code>:</p>
-<pre><code class="language-gleam">// 37 is bigger than 36
-int.to_base_string(48, 37) // =&gt; Error(InvalidBase)
-
-// 1 is less than 2
-int.to_base_string(48, 1)  // =&gt; Error(InvalidBase)
-
-// Same as running to_base36()
-int.to_base_string(48, 36) // =&gt; Ok("1C")
-</code></pre>
-<h3 id="floats"><a class="header" href="#floats">Floats</a></h3>
-<p>Here are some examples of float literals:</p>
-<pre><code class="language-gleam">1.6
--0.3
+<p>The compiler warns when you exceed this range on the JS target.</p>
+<h3 id="float-numbers"><a class="header" href="#float-numbers">Float Numbers</a></h3>
+<p>Float literals:</p>
+<pre><code class="language-gleam">1.5
+-0.25
 8.0
 </code></pre>
-<p>As for integers, Gleam supports <code>_</code> in floats for clarity:</p>
-<pre><code class="language-gleam">3.141_159_265
+<p>You can use underscores for clarity:</p>
+<pre><code class="language-gleam">3.141_592
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: you cannot put <code>_</code> before <code>.</code>:</p>
-<pre><code>error: Syntax error
-   ┌─ .../hello_world/src/hello_world.gleam
-   │
-   │     -0_.3_3
-   │       ^ Numbers cannot have a trailing underscore
-
-Hint: remove it.
+<p>Scientific notation is also supported:</p>
+<pre><code class="language-gleam">6.022e23
 </code></pre>
-</blockquote>
-<p>You can also use scientific notation with floats:</p>
-<pre><code class="language-gleam">2.997e8
-6.626e-34
+<h3 id="float-operations"><a class="header" href="#float-operations">Float Operations</a></h3>
+<p>Use <code>+.</code>, <code>-.</code>, <code>*.</code>, and <code>/.</code> for float math:</p>
+<pre><code class="language-gleam">2.0 +. 3.0   // 5.0
+5.0 -. 2.0   // 3.0
+3.0 *. 2.0   // 6.0
+4.0 /. 2.0   // 2.0
 </code></pre>
-<blockquote>
-<p><strong>Note</strong>: In Gleam operators like <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code> cannot be used for floats. Instead use <code>+.</code>, <code>-.</code>, <code>*.</code> and <code>/.</code>:</p>
-<pre><code class="language-gleam">2.0 +. 2.0 // =&gt; 4.0
-3.0 -. 2.0 // =&gt; 1.0
-1.0 *. 2.0 // =&gt; 2.0
-3.0 /. 2.0 // =&gt; 1.5
-
-// As with integers
-2.0 /. 0.0 // =&gt; 0.0
-0.0 /. 0.0 // =&gt; 0.0
-</code></pre>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: Situation is a little more complex with comparison operators. <code>==</code> and <code>!=</code> work for both integers and floats. <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> however only work for integers. So you need to use analogs: <code>&gt;.</code>, <code>&lt;.</code>, <code>&gt;=.</code>, <code>&lt;=.</code>:</p>
-<pre><code class="language-gleam">2.0 &gt;.  1.0  // =&gt; True
-2.0 &lt;=. 2.0  // =&gt; True
-2.0 &lt;.  2.0  // =&gt; True
-2.0 ==  2.0  // =&gt; True
-2.0 !=  2.0  // =&gt; False
-</code></pre>
-</blockquote>
-<blockquote>
-<p><strong>Note</strong>: In Gleam, as with integers, division returns <code>0.0</code> when divisor is <code>0.0</code>:</p>
-<pre><code class="language-gleam">2.0 /. 0.0 // =&gt; 0.0
-1.0 /. 0.0 // =&gt; 0.0
-0.0 /. 0.0 // =&gt; 0.0
-</code></pre>
-<p>This is why it is generally recommended to use <code>float.divide</code> function which returns an error if the divisor is 0:</p>
+<p>Dividing by zero yields <code>0.0</code>. Use <code>float.divide</code> to handle it safely:</p>
 <pre><code class="language-gleam">import gleam/float
 
-float.divide(5.0, 2.0) // =&gt; Ok(2.5)
-float.divide(5.0, 0.0) // =&gt; Error(Nil)
-float.divide(0.0, 0.0) // =&gt; Error(Nil)
+float.divide(3.0, 0.0) // Error(Nil)
 </code></pre>
-</blockquote>
-<p>You can find the absolute value of the float using <code>float.absolute_value</code> function:</p>
-<pre><code class="language-gleam">float.absolute_value(-12.0) // =&gt; 12.0
-float.absolute_value(12.0)  // =&gt; 12.0
-float.absolute_value(0.0)   // =&gt; 0.0
+<p>Comparisons use float-specific operators:</p>
+<pre><code class="language-gleam">2.0 &gt;. 1.0    // True
+2.0 &lt;=. 2.0   // True
+2.0 == 2.0    // True
+2.0 != 3.0    // True
 </code></pre>
-<p>You can also round float number to the next lowest or the next highest whole number using <code>ceiling</code> and <code>floor</code> functions:</p>
-<pre><code class="language-gleam">float.ceiling(2.3) // =&gt; 3.0
-float.floor(2.3)   // =&gt; 2.0
+<h3 id="float-helpers"><a class="header" href="#float-helpers">Float Helpers</a></h3>
+<pre><code class="language-gleam">float.absolute_value(-2.5)  // 2.5
+float.negate(1.0)           // -1.0
+float.min(2.1, 3.3)         // 2.1
+float.max(2.1, 3.3)         // 3.3
+float.truncate(2.99)        // 2
+float.ceiling(1.4)          // 2.0
+float.floor(1.4)            // 1.0
+float.round(2.5)            // 3.0
 </code></pre>
-<p>Or you can round to the nearest whole number using <code>round</code>:</p>
-<pre><code class="language-gleam">float.round(2.3)  // =&gt; 2.0
-float.round(2.5)  // =&gt; 3.0
+<h3 id="float-power-and-root"><a class="header" href="#float-power-and-root">Float Power and Root</a></h3>
+<pre><code class="language-gleam">float.power(2.0, 3.0)        // Ok(8.0)
+float.power(-1.0, 0.5)       // Error(Nil)
+float.square_root(4.0)       // Ok(2.0)
+float.square_root(-1.0)      // Error(Nil)
 </code></pre>
-<p>Here are some other useful methods for floats:</p>
-<pre><code class="language-gleam">// Returns the minimum of two numbers
-float.min(2.0, 3.3)  // =&gt; 2.0
-
-// Returns the maximum of two numbers
-float.max(3.1, 4.2)  // =&gt; 4.2
-
-// Returns the negative of the number
-float.negate(1.0)    // =&gt; -1.0
-
-// Returns the value as `Int`, truncating all decimal digits
-float.truncate(2.4287898428)  // =&gt; 2
-
-// Returns the results of the base being raised to the power of the exponent
-float.power(2.0, -1.0)     // =&gt; Ok(0.5)
-float.power(2.0, 2.0)      // =&gt; Ok(4.0)
-float.power(4.0, of: 2.0)  // =&gt; Ok(16.0)
-float.power(-1.0, 0.5)     // =&gt; Error(Nil)
-
-// Returns the square root
-float.square_root(4.0)   // =&gt; Ok(2.0)
-float.square_root(-16.0) // =&gt; Error(Nil)
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="strings"><a class="header" href="#strings">Strings</a></h2>
-<p>In Gleam, <strong>strings are UTF-8 binaries</strong>. They're immutable and can hold any Unicode text. Gleam aims for <strong>grapheme-aware</strong> behavior by default (the "user-visible characters" you expect), so things like length, reversing, and slicing won't split a character in half even when it's composed of multiple code points.</p>
-<ul>
-<li>On the <strong>BEAM</strong> target, strings are UTF-8 binaries and Erlang's Unicode-aware functions back a lot of the heavy lifting. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html" title="Using Unicode in Erlang  -  stdlib v7.0.2">Erlang.org</a>)</li>
-<li>On the <strong>JavaScript</strong> target, the host uses UTF-16 code units under the hood, but Gleam's stdlib gives you grapheme-aware APIs so you don't have to reason in code units. (<a href="https://unicode.org/reports/tr29/" title="UAX #29: Unicode Text Segmentation">MDN Web Docs</a>)</li>
-</ul>
-<p>Strings use double quotes and typical escapes (<code>\"</code>, <code>\\</code>, <code>\n</code>, <code>\t</code>, <code>\u{...}</code>). Concatenate with <code>&lt;&gt;</code>:</p>
+<p>As with integers, you must pass <code>Float</code> to these functions. Gleam doesn’t auto-cast from <code>Int</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="strings-1"><a href="#strings-1" class="header">Strings</a></h1>
+<h2 id="strings"><a class="header" href="#strings">Strings</a></h2>
+<p>In Gleam, strings are UTF-8 binaries. They’re immutable and store any Unicode text. Operations like length, slicing, and reversing work on <strong>graphemes</strong> (what users think of as characters), so they won’t split composed characters.</p>
+<p>On the <strong>BEAM</strong> backend, Gleam uses Erlang’s Unicode-aware functions. On <strong>JavaScript</strong>, it uses UTF-16 under the hood, but the standard library ensures grapheme-level correctness.</p>
+<p>Use double quotes with standard escapes (<code>\"</code>, <code>\\</code>, <code>\n</code>, <code>\t</code>, <code>\u{...}</code>). Concatenate with <code>&lt;&gt;</code>:</p>
 <pre><code class="language-gleam">"Hello, Gleam!\n" &lt;&gt; "\u{1F44B}"  // "Hello, Gleam! 👋"
 </code></pre>
-<h3 id="check-emptiness--length"><a class="header" href="#check-emptiness--length">Check emptiness &amp; length</a></h3>
-<p><code>string.is_empty</code> is a fast, zero-allocation check.</p>
-<p><code>string.length</code> counts <strong>graphemes</strong> (linear time because it must walk boundaries).</p>
-<p><code>string.byte_size</code> reports the <strong>UTF-8 byte length</strong> (constant time on BEAM; linear on JS because it has to encode).</p>
-<pre><code class="language-gleam">import gleam/string
-
-pub fn main() {
-  echo string.is_empty("")       // True
-  echo string.length("Gleam")    // 5
-  echo string.length("ß↑e̊")      // 3 (graphemes)
-  echo string.byte_size("Gleam") // 5
-  echo string.byte_size("ß↑e̊")   // 8 (bytes)
-}
+<h3 id="emptiness-and-length"><a class="header" href="#emptiness-and-length">Emptiness and Length</a></h3>
+<p><code>string.is_empty</code> checks for an empty string without allocating.
+<code>string.length</code> returns the grapheme count.
+<code>string.byte_size</code> gives the UTF-8 byte length.</p>
+<pre><code class="language-gleam">string.is_empty("")        // True
+string.length("ß↑e̊")       // 3 graphemes
+string.byte_size("ß↑e̊")    // 8 bytes
 </code></pre>
 <h3 id="reverse"><a class="header" href="#reverse">Reverse</a></h3>
-<p><code>string.reverse</code> flips by <strong>graphemes</strong>, not bytes or code points, so diacritics, emoji sequences, and composed characters stay intact:</p>
-<pre><code class="language-gleam">string.reverse("stressed") // "desserts"
+<p><code>string.reverse</code> works on graphemes:</p>
+<pre><code class="language-gleam">string.reverse("stressed")  // "desserts"
 </code></pre>
-<h3 id="replace-all-occurrences"><a class="header" href="#replace-all-occurrences">Replace (all occurrences)</a></h3>
-<p><code>string.replace</code> swaps <strong>all</strong> non-overlapping matches of a substring. It's grapheme-safe and doesn't interpret patterns - just literal substring replacement - so you don't have to worry about regex semantics here. Use it for path munging, simple templating, or normalizing separators:</p>
+<h3 id="replace"><a class="header" href="#replace">Replace</a></h3>
+<p><code>string.replace</code> replaces all non-overlapping <strong>literal</strong> substrings:</p>
 <pre><code class="language-gleam">string.replace(in: "www.example.com", each: ".", with: "-")
 // "www-example-com"
 </code></pre>
-<h3 id="case-conversion"><a class="header" href="#case-conversion">Case conversion</a></h3>
-<p><code>lowercase</code> and <code>uppercase</code> are Unicode-aware and rely on target primitives under the hood (BEAM/JS). That means locale-agnostic rules (e.g., Turkish dotted/dotless "i" special cases are not locale-sensitive). Use these for case-folding before comparisons or when normalizing tags.</p>
-<pre><code class="language-gleam">string.lowercase("X-FILES") // "x-files"
-string.uppercase("skinner") // "SKINNER"
+<h3 id="case-conversion"><a class="header" href="#case-conversion">Case Conversion</a></h3>
+<p><code>lowercase</code> and <code>uppercase</code> are Unicode-aware but not locale-sensitive:</p>
+<pre><code class="language-gleam">string.lowercase("X-FILES")  // "x-files"
+string.uppercase("skinner")  // "SKINNER"
 </code></pre>
-<h3 id="ordering--comparison"><a class="header" href="#ordering--comparison">Ordering &amp; comparison</a></h3>
-<p><code>string.compare(a, b)</code> is <strong>lexicographic over graphemes</strong>, returning <code>order.Lt</code>, <code>Eq</code>, or <code>Gt</code>:</p>
-<pre><code class="language-gleam">string.compare("Anthony", "Anthony") // order.Eq
-string.compare("A", "B")             // order.Lt
+<h3 id="comparison"><a class="header" href="#comparison">Comparison</a></h3>
+<p>Lexicographic comparison using graphemes:</p>
+<pre><code class="language-gleam">string.compare("A", "B")  // order.Lt
 </code></pre>
-<h3 id="substrings--slicing"><a class="header" href="#substrings--slicing">Substrings &amp; slicing</a></h3>
-<p><code>slice</code> takes a starting grapheme index and a length (also in graphemes). Negative <code>at_index</code> counts from the end. Out-of-range indices are safe and yield <code>""</code>, which is great for defensive string handling:</p>
+<h3 id="slicing"><a class="header" href="#slicing">Slicing</a></h3>
+<p><code>slice</code> uses grapheme indices and returns <code>""</code> for out-of-bounds:</p>
 <pre><code class="language-gleam">string.slice(from: "gleam", at_index: 1, length: 2)  // "le"
-string.slice(from: "gleam", at_index: -2, length: 2) // "am"
 </code></pre>
-<h3 id="cropping--dropping"><a class="header" href="#cropping--dropping">Cropping &amp; dropping</a></h3>
-<p><code>crop(from, before)</code> finds the first occurrence of <code>before</code> and returns the remainder, useful for stripping prefixes without worrying about indices.</p>
-<p><code>drop_start</code>/<code>drop_end</code> remove a fixed <strong>grapheme</strong> count from the start/end, which makes them predictable with multicodepoint characters:</p>
+<h3 id="cropping-and-dropping"><a class="header" href="#cropping-and-dropping">Cropping and Dropping</a></h3>
+<p>Remove prefixes or graphemes:</p>
 <pre><code class="language-gleam">string.crop(from: "The Lone Gunmen", before: "Lone") // "Lone Gunmen"
 string.drop_start(from: "  hats", up_to: 2)          // "hats"
-string.drop_end(from: "hats  ", up_to: 2)            // "hats"
 </code></pre>
-<h3 id="contains--prefix--suffix"><a class="header" href="#contains--prefix--suffix">Contains / prefix / suffix</a></h3>
-<p><code>contains</code>, <code>starts_with</code>, and <code>ends_with</code> check literal substrings. They're case-sensitive and don't handle locale collation, so normalize with <code>lowercase</code> if you want case-insensitive logic:</p>
+<h3 id="contains-prefix-suffix"><a class="header" href="#contains-prefix-suffix">Contains, Prefix, Suffix</a></h3>
+<p>All are case-sensitive literal checks:</p>
 <pre><code class="language-gleam">string.contains(does: "theory", contain: "ory") // True
-string.starts_with("theory", "the")             // True
-string.ends_with("theory", "ory")               // True
 </code></pre>
 <h3 id="splitting"><a class="header" href="#splitting">Splitting</a></h3>
-<p><code>split</code> returns <strong>all</strong> pieces, including a trailing empty string if the input ends with the separator - handy for filesystem-like paths where the trailing slash is meaningful.</p>
-<p><code>split_once</code> stops after the first separator and returns <code>Ok(#(left, right))</code>, or <code>Error(Nil)</code> if missing - perfect for "key:value" style parsing:</p>
-<pre><code class="language-gleam">string.split("home/gleam/desktop/", on: "/")
-// ["home","gleam","desktop",""]
-
-string.split_once("home/gleam/desktop/", on: "/")
-// Ok(#("home", "gleam/desktop/"))
+<p><code>split</code> returns all parts, including trailing empty strings.
+<code>split_once</code> stops after the first match:</p>
+<pre><code class="language-gleam">string.split("a/b/c/", on: "/")          // ["a", "b", "c", ""]
+string.split_once("a/b/c/", on: "/")     // Ok(#("a", "b/c/"))
 </code></pre>
-<h3 id="joining--building"><a class="header" href="#joining--building">Joining &amp; building</a></h3>
-<p><code>append</code>, <code>concat</code>, and <code>join</code> <strong>copy</strong> data and are linear in the total output size - great for one-off joins:</p>
-<pre><code class="language-gleam">string.append(to: "butter", suffix: "fly")  // "butterfly"
-string.concat(["never", "the", "less"])       // "nevertheless"
-string.join(["home", "evan", "Desktop"], with: "/") // "home/evan/Desktop"
+<h3 id="joining"><a class="header" href="#joining">Joining</a></h3>
+<p><code>append</code>, <code>concat</code>, and <code>join</code> copy strings:</p>
+<pre><code class="language-gleam">string.join(["home", "evan"], with: "/")  // "home/evan"
 </code></pre>
-<h3 id="repeating--padding"><a class="header" href="#repeating--padding">Repeating &amp; padding</a></h3>
-<p><code>repeat</code> is linear in the final size and won't split graphemes.</p>
-<p><code>pad_start</code>/<code>pad_end</code> pad in <strong>graphemes</strong>, so a multi-codepoint pad string counts as one grapheme per repeat, matching user expectations for alignment:</p>
-<pre><code class="language-gleam">string.repeat("ha", times: 3)        // "hahaha"
+<h3 id="repeat-and-pad"><a class="header" href="#repeat-and-pad">Repeat and Pad</a></h3>
+<p>Work on graphemes:</p>
+<pre><code class="language-gleam">string.repeat("ha", times: 3)           // "hahaha"
 string.pad_start("121", to: 5, with: ".") // "..121"
-string.pad_end("123", to: 5, with: ".")   // "123.."
 </code></pre>
 <h3 id="trimming"><a class="header" href="#trimming">Trimming</a></h3>
-<p><code>trim</code>, <code>trim_start</code>, and <code>trim_end</code> remove Unicode whitespace per the standard definition (not just ASCII spaces):</p>
-<pre><code class="language-gleam">string.trim("  hats  \n")       // "hats"
-string.trim_start("  hats  \n") // "hats  \n"
-string.trim_end("  hats  \n")   // "  hats"
+<p>Removes Unicode whitespace:</p>
+<pre><code class="language-gleam">string.trim("  hats  \n")  // "hats"
 </code></pre>
-<h2 id="working-at-grapheme--code-point-level"><a class="header" href="#working-at-grapheme--code-point-level">Working at grapheme / code point level</a></h2>
-<h3 id="pop--iterate-graphemes"><a class="header" href="#pop--iterate-graphemes">Pop &amp; iterate graphemes</a></h3>
-<p><code>pop_grapheme</code> returns the first grapheme and the rest - a clean, Unicode-safe way to peel characters from the front.</p>
-<p><code>to_graphemes</code> gives you a list of grapheme clusters for iteration, cursor logic, or UI navigation.</p>
-<pre><code class="language-gleam">string.pop_grapheme("gleam") // Ok(#("g", "leam"))
-string.to_graphemes("abc")   // ["a", "b", "c"]
+<h3 id="grapheme-level-access"><a class="header" href="#grapheme-level-access">Grapheme-Level Access</a></h3>
+<p><code>pop_grapheme</code> and <code>to_graphemes</code> let you iterate safely:</p>
+<pre><code class="language-gleam">string.pop_grapheme("gleam")  // Ok(#("g", "leam"))
 </code></pre>
-<h3 id="code-points-unicode-scalars"><a class="header" href="#code-points-unicode-scalars">Code points (Unicode scalars)</a></h3>
-<p>These APIs expose raw <strong>Unicode scalar values</strong> (code points), which is useful for serialization, custom parsing, or implementing algorithms that work below the grapheme layer (e.g., normalization, filters):</p>
+<h3 id="code-points"><a class="header" href="#code-points">Code Points</a></h3>
+<p>Work at the Unicode scalar level:</p>
 <pre><code class="language-gleam">let cps = string.to_utf_codepoints("🏳️‍🌈")
-// [UtfCodepoint(127987), 65039, 8205, 127752]
-
-string.from_utf_codepoints(cps) // "🏳️‍🌈"
+string.from_utf_codepoints(cps)  // "🏳️‍🌈"
 </code></pre>
-<p>Creating/inspecting scalars:</p>
-<pre><code class="language-gleam">let assert Ok(cp) = string.utf_codepoint(97)         // 'a'
-string.utf_codepoint_to_int(cp)                      // 97
+<h3 id="other-helpers"><a class="header" href="#other-helpers">Other Helpers</a></h3>
+<pre><code class="language-gleam">string.first("icecream")        // Ok("i")
+string.capitalise("mamouna")    // "Mamouna"
+string.to_option("")            // None
 </code></pre>
-<h3 id="firstlast-capitalisation-options"><a class="header" href="#firstlast-capitalisation-options">First/last, capitalisation, options</a></h3>
-<p><code>first</code>/<code>last</code> return the first/last <strong>grapheme</strong> as an <code>Ok(...)</code> or an <code>Error(Nil)</code> for empty strings.</p>
-<p><code>capitalise</code> uppercases the first grapheme and lowercases the rest - handy for display names, but note it's not locale-aware title-casing.</p>
-<p><code>to_option</code> converts <code>""</code> to <code>None</code> and non-empty strings to <code>Some</code>, which models "maybe present text" more cleanly than sentinel empty strings.</p>
-<pre><code class="language-gleam">string.first("icecream")     // Ok("i")
-string.last("icecream")      // Ok("m")
-string.capitalise("mamouna") // "Mamouna"
-string.to_option("")         // None
-string.to_option("hats")     // Some("hats")
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="tuples-and-lists"><a href="#tuples-and-lists" class="header">Tuples and lists</a></h1>
+<h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
+<p>A list is an ordered collection of values. Lists are generic, so their type tracks the kind of elements they hold, like <code>List(Int)</code> or <code>List(String)</code>.</p>
+<p>Internally, lists are immutable and singly-linked. This makes operations at the front fast and anything involving the end slower. For that reason, Gleam code usually builds lists from the front.</p>
+<p>Use the <code>gleam/list</code> module for transformations like <code>map</code>, <code>filter</code>, and <code>fold</code>. This works the same on both BEAM and JavaScript targets.</p>
+<h3 id="list-literals"><a class="header" href="#list-literals">List Literals</a></h3>
+<p>Use square brackets. An empty list is <code>[]</code>. All elements must be the same type.</p>
+<pre><code class="language-gleam">let empty_list = []
+let letters = ["a", "b", "c"]
 </code></pre>
-<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
-<ul>
-<li><strong>Erlang Unicode usage / <code>unicode</code> module</strong>  -  background for BEAM target and UTF-8 binaries. (<a href="https://www.erlang.org/doc/apps/stdlib/unicode_usage.html" title="Using Unicode in Erlang  -  stdlib v7.0.2">Erlang.org</a>)</li>
-<li><strong>Unicode UAX #29</strong>  -  grapheme/word/sentence boundaries (what "grapheme-aware" means). (<a href="https://unicode.org/reports/tr29/" title="UAX #29: Unicode Text Segmentation">Unicode</a>)</li>
-<li><strong>MDN: JavaScript Strings</strong>  -  UTF-16 code units and <code>.length</code> behavior on the JS target. (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length" title="String: length - JavaScript | MDN - Mozilla">MDN Web Docs</a>)</li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="lists"><a class="header" href="#lists">Lists</a></h2>
-<p>A <strong>list</strong> is an ordered collection of values. Lists are <strong>generic</strong> - their type records the element type: <code>List(Int)</code>, <code>List(String)</code>, etc.</p>
-<p>Under the hood they're <strong>immutable singly-linked</strong> lists. That makes adding or removing at the <strong>front</strong> O(1) and anything that touches the <strong>end</strong> O(n).</p>
-<p>So in Gleam you usually <strong>build from the front</strong> and avoid random indexing. These rules are the same on both Erlang/BEAM and JS targets; you use <code>gleam/list</code> for all the usual suspects like <code>map</code>, <code>filter</code>, <code>fold</code>, and friends.</p>
-<h3 id="literal-syntax"><a class="header" href="#literal-syntax">Literal syntax</a></h3>
-<p>Use square brackets. Empty is <code>[]</code>. Elements are homogeneous by type parameter:</p>
-<pre><code class="language-gleam">let empty = []
-let nums  = [1, 2, 3]
+<h3 id="prepend-fast"><a class="header" href="#prepend-fast">Prepend (Fast)</a></h3>
+<p>Adding to the front is efficient and doesn’t copy the list.</p>
+<pre><code class="language-gleam">let tail = ["b", "c"]
+let full = ["a", ..tail]  // ["a", "b", "c"]
 </code></pre>
-<h3 id="prepend-constant-time"><a class="header" href="#prepend-constant-time">Prepend (constant time)</a></h3>
-<p>Prepending doesn't copy the whole list, so it's the idiomatic way to build sequences efficiently:</p>
-<pre><code class="language-gleam">let tail = [2, 3, 4]
-let all  = [1, ..tail]     // -&gt; [1, 2, 3, 4]
-</code></pre>
-<p>That spread syntax is specific to <strong>prefixing</strong>. It's not a general "concatenate two lists" shortcut. The language even warns if you accidentally try to use it as concat.</p>
-<h2 id="pattern-matching--deconstruction"><a class="header" href="#pattern-matching--deconstruction">Pattern matching &amp; deconstruction</a></h2>
-<p>You can destructure lists right in a <code>case</code>. It's a clean way to branch on empty vs non-empty and bind the head and tail:</p>
-<pre><code class="language-gleam">case nums {
-  [] -&gt; "empty"
-  [first] -&gt; "one: " &lt;&gt; int.to_string(first)
-  [head, ..rest] -&gt; "head " &lt;&gt; int.to_string(head)
+<p>The <code>..</code> spread works only at the start of a list. It’s not a general-purpose concat operator.</p>
+<h3 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern Matching</a></h3>
+<p>You can match on lists using <code>case</code>, useful for handling different shapes.</p>
+<pre><code class="language-gleam">case letters {
+  [] -&gt; "Empty"
+  [x] -&gt; "One: " &lt;&gt; x
+  [first, ..rest] -&gt; "First is " &lt;&gt; first
 }
 </code></pre>
-<p><code>[]</code> matches empty, <code>[x]</code> matches single-element, and <code>[h, ..t]</code> peels one off the front.</p>
-<h2 id="everyday-operators--utilities"><a class="header" href="#everyday-operators--utilities">Everyday operators &amp; utilities</a></h2>
-<p>All functions are <strong>pure</strong> and return new lists. The important cost model: anything that must walk the list is <strong>linear</strong>; operations that only touch the head are <strong>constant time</strong>.</p>
-<h3 id="length-emptiness-membership"><a class="header" href="#length-emptiness-membership">Length, emptiness, membership</a></h3>
+<p>This helps cleanly separate the empty case, a single item, or a longer list.</p>
+<h3 id="length-emptiness-membership"><a class="header" href="#length-emptiness-membership">Length, Emptiness, Membership</a></h3>
 <pre><code class="language-gleam">import gleam/list
 
-pub fn main() {
-  echo list.length([1, 2, 3])   // 3
-  echo list.is_empty([])        // True
-  echo list.contains([1, 0], 0) // True
-}
+list.length([1, 2, 3])           // 3
+list.is_empty([])                // True
+list.contains(["a", "b"], "b")   // True
 </code></pre>
-<p><code>length</code> and <code>contains</code> traverse the list, so they're O(n). Use them when you need them, but don't call them in tight loops if you can carry the info through folds instead.</p>
-<h3 id="head--tail"><a class="header" href="#head--tail">Head &amp; tail</a></h3>
-<pre><code class="language-gleam">list.first([1, 2])  // Ok(1)
-list.rest([1, 2])   // Ok([2])
+<p>These scan the list, so avoid using them in tight loops.</p>
+<h3 id="head-and-tail"><a class="header" href="#head-and-tail">Head and Tail</a></h3>
+<pre><code class="language-gleam">list.first(["x", "y"])   // Ok("x")
+list.rest(["x", "y"])    // Ok(["y"])
 </code></pre>
-<p>These do not copy. They're constant time and the safest way to peek or step through a list one element at a time.</p>
-<h3 id="map--filter--fold"><a class="header" href="#map--filter--fold">Map / Filter / Fold</a></h3>
-<pre><code class="language-gleam">list.map([2, 4, 6], fn(x) { x * 2 })     // [4, 8, 12]
-list.filter([2, 4, 6, 1], fn(x) { x &gt; 2 }) // [4, 6]
+<p>Both are fast and do not copy data.</p>
+<h3 id="map-filter-fold"><a class="header" href="#map-filter-fold">Map, Filter, Fold</a></h3>
+<pre><code class="language-gleam">list.map([1, 2], fn(x) { x + 1 })              // [2, 3]
+list.filter([1, 2, 3], fn(x) { x &gt; 1 })        // [2, 3]
 list.fold([1, 2, 3], 0, fn(acc, x) { acc + x }) // 6
 </code></pre>
-<p>These are your <strong>loops</strong>. Prefer them over manual recursion for clarity.</p>
-<h3 id="find--predicates"><a class="header" href="#find--predicates">Find &amp; predicates</a></h3>
-<pre><code class="language-gleam">list.find([1, 2, 3], fn(x) { x &gt; 2 }) // Ok(3)
-list.any([3, 4], fn(x) { x &gt; 3 })     // True
-list.all([4, 5], fn(x) { x &gt; 3 })     // True
+<p>These replace manual recursion for most list processing.</p>
+<h3 id="find-any-all"><a class="header" href="#find-any-all">Find, Any, All</a></h3>
+<pre><code class="language-gleam">list.find([1, 2, 3], fn(x) { x == 2 })   // Ok(2)
+list.any([3, 5], fn(x) { x &lt; 4 })        // True
+list.all([3, 5], fn(x) { x &gt; 2 })        // True
 </code></pre>
-<p><code>any</code>/<code>all</code> <strong>short-circuit</strong>, which is handy for guards and validations without scanning the whole list unnecessarily.</p>
-<h3 id="zipping--unzipping"><a class="header" href="#zipping--unzipping">Zipping &amp; unzipping</a></h3>
-<pre><code class="language-gleam">list.zip([1, 2], ["a", "b"])           // [#(1, "a"), #(2, "b")]
-list.unzip([#(1, 2), #(3, 4)])         // #([1, 3], [2, 4])
+<p><code>any</code> and <code>all</code> stop as soon as possible.</p>
+<h3 id="zip-and-unzip"><a class="header" href="#zip-and-unzip">Zip and Unzip</a></h3>
+<pre><code class="language-gleam">list.zip([1, 2], ["a", "b"])               // [#(1, "a"), #(2, "b")]
+list.unzip([#(1, "x"), #(2, "y")])         // #([1, 2], ["x", "y"])
 </code></pre>
-<p>If you need equal lengths guaranteed, use <code>strict_zip</code> which returns <code>Error(Nil)</code> on mismatch. Great for pairing coordinates, ids to names, etc.</p>
-<h3 id="append-flatten-flat_map"><a class="header" href="#append-flatten-flat_map">Append, flatten, flat_map</a></h3>
-<pre><code class="language-gleam">list.append([1, 2], [3])                     // [1, 2, 3]
-list.flatten([[1], [2, 3], []])              // [1, 2, 3]
-list.flat_map([2, 4], fn(x) { [x, x + 1] })  // [2, 3, 4, 5]
+<p>Use <code>strict_zip</code> if you want to fail on length mismatch.</p>
+<h3 id="append-flatten-flat-map"><a class="header" href="#append-flatten-flat-map">Append, Flatten, Flat Map</a></h3>
+<pre><code class="language-gleam">list.append(["a"], ["b"])                  // ["a", "b"]
+list.flatten([["a"], ["b", "c"]])          // ["a", "b", "c"]
+list.flat_map(["x", "y"], fn(s) { [s, "!"] }) // ["x", "!", "y", "!"]
 </code></pre>
-<p><code>append</code> must <strong>copy the first list</strong>, so it's O(n).</p>
-<p>In hot paths, build by <strong>prepending inside a fold</strong> and finish with a single <code>reverse</code>. That keeps each step O(1) and has one linear pass at the end.</p>
-<h3 id="take--drop-safe-slicing"><a class="header" href="#take--drop-safe-slicing">Take &amp; drop (safe slicing)</a></h3>
-<pre><code class="language-gleam">list.take([1, 2, 3, 4], 2) // [1, 2]
-list.drop([1, 2, 3, 4], 2) // [3, 4]
+<p>Appending copies the first list, so avoid chaining it repeatedly. Use a fold and reverse for better performance.</p>
+<h3 id="take-and-drop"><a class="header" href="#take-and-drop">Take and Drop</a></h3>
+<pre><code class="language-gleam">list.take(["a", "b", "c"], 2)  // ["a", "b"]
+list.drop(["a", "b", "c"], 1)  // ["b", "c"]
 </code></pre>
-<p>Both are linear. <code>drop</code> doesn't copy nodes it skips, which makes it an efficient way to "advance" a cursor in streaming code.</p>
-<h3 id="unique-sort"><a class="header" href="#unique-sort">Unique, sort</a></h3>
-<pre><code class="language-gleam">list.unique([1, 1, 4, 7, 3, 3, 4]) // [1, 4, 7, 3]
-list.sort([4, 3, 6, 5, 4, 1, 2], by: int.compare) // [1, 2, 3, 4, 4, 5, 6]
+<p>Both are safe and return smaller lists without error.</p>
+<h3 id="unique-and-sort"><a class="header" href="#unique-and-sort">Unique and Sort</a></h3>
+<pre><code class="language-gleam">list.unique(["x", "x", "y"])             // ["x", "y"]
+list.sort([3, 1, 2], by: int.compare)    // [1, 2, 3]
 </code></pre>
-<p><code>unique</code> runs in <strong>log-linear</strong> time; it preserves the <strong>first occurrence</strong> order.</p>
-<p><code>sort</code> takes a comparator and returns a new sorted list.</p>
-<h3 id="windows-chunks-partitions"><a class="header" href="#windows-chunks-partitions">Windows, chunks, partitions</a></h3>
-<pre><code class="language-gleam">list.window([1, 2, 3, 4, 5], by: 3)            // [[1,2,3],[2,3,4],[3,4,5]]
-list.sized_chunk([1, 2, 3, 4, 5, 6], into: 2)  // [[1,2],[3,4],[5,6]]
-list.partition([1, 2, 3, 4, 5], int.is_odd)    // #([1,3,5], [2,4])
+<p><code>unique</code> keeps the first of each value. <code>sort</code> needs a comparison function.</p>
+<h3 id="windows-chunks-partition"><a class="header" href="#windows-chunks-partition">Windows, Chunks, Partition</a></h3>
+<pre><code class="language-gleam">list.window([1, 2, 3, 4], by: 2)        // [[1,2],[2,3],[3,4]]
+list.sized_chunk([1, 2, 3, 4], into: 2) // [[1,2],[3,4]]
+list.partition([1, 2, 3], int.is_even)  // #([2], [1, 3])
 </code></pre>
-<p>Use sliding <code>window</code> for rolling metrics, <code>sized_chunk</code> for batching, and <code>partition</code> to split by a predicate in one pass.</p>
-<blockquote>
-<p><strong>Note</strong>: <code>transpose</code> isn't tail-recursive on JS and can blow the stack with huge lists.</p>
-</blockquote>
-<h3 id="ranges--repetition"><a class="header" href="#ranges--repetition">Ranges &amp; repetition</a></h3>
-<pre><code class="language-gleam">list.range(0, 5)        // [0, 1, 2, 3, 4, 5]
-list.repeat("a", 3)     // ["a", "a", "a"]
+<p>Use these to split or batch data.</p>
+<h3 id="ranges-and-repeats"><a class="header" href="#ranges-and-repeats">Ranges and Repeats</a></h3>
+<pre><code class="language-gleam">list.range(1, 3)         // [1, 2, 3]
+list.repeat("hi", 2)     // ["hi", "hi"]
 </code></pre>
-<p>Great for generating test data, producing index sequences, or simple stubs.</p>
-<h2 id="when-not-to-use-a-list"><a class="header" href="#when-not-to-use-a-list">When not to use a list</a></h2>
-<p>If you need <strong>random access</strong> or frequent updates in the <strong>middle/end</strong>, a singly-linked list is the wrong tool.</p>
-<p>Consider <code>gleam/dict</code> for keyed lookups, or restructure the algorithm around streaming with folds. Index-based algorithms are rare in Gleam because lists are linked. If you must, <code>list.at</code> exists but returns a <code>Result</code> and is still O(n).</p>
+<p>Useful for generating test data or index sequences.</p>
+<h3 id="when-not-to-use-lists"><a class="header" href="#when-not-to-use-lists">When Not to Use Lists</a></h3>
+<p>If you need random access, frequent edits in the middle, or lookups by key, lists aren’t the right tool. Try <code>gleam/dict</code> for key-value data or rewrite the algorithm to use folds.</p>
+<p><code>list.at</code> lets you read by index, but it’s O(n) and returns a result:</p>
+<pre><code class="language-gleam">list.at(["a", "b"], 1) // Ok("b")
+</code></pre>
 <h2 id="tuples"><a class="header" href="#tuples">Tuples</a></h2>
-<p>A <strong>tuple</strong> groups a fixed number of values, possibly of <strong>different types</strong>. They're perfect for small, ad-hoc groupings or multi-value returns, like <code>#(status_code, body)</code> or <code>#(x, y)</code>. If the group has domain meaning, prefer a custom type or record to make the fields self-describing. Tuples are immutable and have a fixed arity.</p>
-<h3 id="literal-syntax-1"><a class="header" href="#literal-syntax-1">Literal syntax</a></h3>
-<pre><code class="language-gleam">let pair = #(200, "OK")
-let triple = #("x", 10, True)
+<p>Tuples hold a fixed number of values. Each element can be a different type. They’re good for short groups like a result pair or coordinates.</p>
+<h3 id="tuple-literals"><a class="header" href="#tuple-literals">Tuple Literals</a></h3>
+<pre><code class="language-gleam">let status = #(404, "Not Found")
+let config = #("dev", True, 3)
 </code></pre>
-<p>Arity is part of the type. For example, <code>#(Int, String)</code> is a different type from <code>#(Int, String, Bool)</code>.</p>
-<h3 id="positional-accessors-no-pattern-match-needed"><a class="header" href="#positional-accessors-no-pattern-match-needed">Positional accessors (no pattern match needed)</a></h3>
-<pre><code class="language-gleam">pair.0   // 200
-pair.1   // "OK"
-triple.2 // True
+<p>Each arity has a different type. A pair is not the same as a triple.</p>
+<h3 id="access-by-position"><a class="header" href="#access-by-position">Access by Position</a></h3>
+<pre><code class="language-gleam">status.0   // 404
+status.1   // "Not Found"
+config.2   // 3
 </code></pre>
-<p>These <strong>zero-based</strong> accessors are convenient for quick reads and are part of the official tour. They're great when you only need one field and don't want a full <code>case</code>.</p>
-<h3 id="pattern-matching"><a class="header" href="#pattern-matching">Pattern matching</a></h3>
-<pre><code class="language-gleam">case triple {
-  #(name, count, active) -&gt; name &lt;&gt; " " &lt;&gt; int.to_string(count)
+<p>Accessors use zero-based indexing and don’t require pattern matching.</p>
+<h3 id="pattern-matching-1"><a class="header" href="#pattern-matching-1">Pattern Matching</a></h3>
+<pre><code class="language-gleam">case config {
+  #(env, active, tries) -&gt; env &lt;&gt; ": " &lt;&gt; int.to_string(tries)
 }
 </code></pre>
-<p>Pattern matching shines when you want to destructure and name everything at once. If you find yourself passing tuples around widely, consider a custom type for readability.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="assignments"><a class="header" href="#assignments">Assignments</a></h2>
-<p>In Gleam you bind values with <code>let</code>. Names use <code>snake_case</code>, bindings are <strong>immutable</strong>, and you can <strong>re-bind</strong> a name later to a new value (the old value doesn’t change; you just shadow the name).</p>
+<p>Use matching when you want to name all fields. If the tuple has meaning in your domain, consider using a record or custom type instead.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="assignments-1"><a href="#assignments-1" class="header">Assignments</a></h1>
+<h2 id="assignments"><a class="header" href="#assignments">Assignments</a></h2>
+<p>Use <code>let</code> to bind values. Names use <code>snake_case</code>. Bindings are immutable, but you can bind the same name again later and shadow the previous value. This does not change the original value, it only replaces which value the name refers to.</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
-  let x = "Original"
-  io.println(x)
+  let title = "Morning"
+  io.println(title) // Morning
 
-  // Copy the value
-  let y = x
-  io.println(y)
+  let copy = title
+  io.println(copy)  // Morning
 
-  // Shadow x with a new value
-  let x = "New"
-  io.println(x)
+  let title = "Evening"
+  io.println(title) // Evening
 
-  // y still points to the original value
-  io.println(y)
+  io.println(copy)  // Morning
 }
 </code></pre>
-<p>If you create a variable and never use it, the compiler warns you. Prefix it with an underscore to show that’s intentional.</p>
+<p>If a binding is never used, the compiler warns you. Prefix the name with an underscore when this is intentional.</p>
 <pre><code class="language-gleam">pub fn main() {
-  // Intentional: silence the unused warning
-  let _score = 1000
+  let _unused_score = 500
 }
 </code></pre>
-<p>You can add type annotations to <code>let</code> bindings. They help readers but don’t change how type checking works (other than catching mismatches).</p>
+<p>You can add type annotations to bindings. These help with clarity and catch mismatches during type checking.</p>
 <pre><code class="language-gleam">pub fn main() {
-  let _name: String = "Gleam"
-  let _is_cool: Bool = True
-  let _version: Int = 1
+  let _label: String = "Gleam"
+  let _active: Bool = True
+  let _count: Int = 3
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="pattern-matching-1"><a class="header" href="#pattern-matching-1">Pattern matching</a></h2>
-<p>Gleam lets you <strong>pattern match</strong> both when assigning and in <code>case</code> expressions.</p>
-<h3 id="let-clause"><a class="header" href="#let-clause">Let clause</a></h3>
-<p>With plain <code>let</code>, your pattern has to be <strong>total</strong> for the value’s shape - i.e., it must always match.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="pattern-matching-3"><a href="#pattern-matching-3" class="header">Pattern matching</a></h1>
+<h2 id="pattern-matching-2"><a class="header" href="#pattern-matching-2">Pattern Matching</a></h2>
+<p>Gleam supports pattern matching in variable bindings and <code>case</code> expressions. This allows you to unpack data and handle different shapes clearly and safely.</p>
+<h3 id="let-bindings"><a class="header" href="#let-bindings">Let Bindings</a></h3>
+<p>With <code>let</code>, your pattern must always match the value. It’s for shapes you know are guaranteed.</p>
 <pre><code class="language-gleam">pub fn main() {
-  // Tuple destructuring: always matches a 2-tuple
   let point = #(3, 4)
   let #(x, y) = point
 
   io.println(int.to_string(x + y))
 }
 </code></pre>
-<h3 id="case-expression"><a class="header" href="#case-expression">Case expression</a></h3>
-<p><code>case</code> lets you handle multiple shapes safely. You can match strings using concatenation syntax:</p>
+<p>This works because <code>point</code> is a 2-tuple, and the pattern matches that exactly.</p>
+<h3 id="case-expressions"><a class="header" href="#case-expressions">Case Expressions</a></h3>
+<p>Use <code>case</code> to match multiple possible shapes. For strings, you can match a prefix using concatenation:</p>
 <pre><code class="language-gleam">import gleam/io
 
 pub fn main() {
@@ -1093,14 +864,13 @@ fn get_name(x: String) -&gt; String {
   }
 }
 </code></pre>
-<p>When working with lists you can match on length and contents. Use <code>..</code> to capture "the rest" of the elements.</p>
+<p>Lists can be matched by length or contents. The <code>..</code> syntax captures the remaining elements:</p>
 <pre><code class="language-gleam">import gleam/int
 import gleam/list
 import gleam/io
 
 pub fn main() {
   let xs = list.repeat(int.random(5), times: int.random(3))
-  io.println(list.to_string(xs, int.to_string))
 
   let result = case xs {
     [] -&gt; "Empty list"
@@ -1113,209 +883,469 @@ pub fn main() {
   io.println(result)
 }
 </code></pre>
-<h3 id="let-assert"><a class="header" href="#let-assert"><code>let assert</code></a></h3>
-<p>Sometimes you <em>know</em> a value has a certain shape and want to crash immediately if it doesn’t. <code>let assert</code> is like <code>let</code>, but it allows <strong>partial</strong> patterns. If the pattern doesn’t match, the program panics. You can attach a custom message with <code>as</code>.</p>
+<h3 id="let-assert"><a class="header" href="#let-assert">Let Assert</a></h3>
+<p>Use <code>let assert</code> when you expect a certain shape and want the program to fail fast if that shape isn’t matched. It allows partial patterns and will panic if the match fails. You can add a custom message.</p>
 <pre><code class="language-gleam">pub fn main() {
   let a = unsafely_get_first_element([123])
   io.println(int.to_string(a))
 
-  // This will panic at runtime with our custom message:
   let b = unsafely_get_first_element([])
-  io.println(int.to_string(b))
+  io.println(int.to_string(b))  // Panics here
 }
 
 pub fn unsafely_get_first_element(items: List(a)) -&gt; a {
-  // Partial pattern: will panic on []
   let assert [first, ..] = items as "List should not be empty"
   first
 }
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
-<p>In Gleam, the <code>fn</code> keyword defines a function. Like blocks, the body is a series of expressions evaluated top-to-bottom, and <strong>the last expression's value is returned</strong> - there's no <code>return</code> keyword.</p>
-<p>Functions are <strong>private by default</strong>. Add <code>pub</code> to make them usable from other modules. Type annotations for parameters and return types are optional but encouraged for clarity.</p>
+<p>Use this only when you’re certain about the input, or when failing is acceptable.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="functions-1"><a href="#functions-1" class="header">Functions</a></h1>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>Use <code>fn</code> to define a function. Gleam runs the body top to bottom and returns the final value. There’s no <code>return</code> keyword.</p>
+<p>Functions are private unless marked <code>pub</code>. Type annotations help with clarity but aren’t required.</p>
 <pre><code class="language-gleam">pub fn main() {
-  echo double(10)
+  greet("Alex")
 }
 
-fn double(a: Int) -&gt; Int {       // private
-  multiply(a, 2)
+fn greet(name: String) {
+  let message = make_message(name)
+  io.println(message)
 }
 
-fn multiply(a: Int, b: Int) -&gt; Int {
-  a * b
+fn make_message(name: String) -&gt; String {
+  "Welcome, " &lt;&gt; name &lt;&gt; "!"
 }
 </code></pre>
-<h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-order functions</a></h3>
-<p>Functions are values. You can <strong>pass them around</strong>, store them in variables, and return them - this is the basis for map/filter/fold and composition patterns. The parameter type for a function value is written with <code>fn(...) -&gt; ...</code>.</p>
+<h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-Order Functions</a></h3>
+<p>Functions can be passed around like any other value. You can use them to build flexible logic.</p>
 <pre><code class="language-gleam">pub fn main() {
-  echo twice(1, add_one)    // pass a function
-  let my_function = add_one // store a function
-  echo my_function(100)
+  let result = apply_twice(square, 3)
+  io.println(int.to_string(result))
 }
 
-fn twice(argument: Int, passed_function: fn(Int) -&gt; Int) -&gt; Int {
-  passed_function(passed_function(argument))
+fn square(n: Int) -&gt; Int {
+  n * n
 }
 
-fn add_one(argument: Int) -&gt; Int {
-  argument + 1
+fn apply_twice(f: fn(Int) -&gt; Int, x: Int) -&gt; Int {
+  f(f(x))
 }
 </code></pre>
-<h3 id="anonymous-functions"><a class="header" href="#anonymous-functions">Anonymous functions</a></h3>
-<p>Anonymous functions use <code>fn(...) { ... }</code>. They're interchangeable with named functions and <strong>capture variables</strong> in scope (closures), which is handy for customizing behavior with local data.</p>
+<h3 id="anonymous-functions"><a class="header" href="#anonymous-functions">Anonymous Functions</a></h3>
+<p>You can define unnamed functions inline. These can also capture values from their environment.</p>
 <pre><code class="language-gleam">pub fn main() {
-  let add_one = fn(a) { a + 1 }
-  echo twice(1, add_one)
+  let double = fn(n) { n * 2 }
+  let result = double_and_add(double, 5)
+  io.println(int.to_string(result))
 
-  echo twice(1, fn(a) { a * 2 })  // inline
-
-  let secret_number = 42
-  let secret = fn() { secret_number } // captures 42
-  echo secret()
+  let base = 10
+  let add_base = fn(x) { x + base }
+  io.println(int.to_string(add_base(5)))
 }
 
-fn twice(argument: Int, my_function: fn(Int) -&gt; Int) -&gt; Int {
-  my_function(my_function(argument))
+fn double_and_add(f: fn(Int) -&gt; Int, x: Int) -&gt; Int {
+  f(x) + x
 }
 </code></pre>
-<p>Closures let you "bake in" environment values without threading them through every call.</p>
-<h3 id="function-captures"><a class="header" href="#function-captures">Function captures</a></h3>
-<p>For the common "wrap a function and pass one argument through" case, use <strong>function capture</strong>: replace the flowing argument with <code>_</code>. It's shorthand for <code>fn(x) { some_fun(..., x, ...) }</code>.</p>
+<h3 id="function-captures"><a class="header" href="#function-captures">Function Captures</a></h3>
+<p>Use <code>_</code> to partially apply a function and create a new one.</p>
 <pre><code class="language-gleam">pub fn main() {
-  // These are equivalent
-  let add_one_v1 = fn(x) { add(1, x) }
-  let add_one_v2 = add(1, _)
+  let greet = say("Hi", _)
+  io.println(greet("Sam"))
+}
 
-  echo add_one_v1(10)
-  echo add_one_v2(10)
+fn say(prefix: String, name: String) -&gt; String {
+  prefix &lt;&gt; ", " &lt;&gt; name
+}
+</code></pre>
+<p>This simplifies your code and makes pipelines easier to read.</p>
+<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h3>
+<p>Generic functions work with any type, as long as it’s consistent within the call.</p>
+<pre><code class="language-gleam">pub fn main() {
+  io.println(duplicate("hey"))
+  io.println(int.to_string(duplicate(42)))
+}
+
+fn duplicate(x: value) -&gt; Tuple(value, value) {
+  #(x, x)
+}
+</code></pre>
+<p>The compiler ensures the types are used consistently and doesn’t allow mismatches.</p>
+<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
+<p>The pipe operator passes the result of one expression into the next. It improves readability by following the data flow.</p>
+<pre><code class="language-gleam">import gleam/string
+import gleam/io
+
+pub fn main() {
+  "   Hello World!  "
+  |&gt; string.trim
+  |&gt; string.uppercase
+  |&gt; string.append("!!!")
+  |&gt; io.println
+}
+</code></pre>
+<p>You can also use <code>_</code> to place the piped value into another argument slot.</p>
+<pre><code class="language-gleam">"42"
+|&gt; string.concat(["Value: ", _])
+|&gt; io.println
+</code></pre>
+<h3 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled Arguments</a></h3>
+<p>Labels help show what each argument means. They’re useful when multiple arguments share a type.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let total = compute_cost(units: 4, price_per_unit: 25)
+  io.println(int.to_string(total))
+}
+
+fn compute_cost(units units: Int, price_per_unit cost: Int) -&gt; Int {
+  units * cost
+}
+</code></pre>
+<p>Labels can be written in any order at the call site.</p>
+<h3 id="label-shorthand"><a class="header" href="#label-shorthand">Label Shorthand</a></h3>
+<p>If your variable names match the parameter labels, you can use shorthand syntax.</p>
+<pre><code class="language-gleam">pub fn main() {
+  let width = 10
+  let height = 5
+  let unit = "cm"
+
+  describe_rectangle(width:, height:, unit:)
+}
+
+fn describe_rectangle(
+  width width: Int,
+  height height: Int,
+  unit unit: String,
+) {
+  let info = int.to_string(width) &lt;&gt; " x " &lt;&gt;
+             int.to_string(height) &lt;&gt; " " &lt;&gt;
+             unit
+
+  io.println(info)
+}
+</code></pre>
+<p>This keeps function calls compact and clear.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="result-and-optional-types"><a href="#result-and-optional-types" class="header">Result and optional types</a></h1>
+<h2 id="handling-absence-and-failure"><a class="header" href="#handling-absence-and-failure">Handling absence and failure</a></h2>
+<p>Gleam uses two types to handle missing values and fallible operations: <code>Option(a)</code> and <code>Result(a, e)</code>. These types make uncertainty explicit and force you to handle it clearly.</p>
+<h3 id="option-type"><a class="header" href="#option-type">Option Type</a></h3>
+<p>Use <code>Option(a)</code> for values that might be missing. For example, an optional parameter or a field that may be absent:</p>
+<pre><code class="language-gleam">import gleam/option.{type Option, Some, None}
+
+pub type User {
+  User(name: String, nickname: Option(String))
+}
+
+let user1 = User("Eva", Some("E"))
+let user2 = User("Tom", None)
+</code></pre>
+<h4 id="optionmap"><a class="header" href="#optionmap"><code>option.map</code></a></h4>
+<p>Transforms the inner value if it’s present:</p>
+<pre><code class="language-gleam">option.map(Some(2), fn(x) { x * 3 }) // Some(6)
+option.map(None, fn(x) { x * 3 })    // None
+</code></pre>
+<h4 id="optionthen"><a class="header" href="#optionthen"><code>option.then</code></a></h4>
+<p>Chains computations that return <code>Option</code>:</p>
+<pre><code class="language-gleam">option.then(Some(2), fn(x) { Some(x + 1) }) // Some(3)
+option.then(Some(2), fn(_) { None })        // None
+option.then(None, fn(x) { Some(x + 1) })    // None
+</code></pre>
+<h4 id="optionor-and-optionlazy_or"><a class="header" href="#optionor-and-optionlazy_or"><code>option.or</code> and <code>option.lazy_or</code></a></h4>
+<p>Use fallback options:</p>
+<pre><code class="language-gleam">option.or(Some(1), Some(2))               // Some(1)
+option.or(None, Some(2))                  // Some(2)
+option.lazy_or(Some(1), fn() { Some(3) }) // Some(1)
+option.lazy_or(None, fn() { Some(3) })    // Some(3)
+</code></pre>
+<h4 id="optionunwrap"><a class="header" href="#optionunwrap"><code>option.unwrap</code></a></h4>
+<p>Extract the value or use a default:</p>
+<pre><code class="language-gleam">option.unwrap(Some(5), 0) // 5
+option.unwrap(None, 0)    // 0
+</code></pre>
+<h4 id="optionflatten"><a class="header" href="#optionflatten"><code>option.flatten</code></a></h4>
+<p>Removes one layer of nesting:</p>
+<pre><code class="language-gleam">option.flatten(Some(Some(1))) // Some(1)
+option.flatten(Some(None))    // None
+option.flatten(None)          // None
+</code></pre>
+<h4 id="optionto_result"><a class="header" href="#optionto_result"><code>option.to_result</code></a></h4>
+<p>Converts an <code>Option</code> into a <code>Result</code>:</p>
+<pre><code class="language-gleam">option.to_result(Some(5), "missing") // Ok(5)
+option.to_result(None, "missing")    // Error("missing")
+</code></pre>
+<h3 id="result-types"><a class="header" href="#result-types">Result Types</a></h3>
+<p>Use <code>Result(a, e)</code> when a function can fail. This forces the caller to handle both the success and error cases.</p>
+<pre><code class="language-gleam">fn parse_number(s: String) -&gt; Result(Int, String) {
+  case int.parse(s) {
+    Ok(n) -&gt; Ok(n)
+    Error(_) -&gt; Error("invalid input")
+  }
+}
+</code></pre>
+<h4 id="resultmap"><a class="header" href="#resultmap"><code>result.map</code></a></h4>
+<p>Transforms the success value:</p>
+<pre><code class="language-gleam">result.map(Ok(2), fn(x) { x * 2 })     // Ok(4)
+result.map(Error("bad"), fn(x) { x })  // Error("bad")
+</code></pre>
+<h4 id="resulttry"><a class="header" href="#resulttry"><code>result.try</code></a></h4>
+<p>Chains fallible functions:</p>
+<pre><code class="language-gleam">fn safe_parse(s: String) -&gt; Result(Int, String) {
+  case int.parse(s) {
+    Ok(n) -&gt; Ok(n)
+    Error(_) -&gt; Error("not a number")
+  }
+}
+
+result.try(Ok("42"), safe_parse)   // Ok(42)
+result.try(Ok("foo"), safe_parse)  // Error("not a number")
+result.try(Error("fail"), safe_parse) // Error("fail")
+</code></pre>
+<h4 id="resultunwrap"><a class="header" href="#resultunwrap"><code>result.unwrap</code></a></h4>
+<p>Returns the success value or a fallback:</p>
+<pre><code class="language-gleam">result.unwrap(Ok("done"), "default")    // "done"
+result.unwrap(Error("fail"), "default") // "default"
+</code></pre>
+<h4 id="resultis_ok-and-resultis_error"><a class="header" href="#resultis_ok-and-resultis_error"><code>result.is_ok</code> and <code>result.is_error</code></a></h4>
+<p>Check what variant you’re working with:</p>
+<pre><code class="language-gleam">result.is_ok(Ok(1))       // True
+result.is_error(Ok(1))    // False
+result.is_error(Error(1)) // True
+</code></pre>
+<h4 id="resultall"><a class="header" href="#resultall"><code>result.all</code></a></h4>
+<p>Collects a list of <code>Result</code>s into one <code>Result</code> with a list:</p>
+<pre><code class="language-gleam">result.all([Ok(1), Ok(2)])        // Ok([1, 2])
+result.all([Ok(1), Error("x")])   // Error("x")
+</code></pre>
+<h4 id="resultlazy_or"><a class="header" href="#resultlazy_or"><code>result.lazy_or</code></a></h4>
+<p>Provides a fallback result lazily:</p>
+<pre><code class="language-gleam">result.lazy_or(Ok(1), fn() { Ok(2) })          // Ok(1)
+result.lazy_or(Error("e"), fn() { Ok(2) })     // Ok(2)
+result.lazy_or(Error("e"), fn() { Error("x") }) // Error("x")
+</code></pre>
+<h3 id="when-to-use-each"><a class="header" href="#when-to-use-each">When to Use Each</a></h3>
+<p>In other languages fallible functions may return either <code>Result</code> or <code>Option</code> depending on whether there is more information to be given about the failure. In Gleam all fallible functions return <code>Result</code>, and <code>Nil</code> is used as the error if there is no extra detail to give.</p>
+<p>This consistency removes the boilerplate that would otherwise be needed to convert between <code>Option</code> and <code>Result</code> types, and makes APIs more predictable:</p>
+<pre><code class="language-gleam">import gleam/option
+import gleam/result
+import gleam/int
+import gleam/io
+
+fn apply_multiplier(value: Int, maybe: Option(Int)) -&gt; Int {
+  case maybe {
+    Some(m) -&gt; value * m
+    None -&gt; value
+  }
+}
+
+fn parse_positive(s: String) -&gt; Result(Int, Nil) {
+  case int.parse(s) {
+    Ok(n) if n &gt; 0 -&gt; Ok(n)
+    _ -&gt; Error(Nil)
+  }
+}
+
+pub fn main() {
+  let maybe_multiplier = Some(2)
+
+  case parse_positive("10") {
+    Ok(n) -&gt;
+      let result = apply_multiplier(n, maybe_multiplier)
+      io.println(int.to_string(result))
+    Error(_) -&gt;
+      io.println("Invalid input")
+  }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="expression-blocks-1"><a href="#expression-blocks-1" class="header">Expression blocks</a></h1>
+<h2 id="expression-blocks"><a class="header" href="#expression-blocks">Expression Blocks</a></h2>
+<pre><code>error: Syntax error  
+  ┌─ /Users/adi.salimgereyev/hello_world/src/hello_world.gleam:8:10  
+  │  
+8 │     let b = (1 + 2) * 3  
+  │             ^ This parenthesis cannot be understood here
+
+Hint: To group expressions in Gleam, use "{" and "}"; tuples are created with `#(` and `)`.
+</code></pre>
+<p>In Gleam you group expressions with <code>{}</code>. A block runs its expressions in order and evaluates to the last one. Names bound inside the block are scoped to that block.</p>
+<pre><code class="language-gleam">pub fn area_of_square(size: Int) -&gt; Int {
+  let perimeter = {
+    let doubled = size * 2
+    doubled * 2
+  }
+  
+  perimeter * size / 4
+}
+</code></pre>
+<p>Blocks can change evaluation order. Wrap a subexpression in <code>{}</code> when you want it to run first:</p>
+<pre><code class="language-gleam">// Default precedence gives 7
+let a = 1 + 2 * 3
+
+// Run 1 + 2 first, gives 9
+let b = { 1 + 2 } * 3
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="panic-and-assert"><a href="#panic-and-assert" class="header">Panic and assert</a></h1>
+<h2 id="assertions-and-panic"><a class="header" href="#assertions-and-panic">Assertions and panic</a></h2>
+<p>You already saw <code>let assert</code> earlier. It binds with a partial pattern and crashes if the value does not match. We use it for invariants we consider impossible to violate, and prefer returning a <code>Result</code> in library code so the caller can decide what to do.</p>
+<p><code>panic</code> crashes immediately. It is for code paths that must never run, such as unreachable branches or unimplemented cases. Add a message with <code>as "..."</code> so failures are clear:</p>
+<pre><code class="language-gleam">import gleam/io
+import gleam/int
+
+pub fn describe(score: Int) {
+  case score {
+    s if s &gt; 1000 -&gt; io.println("High score!")
+    s if s &gt; 0 -&gt; io.println("Still working on it")
+    _ -&gt; panic as "Scores should never be negative!"
+  }
+}
+</code></pre>
+<p><code>assert</code> is another way to cause a panic. It checks that a boolean expression evaluates to <code>True</code>. Like the others, you can add a custom message with <code>as</code>. This replaces the generic message when the assertion fails. Do not use <code>assert</code> in applications or libraries. Keep it in tests:</p>
+<pre><code class="language-gleam">pub fn add_test() {
+  assert add(1, 2) == 3
+  assert add(1, 2) &lt; add(1, 3)
+  assert add(6, 2) == add(2, 6) as "Addition should be commutative"
+  assert add(2, 2) == 5
 }
 
 fn add(a: Int, b: Int) -&gt; Int {
   a + b
 }
+
 </code></pre>
-<p>This reads nicely in pipelines or when reordering parameters.</p>
-<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic functions</a></h3>
-<p>When your logic doesn't care about a concrete type, use a <strong>type variable</strong> (lowercase) to make a function generic. The compiler instantiates it with a specific type at each call site. This is stricter than "any" - it must be <strong>the same</strong> type throughout that call.</p>
-<pre><code class="language-gleam">pub fn main() {
-  let add_one = fn(x) { x + 1 }
-  let exclaim = fn(x) { x &lt;&gt; "!" }
-
-  // twice(10, exclaim)          // invalid: types conflict
-
-  echo twice(10, add_one)        // value = Int here
-  echo twice("Hello", exclaim)   // value = String here
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="custom-types-1"><a href="#custom-types-1" class="header">Custom types</a></h1>
+<h2 id="custom-types"><a class="header" href="#custom-types">Custom types</a></h2>
+<p>Custom types let you model “this or that” choices with named constructors. A value of a custom type is one of its constructors, and you handle each case with <code>case</code>. This is a sum type, also called an algebraic data type.</p>
+<pre><code class="language-gleam">pub type Shape {
+  Circle(radius: Float)
+  Rectangle(width: Float, height: Float)
 }
 
-fn twice(argument: value, my_function: fn(value) -&gt; value) -&gt; value {
-  my_function(my_function(argument))
+fn area(s: Shape) -&gt; Float {
+  case s {
+    Circle(radius:) -&gt; 3.14159 *. radius *. radius
+    Rectangle(width:, height:) -&gt; width *. height
+  }
 }
 </code></pre>
-<p>Result: reusable functions with strong static guarantees - no runtime type checks needed.</p>
-<h3 id="pipelines"><a class="header" href="#pipelines">Pipelines</a></h3>
-<p>The <strong>pipe operator</strong> <code>|&gt;</code> passes the value on the left into the function on the right, letting you read transformations <strong>top-to-bottom</strong>. It tries to place the piped value as the <strong>first argument</strong>; if that doesn't fit, it treats the right side as a function that returns a function (so <code>b(1,2)(a)</code>). Capture <code>_</code> helps target a different parameter position.</p>
-<pre><code class="language-gleam">import gleam/io
-import gleam/string
+<p>You define the type with <code>type</code>, give each variant a constructor, then pattern match by constructor.</p>
+<p>A constructor that carries fields is called a record. You can read fields with dot syntax and update immutably with record update. This keeps data immutable and clear to read.</p>
+<pre><code class="language-gleam">pub type User {
+  User(name: String, age: Int)
+}
 
 pub fn main() {
-  // Without the pipe operator
-  io.println(string.drop_start(string.drop_end("Hello, Joe!", 1), 7))
-
-  // With the pipe operator
-  "Hello, Mike!"
-  |&gt; string.drop_end(1)
-  |&gt; string.drop_start(7)
-  |&gt; io.println
-
-  // Reordering with a capture
-  "1"
-  |&gt; string.append("2")
-  |&gt; string.append("3", _)
-  |&gt; io.println
+  let u1 = User("Bea", 28)
+  let u2 = User(..u1, age: 29)
+  let name = u2.name
+  
+  io.println(name) // Bea
 }
 </code></pre>
-<p>Pipes are the idiomatic way to <strong>compose</strong> in Gleam - most stdlib functions put the "subject" first to make piping natural.</p>
-<h3 id="labelled-arguments"><a class="header" href="#labelled-arguments">Labelled arguments</a></h3>
-<p>Give arguments <strong>labels</strong> to self-document calls and avoid "what does the second <code>Int</code> mean?" moments. Labels are written <strong>before</strong> the parameter name in the definition; at call sites you can supply them in any order. Unlabelled args must come first. No runtime cost.</p>
-<pre><code class="language-gleam">pub fn main() {
-  echo calculate(1, add: 2, multiply: 3)
-  echo calculate(1, multiply: 3, add: 2) // order doesn't matter
-  echo calculate(1, 2, 3)                // labels optional when calling
-}
-
-fn calculate(value: Int, add addend: Int, multiply multiplier: Int) {
-  value * multiplier + addend
+<p>You can match on records to pull out fields or add guards. This keeps branching logic tight and local. The <code>let</code> form can destructure single-variant types, and <code>case</code> works for any variant set.</p>
+<pre><code class="language-gleam">fn can_vote(u: User) -&gt; Bool {
+  case u {
+    User(age: a) if a &gt;= 18 -&gt; True
+    _ -&gt; False
+  }
 }
 </code></pre>
-<p>Labels shine in APIs with multiple same-typed parameters.</p>
-<h3 id="label-shorthand"><a class="header" href="#label-shorthand">Label shorthand</a></h3>
-<p>If local variable names match the labels, you can <strong>omit</strong> the names at the call site - nice for records and functions with many labelled args. This shorthand is part of the language and widely used in examples and blog posts.</p>
-<pre><code class="language-gleam">pub fn main() {
-  let quantity = 5.0
-  let unit_price = 10.0
-  let discount = 0.2
-
-  // Regular label syntax
-  echo calculate_total_cost(
-    quantity: quantity,
-    unit_price: unit_price,
-    discount: discount,
-  )
-
-  // Shorthand (names match labels)
-  echo calculate_total_cost(quantity:, unit_price:, discount:)
+<p>Custom types can be generic. Write type variables in lowercase. This gives you reuse without losing static checks. Gleam’s own <code>Option(a)</code> and <code>Result(a, e)</code> follow this shape.</p>
+<pre><code class="language-gleam">pub type Box(value) { 
+  Box(value) 
 }
 
-fn calculate_total_cost(
-  quantity quantity: Float,
-  unit_price price: Float,
-  discount discount: Float,
-) -&gt; Float {
-  let subtotal = quantity *. price
-  let discount = subtotal *. discount
-  subtotal -. discount
+fn map_box(x: Box(a), f: fn(a) -&gt; b) -&gt; Box(b) {
+  case x { 
+    Box(v) -&gt; Box(f(v))
+  }
 }
 </code></pre>
-<p>Shorthand keeps the call sites tidy without sacrificing readability.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="result"><a class="header" href="#result">Result</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="expression-blocks"><a class="header" href="#expression-blocks">Expression blocks</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="panic-and-assert"><a class="header" href="#panic-and-assert">Panic and assert</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="creating-custom-types"><a class="header" href="#creating-custom-types">Creating custom types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="modules-and-imports"><a class="header" href="#modules-and-imports">Modules and imports</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="advanced-gleam"><a class="header" href="#advanced-gleam">Advanced Gleam</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="todo"><a class="header" href="#todo">Todo</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="bit-strings"><a class="header" href="#bit-strings">Bit strings</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="escape-sequences"><a class="header" href="#escape-sequences">escape sequences</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tail-call-optimisation"><a class="header" href="#tail-call-optimisation">Tail call optimisation</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="phantom-types"><a class="header" href="#phantom-types">Phantom types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-arguments-1"><a class="header" href="#labelled-arguments-1">Labelled arguments</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="labelled-fields"><a class="header" href="#labelled-fields">Labelled fields</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="dict"><a class="header" href="#dict">Dict</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="pairs"><a class="header" href="#pairs">Pairs</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="sets"><a class="header" href="#sets">Sets</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="option"><a class="header" href="#option">Option</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="order"><a class="header" href="#order">Order</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="iterator"><a class="header" href="#iterator">Iterator</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="opaque-types"><a class="header" href="#opaque-types">Opaque types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="queue"><a class="header" href="#queue">Queue</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="erlang-and-javascript-interop"><a class="header" href="#erlang-and-javascript-interop">Erlang and Javascript interop</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="testing"><a class="header" href="#testing">Testing</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="bytes-and-string-builders"><a class="header" href="#bytes-and-string-builders">Bytes and string builders</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="base64"><a class="header" href="#base64">Base64</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="regex"><a class="header" href="#regex">Regex</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="uri"><a class="header" href="#uri">URI</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ecosystem"><a class="header" href="#ecosystem">Ecosystem</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="installing-custom-packages"><a class="header" href="#installing-custom-packages">Installing custom packages</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="creating-and-publishing-a-package"><a class="header" href="#creating-and-publishing-a-package">Creating and publishing a package</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gleam-docker-images"><a class="header" href="#gleam-docker-images">Gleam docker images</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="simplifile-package"><a class="header" href="#simplifile-package">Simplifile package</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="filepath-filepath"><a class="header" href="#filepath-filepath">Filepath: filepath</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ranges-ranger"><a class="header" href="#ranges-ranger">Ranges: ranger</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="datetime-birl"><a class="header" href="#datetime-birl">Datetime: birl</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="ad-hoc-error-type-snag"><a class="header" href="#ad-hoc-error-type-snag">Ad-hoc error type: snag</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="json-gleam_json"><a class="header" href="#json-gleam_json">Json: gleam_json</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gleam_crypto"><a class="header" href="#gleam_crypto">gleam_crypto</a></h1>
+<p>When you need invariants, make the type opaque. Export the type, keep its constructors private, and expose smart constructors and getters. Callers can use the type but cannot forge or deconstruct it:</p>
+<pre><code class="language-gleam">pub opaque type Id { 
+  Id(value: String) 
+}
+
+pub fn from_string(s: String) -&gt; Id {
+  Id(s)
+}
+
+pub fn to_string(id: Id) -&gt; String {
+  id.value
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="modules-and-imports"><a class="header" href="#modules-and-imports">Modules and imports</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="advanced-gleam"><a class="header" href="#advanced-gleam">Advanced Gleam</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="todo"><a class="header" href="#todo">Todo</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="bit-strings"><a class="header" href="#bit-strings">Bit strings</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="escape-sequences"><a class="header" href="#escape-sequences">escape sequences</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="tail-call-optimisation"><a class="header" href="#tail-call-optimisation">Tail call optimisation</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="phantom-types"><a class="header" href="#phantom-types">Phantom types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="labelled-arguments-1"><a class="header" href="#labelled-arguments-1">Labelled arguments</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="labelled-fields"><a class="header" href="#labelled-fields">Labelled fields</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="dict"><a class="header" href="#dict">Dict</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="pairs"><a class="header" href="#pairs">Pairs</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="sets"><a class="header" href="#sets">Sets</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="option"><a class="header" href="#option">Option</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="order"><a class="header" href="#order">Order</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="iterator"><a class="header" href="#iterator">Iterator</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="opaque-types"><a class="header" href="#opaque-types">Opaque types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="queue"><a class="header" href="#queue">Queue</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="erlang-and-javascript-interop"><a class="header" href="#erlang-and-javascript-interop">Erlang and Javascript interop</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="testing"><a class="header" href="#testing">Testing</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="bytes-and-string-builders"><a class="header" href="#bytes-and-string-builders">Bytes and string builders</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="base64"><a class="header" href="#base64">Base64</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="regex"><a class="header" href="#regex">Regex</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="uri"><a class="header" href="#uri">URI</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ecosystem"><a class="header" href="#ecosystem">Ecosystem</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installing-custom-packages"><a class="header" href="#installing-custom-packages">Installing custom packages</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="creating-and-publishing-a-package"><a class="header" href="#creating-and-publishing-a-package">Creating and publishing a package</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="gleam-docker-images"><a class="header" href="#gleam-docker-images">Gleam docker images</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="simplifile-package"><a class="header" href="#simplifile-package">Simplifile package</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="filepath-filepath"><a class="header" href="#filepath-filepath">Filepath: filepath</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ranges-ranger"><a class="header" href="#ranges-ranger">Ranges: ranger</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="datetime-birl"><a class="header" href="#datetime-birl">Datetime: birl</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ad-hoc-error-type-snag"><a class="header" href="#ad-hoc-error-type-snag">Ad-hoc error type: snag</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="json-gleam_json"><a class="header" href="#json-gleam_json">Json: gleam_json</a></h1>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="gleam_crypto"><a class="header" href="#gleam_crypto">gleam_crypto</a></h1>
 
                     </main>
 
@@ -1342,17 +1372,17 @@ fn calculate_total_cost(
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-5a2b5dad.js"></script>
+        <script src="book-9576a2db.js"></script>
 
         <!-- Custom JS scripts -->
-        <script src="syntax.js"></script>
-        <script src="highlight.js"></script>
+        <script src="syntax-1451bcbd.js"></script>
+        <script src="highlight-5a2b5dad.js"></script>
 
         <script>
         window.addEventListener('load', function() {
